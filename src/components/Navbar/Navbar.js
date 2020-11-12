@@ -1,20 +1,33 @@
 import React from 'react';
 import { BrowserRouter as Router, Link as NavLink, Switch, Route } from 'react-router-dom'
 import './Navbar.css'
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles({
+  navbar: {
+    paddingLeft: '20px',
+    paddingTop: '40px',
+    float: 'right',
+  },
+  image: {
+    paddingTop: '20px'
+  }
+})
 
 
 export default function Navbar() {
+    const classes = useStyles();
     return (
         <Router>
             <div>
-                <img src={""} alt='logo'/>
-                <NavLink to="/" color="inherit">
+                <img className={classes.image} src={"https://via.placeholder.com/200x100.png"} alt='logo'/>
+                <NavLink className={classes.navbar} to="/" color="inherit">
                     Home
             </NavLink>
-                <NavLink to="/about" color="inherit">
+                <NavLink className={classes.navbar} to="/about" color="inherit">
                     About
             </NavLink>
-                <NavLink to="/signin" color="inherit">
+                <NavLink className={classes.navbar} to="/signin" color="inherit">
                     Sign In
             </NavLink>
             </div>
