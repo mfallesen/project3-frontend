@@ -6,6 +6,7 @@ import Adventure from './components/Adventure';
 import Footer from './components/Footer';
 import Hero from './components/Hero/Hero';
 import Navbar from './components/Navbar';
+import Userlandingpost from './components/Userlandingpost';
 import theme from './theme'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       Hello World
       <Hero></Hero>
       <Adventure></Adventure>
+      <Userlandingpost></Userlandingpost>
       <Footer></Footer>
       </ThemeProvider>
     </div>
