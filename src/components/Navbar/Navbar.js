@@ -13,6 +13,7 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import StarIcon from '@material-ui/icons/Star';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AdventuresPage from '../AdventuresPage/AdventuresPage';
 
 
 
@@ -94,7 +95,7 @@ export default function Navbar() {
             <Divider />
             <List>
                 
-                    <ListItem button onClick={console.log("hi there")}>
+                <ListItem button >
                         <ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
                         <ListItemText primary={'Logout'} />
                     </ListItem>
@@ -149,6 +150,7 @@ export default function Navbar() {
 
                 </Route>
                 <Route path="/adventures">
+                    <AdventuresPage></AdventuresPage>
 
                 </Route>
                 <Route path="/signin">
