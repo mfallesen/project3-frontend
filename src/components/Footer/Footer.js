@@ -6,59 +6,25 @@ import Container from '@material-ui/core/Container';
 import Typography from '../Typography';
 
 
+
 function Copyright() {
   return (
-    <React.Fragment>
-      {'© '}
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Minnesvart
       </Link>{' '}
       {new Date().getFullYear()}
-    </React.Fragment>
+      {'.'}
+    </Typography>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    backgroundColor: theme.palette.secondary.light,
-  },
-  container: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(8),
-    display: 'flex',
-  },
-  iconsWrapper: {
-    height: 120,
-  },
-  icons: {
-    display: 'flex',
-  },
-  icon: {
-    width: 48,
-    height: 48,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: theme.palette.warning.main,
-    marginRight: theme.spacing(1),
-    '&:hover': {
-      backgroundColor: theme.palette.warning.dark,
-    },
-  },
-  list: {
-    margin: 0,
-    listStyle: 'none',
-    padding: 0,
-  },
-  listItem: {
-    paddingTop: theme.spacing(0.5),
-    paddingBottom: theme.spacing(0.5),
-  },
-  language: {
-    marginTop: theme.spacing(1),
-    width: 150,
-  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6),
+  }
 }));
 
 
@@ -67,45 +33,16 @@ export default function Footer() {
   const classes = useStyles();
 
   return (
-    <Typography component="footer" className={classes.root}>
-      <Container className={classes.container}>
-        <Grid container spacing={5}>
-          <Grid item xs={6} sm={4} md={3}>
-            <Grid
-              container
-              direction="column"
-              justify="flex-end"
-              className={classes.iconsWrapper}
-              spacing={2}
-            >
-              <Grid item className={classes.icons}>
-                <a href="https://material-ui.com/" className={classes.icon}>
-                  <img src="/static/themes/onepirate/appFooterFacebook.png" alt="Facebook" />
-                </a>
-                <a href="https://twitter.com/MaterialUI" className={classes.icon}>
-                  <img src="/static/themes/onepirate/appFooterTwitter.png" alt="Twitter" />
-                </a>
-              </Grid>
-              <Grid item>
-                <Copyright />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={6} sm={4} md={2}>
-            <Typography variant="h6" marked="left" gutterBottom>
-              Legal
-            </Typography>
-            <ul className={classes.list}>
-              <li className={classes.listItem}>
-                <Link href="/premium-themes/onepirate/terms/">Terms</Link>
-              </li>
-              <li className={classes.listItem}>
-                <Link href="/premium-themes/onepirate/privacy/">Privacy</Link>
-              </li>
-            </ul>
-          </Grid>
-        </Grid>
-      </Container>
-    </Typography>
+
+    < footer className={classes.footer} >
+      <Typography variant="h6" align="center" gutterBottom>
+        Footer
+        </Typography>
+      <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+        Something here to give the footer a purpose!
+        </Typography>
+      <Copyright />
+    </footer >
+
   );
 }
