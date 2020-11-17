@@ -19,7 +19,7 @@ export default function Userlandingpost() {
         return (
             <Grid item sm={3}>
                 <Card>
-                    
+
                     <CardHeader
                     title=" My Adventure"
                     />
@@ -44,8 +44,8 @@ export default function Userlandingpost() {
                     <UserPostCard/>
                     <UserPostCard/>
                     <UserPostCard/>
-                </Grid>
-                <Grid className={classes.cardRow} container item md={12} spacing={3}>
+                {/* </Grid>
+                <Grid className={classes.cardRow} container item md={12} spacing={3}> */}
                     <UserPostCard/>
                     <UserPostCard/>
                     <UserPostCard/>
