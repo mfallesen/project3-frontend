@@ -77,10 +77,7 @@ const useStyles = makeStyles((theme) => ({
     cardContent: {
         flexGrow: 1,
     },
-    footer: {
-        backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(6),
-    },
+
 }));
 
 const cards = [{
@@ -207,12 +204,16 @@ function Profile() {
 
         const classes = useStyles();
         const userOne = client.feed('timeline', client.userId);
-        let somethingOut = undefined
-        userOne.followers({ limit: '10', offset: '0' }).then((res) => {
-            somethingOut = res.results
-            console.log(somethingOut)
-        });
-        console.log(somethingOut)
+        userOne.follow('user', 'ccrow')
+        userOne.following({ offset: 0, limit: 10 }).then((res) => {
+            console.log(res.results)
+        })
+        userOne.followStats().then((res) => {
+            console.log(res);
+        })
+
+
+
 
         return (
             <Grid container spacing={1}>
@@ -314,26 +315,24 @@ function Profile() {
                                     </Typography>
                                 </Grid>
                             </Grid>
+                            <StreamApp
+                                apiKey={process.env.REACT_APP_STREAM_API_KEY}
+                                appId={process.env.REACT_APP_STREAM_APP_ID}
+                                token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWNyb3cifQ.VBkmY5Jj7gurCqJLV69b4iOzxc7QTyAkLbKVYNvm6lg"
+                            >
 
+                                <UserBar
 
-                            <UserFollowers />
+                                    username="ccrow"
 
+                                />
+                            </StreamApp>
 
                         </Grid>
                     </Grid>
                 </Container>
             </main>
-            {/* Footer */}
-            <footer className={classes.footer}>
-                <Typography variant="h6" align="center" gutterBottom>
-                    Footer
-        </Typography>
-                <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                    Something here to give the footer a purpose!
-        </Typography>
-                <Copyright />
-            </footer>
-            {/* End footer */}
+
         </React.Fragment>
     );
 }
