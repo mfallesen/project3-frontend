@@ -148,7 +148,7 @@ export default function Navbar() {
                 <Route path="/home">
 
                 </Route>
-                <Route path="/adventure">
+                <Route path="/adventures">
 
                 </Route>
                 <Route path="/signin">
