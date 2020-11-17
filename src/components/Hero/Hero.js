@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React from 'react'
 import './Hero.css'
+import Overlay from '../Overlay';
 
 const useStyles = makeStyles({
     btn: {
@@ -11,12 +12,12 @@ const useStyles = makeStyles({
 })
 
 export default function Hero() {
-const classes = useStyles();
+    const classes = useStyles();
 
     return (
-       <section>
-           <h1>Memorable Microadventures</h1>
-           <Button className={classes.btn}>Sign Up</Button>
-       </section>
+
+        <section>
+            <Overlay btn={classes.btn} />
+        </section>
     )
 }
