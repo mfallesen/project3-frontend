@@ -165,7 +165,6 @@ export default function Navbar() {
                     <Hero></Hero>
                     <Adventure></Adventure>
                     <Userlandingpost></Userlandingpost>
-                    <Footer></Footer>
                 </Route>
             </Switch>
 
