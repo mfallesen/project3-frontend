@@ -5,7 +5,7 @@ import './Navbar.css'
 import { makeStyles } from '@material-ui/styles';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { AppBar, Button, Toolbar, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Drawer } from '@material-ui/core';
-import Adventure from '../Adventure';
+import AdventureLanding from '../AdventureLanding';
 import Hero from '../Hero/Hero';
 import Userlandingpost from '../Userlandingpost';
 import Profile from '../Profile/Profile'
@@ -158,9 +158,9 @@ export default function Navbar() {
                     <Profile />
                 </Route>
                 <Route path="/">
-                    <Hero></Hero>
-                    <Adventure></Adventure>
-                    <Userlandingpost></Userlandingpost>
+                    <Hero/>
+                    <AdventureLanding/>
+                    <Userlandingpost/>
                 </Route>
             </Switch>
 
