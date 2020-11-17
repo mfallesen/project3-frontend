@@ -1,40 +1,16 @@
-import { Card, CardHeader, CardMedia, Grid, Typography } from '@material-ui/core';
+import {Grid,} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles'
 import React from 'react'
+import UserPostCard from '../UserPostCard'
 
 const useStyles = makeStyles({
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
     cardRow: {
         margin: 0,
     }
 });
 
 export default function Userlandingpost() {
-    const classes = useStyles();
-    
-    function UserPostCard() {
-        return (
-            <Grid item sm={3}>
-                <Card>
-
-                    <CardHeader
-                    title=" My Adventure"
-                    />
-
-                    <CardMedia
-                    className={classes.media}
-                    image="https://picsum.photos/150/200"
-                    />    
-                    
-                    <Typography>Check out adventure!</Typography>
-                </Card>
-            </Grid>
-        )
-    }
-    
+    const classes = useStyles();  
     
     return (
         <div>
