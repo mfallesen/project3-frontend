@@ -38,7 +38,7 @@ import Paper from '@material-ui/core/Paper';
 
 
 
-
+const streamString = localStorage.getItem('STREAM');
 const useStyles = makeStyles((theme) => ({
     icon: {
         marginRight: theme.spacing(2),
@@ -118,7 +118,7 @@ function Feed() {
             <StreamApp
                 apiKey={process.env.REACT_APP_STREAM_API_KEY}
                 appId={process.env.REACT_APP_STREAM_APP_ID}
-                token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWNyb3cifQ.VBkmY5Jj7gurCqJLV69b4iOzxc7QTyAkLbKVYNvm6lg"
+                token={streamString}
             >
 
                 <StatusUpdateForm feedGroup="timeline" Header="Status Update" />
@@ -280,7 +280,7 @@ function Profile() {
                                 <StreamApp
                                     apiKey={process.env.REACT_APP_STREAM_API_KEY}
                                     appId={process.env.REACT_APP_STREAM_APP_ID}
-                                    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWNyb3cifQ.VBkmY5Jj7gurCqJLV69b4iOzxc7QTyAkLbKVYNvm6lg"
+                                    token={streamString}
                                 >
                                     {cards.map((card) => (
                                         <Grid item key={card} xs={12} sm={12} md={12} lg={12} >
@@ -306,7 +306,7 @@ function Profile() {
                             <StreamApp
                                 apiKey={process.env.REACT_APP_STREAM_API_KEY}
                                 appId={process.env.REACT_APP_STREAM_APP_ID}
-                                token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWNyb3cifQ.VBkmY5Jj7gurCqJLV69b4iOzxc7QTyAkLbKVYNvm6lg"
+                                token={streamString}
                             >
 
                                 <UserBar
