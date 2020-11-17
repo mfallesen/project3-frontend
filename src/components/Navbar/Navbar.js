@@ -19,7 +19,7 @@ import Adventure from '../Adventure';
 import Footer from '../Footer';
 import Hero from '../Hero/Hero';
 import Userlandingpost from '../Userlandingpost';
-import Profile from '../../pages/Profile'
+import Profile from '../Profile/Profile'
 
 
 
