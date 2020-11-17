@@ -19,7 +19,8 @@ import Adventure from '../Adventure';
 import Footer from '../Footer';
 import Hero from '../Hero/Hero';
 import Userlandingpost from '../Userlandingpost';
-import Profile from '../../pages/Profile'
+import Profile from '../Profile/Profile'
+
 
 
 
@@ -114,28 +115,28 @@ export default function Navbar() {
 
                 <Toolbar className={classes.toolbar}>
 
-                   
-                        
-                     
-                            <React.Fragment key={'left'}>
-                                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                                    <MenuOpenIcon onClick={toggleDrawer('left', true)}>{'left'}</MenuOpenIcon>
-                                </IconButton>
-                            
 
-                                <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
-                                    {list('left')}
-                                </Drawer>
-                            </React.Fragment>
-                        
-                        <img className={classes.image} src={"https://logoipsum.com/logo/logo-25.svg"} alt='logo' />
-                        
+
+
+                    <React.Fragment key={'left'}>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                            <MenuOpenIcon onClick={toggleDrawer('left', true)}>{'left'}</MenuOpenIcon>
+                        </IconButton>
+
+
+                        <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+                            {list('left')}
+                        </Drawer>
+                    </React.Fragment>
+
+                    <img className={classes.image} src={"https://logoipsum.com/logo/logo-25.svg"} alt='logo' />
+
 
 
                     <NavLink to="/signin" edge="end">
                         <Button className={classes.navBtn}>Login</Button>
                     </NavLink>
-                    
+
 
 
 
@@ -164,7 +165,6 @@ export default function Navbar() {
                     <Hero></Hero>
                     <Adventure></Adventure>
                     <Userlandingpost></Userlandingpost>
-                    <Footer></Footer>
                 </Route>
             </Switch>
 
