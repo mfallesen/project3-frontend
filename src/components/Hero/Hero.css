@@ -1,13 +1,14 @@
 h1 {
-    text-align: center;
-    color: white;
-    font-size: 30px;
+  text-align: center;
+  color: white;
+  font-size: 30px;
 }
 section {
-    text-align: center;
-    background: #687864 url('https://res.cloudinary.com/crowandrew/image/upload/v1605219058/minnesvart/solo_travel_germany_gytbwl.png') no-repeat center;
-    background-size: cover;
-    height: 600px;
-    margin-top: -165px;
-    
+  text-align: center;
+  background: #687864
+    url("https://res.cloudinary.com/crowandrew/image/upload/v1605219058/minnesvart/solo_travel_germany_gytbwl.png")
+    no-repeat center;
+  background-size: cover;
+  height: 600px;
+  margin-top: -165px;
 }
