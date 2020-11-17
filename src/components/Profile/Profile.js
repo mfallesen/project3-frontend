@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Overlay.css';
+import './Profile.css';
 import {
     StreamApp,
     NotificationDropdown,
