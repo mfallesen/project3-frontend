@@ -11,17 +11,16 @@ import theme from './theme'
 
 function App() {
   return (
-    <div >
+    
       <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navbar></Navbar>
-      Hello World
+      <Navbar></Navbar >
       <Hero></Hero>
       <Adventure></Adventure>
       <Userlandingpost></Userlandingpost>
       <Footer></Footer>
       </ThemeProvider>
-    </div>
+    
   );
 }
 
