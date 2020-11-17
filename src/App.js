@@ -15,10 +15,6 @@ function App() {
       <ThemeProvider theme={theme}>
       <CssBaseline />
       <Navbar></Navbar >
-      <Hero></Hero>
-      <Adventure></Adventure>
-      <Userlandingpost></Userlandingpost>
-      <Footer></Footer>
       </ThemeProvider>
     
   );
