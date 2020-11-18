@@ -113,9 +113,8 @@ function App() {
 
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navbar profile={setProfileState}></Navbar >
-      <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />
-      {profileState.isLoggedIn ? <Footer></Footer>: <Footer />}
+      <Navbar profile={profileState}></Navbar >
+      {profileState.isLoggedIn ? <Footer />: <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
     </ThemeProvider>
 
   );
