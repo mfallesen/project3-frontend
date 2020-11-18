@@ -25,8 +25,8 @@ export default {
     },
 
     addCompany: function (companyData) {
-        console.log(companyData);
-        return axios.post(BASEURL + '/company/adventure/company', {
+        console.log("In API: ", companyData);
+        return axios.post(BASEURL + '/company/addCompany', {
             name: companyData.name,
             address_1: companyData.address_1,
             address_2: companyData.address_2,
