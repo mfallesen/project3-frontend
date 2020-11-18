@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function UserPostCard() {
+export default function UserPostCard(props) {
     const classes = useStyles();
 
     return (
@@ -18,15 +18,14 @@ export default function UserPostCard() {
                 <Card>
 
                     <CardHeader
-                    title=" My Adventure"
+                    title={props.title}
                     />
-
                     <CardMedia
                     className={classes.media}
-                    image="https://picsum.photos/150/200"
+                    image={props.image}
                     />    
                     
-                    <Typography>Check out adventure!</Typography>
+                    <Typography>{props.text}</Typography>
                 </Card>
             </Grid>
     )
