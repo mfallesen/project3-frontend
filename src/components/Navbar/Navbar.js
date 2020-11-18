@@ -14,9 +14,9 @@ import StarIcon from '@material-ui/icons/Star';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AdventuresPage from '../AdventuresPage/AdventuresPage';
-
-
-
+import CompanySignup from '../CompanySignup'
+import CompanyLogin from '../CompanyLogin'
+import CompanyAddInfo from '../CompanyAddInfo';
 
 
 const useStyles = makeStyles({
@@ -85,7 +85,7 @@ export default function Navbar(props) {
             onKeyDown={toggleDrawer('left', false)}
         >
             <List>
-                {[{name:'My Profile', icon: <AccountCircleIcon/>, href:'/profile'}, {name: 'Adventures', icon:<ExploreIcon/>, href: '/adventures'}, {name: 'Favorite Adventures', icon: <StarIcon/>, href: '/myadventures'}].map((text) => (
+                {[{ name: 'My Profile', icon: <AccountCircleIcon />, href: '/profile' }, { name: 'Adventures', icon: <ExploreIcon />, href: '/adventures' }, { name: 'Favorite Adventures', icon: <StarIcon />, href: '/myadventures' }].map((text) => (
                     <ListItemLink key={text} href={text.href}>
                         <ListItemIcon>{text.icon}</ListItemIcon>
                         <ListItemText primary={text.name} />
@@ -94,12 +94,12 @@ export default function Navbar(props) {
             </List>
             <Divider />
             <List>
-                
+
                 <ListItem button >
-                        <ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
-                        <ListItemText primary={'Logout'} />
-                    </ListItem>
-               
+                    <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
+                    <ListItemText primary={'Logout'} />
+                </ListItem>
+
             </List>
         </div>
     );
@@ -116,7 +116,7 @@ export default function Navbar(props) {
 
 
                     <React.Fragment key={'left'}>
-                       {props.profile.isLoggedIn?<MenuOpenIcon/>: <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        {props.profile.isLoggedIn ? <MenuOpenIcon /> : <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                             <MenuOpenIcon onClick={toggleDrawer('left', true)}>{'left'}</MenuOpenIcon>
                         </IconButton>}
 
@@ -131,7 +131,7 @@ export default function Navbar(props) {
 
 
                     <NavLink to="/signin" edge="end">
-                       {props.profile.isLoggedIn? <Button className={classes.navBtn}>Logout</Button>: <Button className={classes.navBtn}>Login</Button>}
+                        {props.profile.isLoggedIn ? <Button className={classes.navBtn}>Logout</Button> : <Button className={classes.navBtn}>Login</Button>}
                     </NavLink>
 
 
@@ -147,6 +147,16 @@ export default function Navbar(props) {
 
             <Switch>
                 <Route path="/home">
+
+                </Route>
+                <Route path="/companysignup">
+                    <CompanySignup />
+                </Route>
+                <Route path="/companylogin">
+                    <CompanyLogin />
+                </Route>
+                <Route path="/companyaddinfo">
+                    <CompanyAddInfo />
                 </Route>
                 <Route path="/adventures">
                     <AdventuresPage></AdventuresPage>
@@ -159,13 +169,13 @@ export default function Navbar(props) {
                     <Profile />
                 </Route>
                 <Route path="/">
-                    <Hero/>
-                    <AdventureLanding/>
-                    <Userlandingpost/>
+                    <Hero />
+                    <AdventureLanding />
+                    <Userlandingpost />
                 </Route>
                 {/* {props.profile.isLoggedIn? <Route path="/"/>: <Route path="/registerUser" />} */}
-                {props.profile.isLoggedIn ? <Route path="/profile"><Profile /></Route>: <Route path="/signin"/>}
-             <Route path="/"><Hero></Hero><AdventureLanding></AdventureLanding><Userlandingpost></Userlandingpost></Route>
+                {props.profile.isLoggedIn ? <Route path="/profile"><Profile /></Route> : <Route path="/signin" />}
+                <Route path="/"><Hero></Hero><AdventureLanding></AdventureLanding><Userlandingpost></Userlandingpost></Route>
             </Switch>
 
         </Router>
