@@ -1,12 +1,13 @@
 // Code to add to API Route
 import axios from "axios";
 const BASEURL = "http://localhost:3000";
+const qs = require('qs');
 
 export default {
     //Register user
     registerUser: function (userData) {
         console.log(userData);
-        return axios.post(BASEURL + '/registerUser', {
+        return axios.post(BASEURL + '/user/registerUser', {
             first_name: userData.first_name,
             last_name: userData.last_name,
             email: userData.email,
@@ -42,6 +43,29 @@ export default {
         });
     },
 
+    addAdventure: function (adventureData, token) {
+        console.log("In API: ", adventureData);
+        console.log("In API: ", token)
+
+        const data = qs.stringify({
+            'name': adventureData.name,
+            'description': adventureData.description,
+            'image': adventureData.longitude,
+            'longitude': adventureData.latitude,
+            'latitude': adventureData.latitude,
+            'AdventureCompanyId': adventureData.adventureCompanyId,
+        });
+        return axios({
+            method: 'post',
+            url: 'http://localhost:3000/api/company/adventure/',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: data
+        })
+    },
+
     loginCompany: function (userData) {
         console.log(userData);
         return axios.post(BASEURL + '/company/loginCompanyUser', {
@@ -51,7 +75,7 @@ export default {
     },
     //Code example of api to login
     login: function (userData) {
-        return axios.post(BASEURL + '/loginUser', {
+        return axios.post(BASEURL + '/user/loginUser', {
             username: userData.username,
             password: userData.password,
 
@@ -59,7 +83,7 @@ export default {
     },
     //Code example of how to pass Bearer token
     updatePassword: function (username, password, accessString) {
-        return axios.put('/updatePassword', {
+        return axios.put('/user/updatePassword', {
             body: {
                 username,
                 password
@@ -68,7 +92,7 @@ export default {
         });
     },
     getProfile: function (username1, token) {
-        return axios.get(BASEURL + '/findUser', {
+        return axios.get(BASEURL + '/user/findUser', {
             params: {
                 username: username1
             },
