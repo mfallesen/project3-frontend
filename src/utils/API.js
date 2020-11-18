@@ -1,6 +1,7 @@
 // Code to add to API Route
 import axios from "axios";
 const BASEURL = "http://localhost:3000";
+const qs = require('qs');
 
 export default {
     //Register user
@@ -45,21 +46,24 @@ export default {
     addAdventure: function (adventureData, token) {
         console.log("In API: ", adventureData);
         console.log("In API: ", token)
-        return axios.post(BASEURL + '/api/company/adventure/', {
+
+        const data = qs.stringify({
+            'name': adventureData.name,
+            'description': adventureData.description,
+            'image': adventureData.longitude,
+            'longitude': adventureData.latitude,
+            'latitude': adventureData.latitude,
+            'AdventureCompanyId': adventureData.adventureCompanyId,
+        });
+        return axios({
+            method: 'post',
+            url: 'http://localhost:3000/api/company/adventure/',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            data: {
-                name: adventureData.name,
-                description: adventureData.description,
-                longitude: adventureData.longitude,
-                latitude: adventureData.latitude,
-                image: adventureData.image,
-                AdventureCompanyId: adventureData.adventureCompanyId,
-            },
-
-        });
+            data: data
+        })
     },
 
     loginCompany: function (userData) {
