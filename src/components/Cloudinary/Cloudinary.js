@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { CloudinaryContext, Image } from "cloudinary-react";
+import { Util } from 'cloudinary-core';
 import { fetchPhotos, openUploadWidget } from "./CloudinaryService";
 import './Cloudinary.css';
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField';
 
-function Cloudinary() {
-    const [images, setImages] = useState([])
+function Cloudinary(props) {
+    const [image, setImage] = useState([])
 
     const beginUpload = tag => {
         const uploadOptions = {
@@ -31,15 +34,26 @@ function Cloudinary() {
     return (
         <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
             <div className="App">
-                <button onClick={() => beginUpload("image")}>Upload Image</button>
-                <section>
+                <Button onClick={() => beginUpload("image")}>Upload Image</Button>
+                <div>
                     {images.map(i => <Image
                         key={i}
                         publicId={i}
                         fetch-format="auto"
                         quality="auto"
                     />)}
-                </section>
+                    <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="image"
+                        label="Image"
+                        name="image"
+                        autoComplete="image"
+                        onChange={props.inputChange}
+                        value={props.image}
+                    />
+                </div>
             </div>
         </CloudinaryContext>
     );

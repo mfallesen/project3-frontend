@@ -42,30 +42,28 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
     const classes = useStyles();
 
-    const [signUpFormState, setUserSignUpFormState] = useState({
-        email: "",
+    const [loginFormState, setLoginFormState] = useState({
         username: "",
         password: ""
     })
     const inputChange = event => {
         const { name, value } = event.target;
-        setUserSignUpFormState({
-            ...signUpFormState,
+        setLoginFormState({
+            ...loginFormState,
             [name]: value
         })
     }
 
     const handleFormSubmit = event => {
         event.preventDefault();
-        API.signupCompany(signUpFormState).then(userData => {
-
-            localStorage.setItem('COMPANYUSERNAME', userData.data.id);
-            console.log(userData.data.id);
+        API.loginCompany(loginFormState).then(newToken => {
+            console.log(newToken);
+            localStorage.setItem('JWTCOMPANY', newToken.data.token);
+            localStorage.setItem('USERNAMECOMPANY', loginFormState.username);
         }).then(() => {
-            window.location.href = "/companyaddinfo";
+            window.location.href = "/";
         })
-        setUserSignUpFormState({
-            email: "",
+        setLoginFormState({
             username: "",
             password: ""
         })
@@ -79,7 +77,7 @@ export default function SignUp() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5" className={classes.h1Text}>
-                    Business Sign up
+                    Business Login
                 </Typography>
                 <form className={classes.form} onSubmit={handleFormSubmit} noValidate>
                     <Grid container spacing={2}>
@@ -93,20 +91,7 @@ export default function SignUp() {
                                 name="username"
                                 autoComplete="username"
                                 onChange={inputChange}
-                                value={signUpFormState.username}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                onChange={inputChange}
-                                value={signUpFormState.email}
+                                value={loginFormState.username}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -120,7 +105,7 @@ export default function SignUp() {
                                 id="password"
                                 autoComplete="current-password"
                                 onChange={inputChange}
-                                value={signUpFormState.password}
+                                value={loginFormState.password}
                             />
                         </Grid>
                     </Grid>
@@ -132,7 +117,7 @@ export default function SignUp() {
                         className={classes.submit}
                         value="register"
                     >
-                        Sign Up
+                        Login
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
