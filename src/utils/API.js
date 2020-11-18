@@ -14,12 +14,38 @@ export default {
             password: userData.password,
         });
     },
+    //Signup Company
+    signupCompany: function (companyData) {
+        console.log("In API: ", companyData);
+        return axios.post(BASEURL + '/company/signupCompanyUser', {
+            email: companyData.email,
+            username: companyData.username,
+            password: companyData.password,
+        });
+    },
 
-    signupCompany: function (userData) {
+    addCompany: function (companyData) {
+        console.log(companyData);
+        return axios.post(BASEURL + '/company/adventure/company', {
+            name: companyData.name,
+            address_1: companyData.address_1,
+            address_2: companyData.address_2,
+            city: companyData.city,
+            state: companyData.state,
+            zip_code: companyData.zip_code,
+            phone: companyData.phone,
+            email: companyData.email,
+            website: companyData.website,
+            description: companyData.description,
+            image: companyData.image,
+            CompanyUserId: companyData.CompanyUserId,
+        });
+    },
+
+    loginCompany: function (userData) {
         console.log(userData);
-        return axios.post(BASEURL + '/user/company_user', {
-            email: userData.email,
-            user_name: userData.username,
+        return axios.post(BASEURL + '/company/loginCompanyUser', {
+            username: userData.username,
             password: userData.password,
         });
     },
