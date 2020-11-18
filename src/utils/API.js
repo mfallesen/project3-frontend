@@ -42,6 +42,26 @@ export default {
         });
     },
 
+    addAdventure: function (adventureData, token) {
+        console.log("In API: ", adventureData);
+        console.log("In API: ", token)
+        return axios.post(BASEURL + '/api/company/adventure/', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: {
+                name: adventureData.name,
+                description: adventureData.description,
+                longitude: adventureData.longitude,
+                latitude: adventureData.latitude,
+                image: adventureData.image,
+                AdventureCompanyId: adventureData.adventureCompanyId,
+            },
+
+        });
+    },
+
     loginCompany: function (userData) {
         console.log(userData);
         return axios.post(BASEURL + '/company/loginCompanyUser', {
