@@ -13,9 +13,7 @@ const useStyles = makeStyles({
     card: {
         textAlign: 'center'
     },
-    // cardBack: {
-    //     height: '100%'
-    // },
+
 })
 
 export default function AdventureCard(props) {
@@ -49,7 +47,7 @@ export default function AdventureCard(props) {
                     <Typography>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </Typography>
                 </CardContent>
                 <Button>More Info</Button>
-                {/* Add to favorites button here */}
+                {/* Add to favorites button */}
             </Card>
 
 
