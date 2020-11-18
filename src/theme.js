@@ -52,7 +52,7 @@ const theme = {
     ...rawTheme.palette,
     background: {
       ...rawTheme.palette.background,
-      default: rawTheme.palette.primary.main,
+      default: rawTheme.palette.primary.white,
       placeholder: grey[200],
     },
   },

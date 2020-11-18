@@ -2,6 +2,7 @@ import { Grid, Typography } from '@material-ui/core'
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
 import CompanyAdventureCard from '../CompanyAdventureCard';
+import CompanyDashPanel from '../CompanyDashPanel';
 
 const useStyles = makeStyles( {
     heading: {
@@ -48,7 +49,15 @@ const adventureArr = [
 
     return (
         <Grid container xs={12} sm={12} md={12}>
+            <Grid 
+                container
+                direction="column"
+                justify="space-evenly"
+                alignItems="center" >
+
             <Typography className={classes.heading} variant='h1'>Current Adventures</Typography>
+            <CompanyDashPanel ></CompanyDashPanel>
+            </Grid>
             <Grid container item spacing={3}>
                 {adventureArr.map((adventure) => 
                 <CompanyAdventureCard
