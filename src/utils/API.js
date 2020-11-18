@@ -14,6 +14,15 @@ export default {
             password: userData.password,
         });
     },
+
+    signupCompany: function (userData) {
+        console.log(userData);
+        return axios.post(BASEURL + '/user/company_user', {
+            email: userData.email,
+            user_name: userData.username,
+            password: userData.password,
+        });
+    },
     //Code example of api to login
     login: function (userData) {
         return axios.post(BASEURL + '/loginUser', {
@@ -32,12 +41,12 @@ export default {
             headers: { Authorization: 'Bearer ' + `${accessString}` },
         });
     },
-    getProfile: function (username1, token){
-        return axios.get(BASEURL + '/findUser',{
+    getProfile: function (username1, token) {
+        return axios.get(BASEURL + '/findUser', {
             params: {
                 username: username1
             },
-            headers:{ Authorization: 'Bearer ' + `${token}` },
+            headers: { Authorization: 'Bearer ' + `${token}` },
         });
     }
 };
