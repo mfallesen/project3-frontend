@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
     const classes = useStyles();
 
-    const currentCompanyUserId = localStorage.getItem("COMPANYUSERID");
+    const currentCompanyUserId = localStorage.getItem("COMPANYUSERNAME");
 
     const [businessInfoFormState, setBusinessInfoFormState] = useState({
         name: "",
@@ -58,7 +58,7 @@ export default function SignUp() {
         website: "",
         description: "",
         image: "",
-        CompanyUserId: "",
+        CompanyUserId: currentCompanyUserId,
     })
 
 
@@ -76,7 +76,7 @@ export default function SignUp() {
     const handleFormSubmit = event => {
         event.preventDefault();
         API.addCompany(businessInfoFormState).then(userData => {
-            console.log(userData);
+            console.log("AFTER API: ", userData);
         }).then(() => {
             window.location.href = "/companylogin";
         })
