@@ -20,9 +20,6 @@ export default {
             username: userData.username,
             password: userData.password,
 
-        }).then(res => {
-            localStorage.setItem('JWT', res.data.token);
-            localStorage.setItem('STREAM', res.data.appToken);
         })
     },
     //Code example of how to pass Bearer token
@@ -35,4 +32,12 @@ export default {
             headers: { Authorization: 'Bearer ' + `${accessString}` },
         });
     },
+    getProfile: function (username1, token){
+        return axios.get(BASEURL + '/findUser',{
+            params: {
+                username: username1
+            },
+            headers:{ Authorization: 'Bearer ' + `${token}` },
+        });
+    }
 };

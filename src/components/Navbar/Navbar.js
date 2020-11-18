@@ -59,7 +59,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Navbar() {
+export default function Navbar(props) {
 
     const classes = useStyles();
 
@@ -119,9 +119,9 @@ export default function Navbar() {
 
 
                     <React.Fragment key={'left'}>
-                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                       {props.profile.isLoggedIn?<MenuOpenIcon/>: <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                             <MenuOpenIcon onClick={toggleDrawer('left', true)}>{'left'}</MenuOpenIcon>
-                        </IconButton>
+                        </IconButton>}
 
 
                         <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
@@ -134,7 +134,7 @@ export default function Navbar() {
 
 
                     <NavLink to="/signin" edge="end">
-                        <Button className={classes.navBtn}>Login</Button>
+                       {props.profile.isLoggedIn? <Button className={classes.navBtn}>Logout</Button>: <Button className={classes.navBtn}>Login</Button>}
                     </NavLink>
 
 
@@ -150,22 +150,12 @@ export default function Navbar() {
 
             <Switch>
                 <Route path="/home">
-
                 </Route>
                 <Route path="/about">
-
                 </Route>
-                <Route path="/signin">
-
-                </Route>
-                <Route path="/profile">
-                    <Profile />
-                </Route>
-                <Route path="/">
-                    <Hero></Hero>
-                    <Adventure></Adventure>
-                    <Userlandingpost></Userlandingpost>
-                </Route>
+                {/* {props.profile.isLoggedIn? <Route path="/"/>: <Route path="/registerUser" />} */}
+                {props.profile.isLoggedIn ? <Route path="/profile"><Profile /></Route>: <Route path="/signin"/>}
+             <Route path="/"><Hero></Hero><Adventure></Adventure><Userlandingpost></Userlandingpost></Route>
             </Switch>
 
         </Router>
