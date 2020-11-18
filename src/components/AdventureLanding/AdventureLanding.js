@@ -25,10 +25,10 @@ export default function AdventureLanding() {
 
         <Grid container spacing={3} alignItems={'center'}>
             <Grid className={classes.cardRow} container item md={12} spacing={3}>
-                <AdventureCard></AdventureCard>
-                <AdventureCard></AdventureCard>
-                <AdventureCard></AdventureCard>
-                <AdventureCard></AdventureCard>
+                <AdventureCard title="Moving" image="https://picsum.photos/150/200" text="Im a PlaceHolder!" xs={12} sm={6} md={6}></AdventureCard>
+                <AdventureCard title="Moving" image="https://picsum.photos/150/200" text="Im a PlaceHolder!" xs={12} sm={6} md={6}></AdventureCard>
+                <AdventureCard title="Moving" image="https://picsum.photos/150/200" text="Im a PlaceHolder!" xs={12} sm={6} md={6}></AdventureCard>
+                <AdventureCard title="Moving" image="https://picsum.photos/150/200" text="Im a PlaceHolder!" xs={12} sm={6} md={6}></AdventureCard>
             </Grid>
 
         </Grid>

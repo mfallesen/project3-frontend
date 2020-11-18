@@ -14,21 +14,21 @@ const useStyles = makeStyles({
     },
 })
 
-export default function AdventureCard() {
+export default function AdventureCard(props) {
     const classes = useStyles();
     return (
 
-        <Grid item xs={12} sm={6}  >
+        <Grid item xs={props.xs} sm={props.sm} md={props.md}>
             <Card className={classes.card}>
                 <CardHeader
-                    title='Lakeside Dock Sitting Adventures'
+                    title={props.title}
                 />
                 <CardMedia
                     className={classes.media}
-                    image='https://res.cloudinary.com/crowandrew/image/upload/v1605219058/minnesvart/solo_travel_germany_gytbwl.png'
+                    image={props.image}
                 ></CardMedia>
                 <CardContent>
-                    <Typography>WE TAKE YOU ON COOL ADVENTURES!</Typography>
+                    <Typography>{props.text}</Typography>
                 </CardContent>
             </Card>
         </Grid>

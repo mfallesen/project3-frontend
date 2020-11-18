@@ -165,7 +165,7 @@ export default function Navbar(props) {
                 </Route>
                 {/* {props.profile.isLoggedIn? <Route path="/"/>: <Route path="/registerUser" />} */}
                 {props.profile.isLoggedIn ? <Route path="/profile"><Profile /></Route>: <Route path="/signin"/>}
-             <Route path="/"><Hero></Hero><Adventure></Adventure><Userlandingpost></Userlandingpost></Route>
+             <Route path="/"><Hero></Hero><AdventureLanding></AdventureLanding><Userlandingpost></Userlandingpost></Route>
             </Switch>
 
         </Router>
