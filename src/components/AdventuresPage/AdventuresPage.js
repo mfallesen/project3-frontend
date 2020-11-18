@@ -9,9 +9,8 @@ const useStyles = makeStyles( {
     },
 });
 
-
-
 export default function AdventuresPage() {
+
     const classes = useStyles();
 
     const adventureArr = [
@@ -42,22 +41,22 @@ export default function AdventuresPage() {
         }
     ]
 
-
-
-
-
     return (
         <Grid container>
-        <Grid className={classes.cardRow} container item spacing={3} md={12} alignItems={'center'}>
-        
-        
-        <AdventureCard></AdventureCard>
-        <AdventureCard></AdventureCard>
-        <AdventureCard></AdventureCard>
-        <AdventureCard></AdventureCard>
-      
-        
-        </Grid>
+            <Grid className={classes.cardRow} container item spacing={3} md={12} alignItems={'center'}>
+            
+                {adventureArr.map((adventure) => 
+                <AdventureCard
+                title={adventure.title}
+                image={adventure.image}
+                text={adventure.text}
+                sm={6}
+                xs={12}
+                md={4}
+                ></AdventureCard>
+                )}
+    
+            </Grid>
         </Grid>
     )
 }
