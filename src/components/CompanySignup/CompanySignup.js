@@ -58,7 +58,16 @@ export default function SignUp() {
     const handleFormSubmit = event => {
         event.preventDefault();
         API.signupCompany(signUpFormState).then(userData => {
-            console.log(userData);
+
+            localStorage.setItem('COMPANYUSERNAME', userData.data.id);
+            console.log(userData.data.id);
+        }).then(() => {
+            window.location.href = "/companyaddinfo";
+        })
+        setUserSignUpFormState({
+            email: "",
+            username: "",
+            password: ""
         })
     }
 
