@@ -6,7 +6,7 @@ export default {
     //Register user
     registerUser: function (userData) {
         console.log(userData);
-        return axios.post(BASEURL + '/registerUser', {
+        return axios.post(BASEURL + '/user/registerUser', {
             first_name: userData.first_name,
             last_name: userData.last_name,
             email: userData.email,
@@ -71,7 +71,7 @@ export default {
     },
     //Code example of api to login
     login: function (userData) {
-        return axios.post(BASEURL + '/loginUser', {
+        return axios.post(BASEURL + '/user/loginUser', {
             username: userData.username,
             password: userData.password,
 
@@ -79,7 +79,7 @@ export default {
     },
     //Code example of how to pass Bearer token
     updatePassword: function (username, password, accessString) {
-        return axios.put('/updatePassword', {
+        return axios.put('/user/updatePassword', {
             body: {
                 username,
                 password
@@ -88,7 +88,7 @@ export default {
         });
     },
     getProfile: function (username1, token) {
-        return axios.get(BASEURL + '/findUser', {
+        return axios.get(BASEURL + '/user/findUser', {
             params: {
                 username: username1
             },
