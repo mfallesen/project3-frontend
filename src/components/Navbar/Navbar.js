@@ -3,24 +3,17 @@ import clsx from 'clsx';
 import { BrowserRouter as Router, Link as NavLink, Switch, Route } from 'react-router-dom'
 import './Navbar.css'
 import { makeStyles } from '@material-ui/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-import { AppBar, Button } from '@material-ui/core';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import Drawer from '@material-ui/core/Drawer';
-import Adventure from '../Adventure';
-import Footer from '../Footer';
+import { AppBar, Button, Toolbar, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Drawer } from '@material-ui/core';
+import AdventureLanding from '../AdventureLanding';
 import Hero from '../Hero/Hero';
 import Userlandingpost from '../Userlandingpost';
 import Profile from '../Profile/Profile'
-
+import ExploreIcon from '@material-ui/icons/Explore';
+import StarIcon from '@material-ui/icons/Star';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AdventuresPage from '../AdventuresPage/AdventuresPage';
 
 
 
@@ -70,6 +63,10 @@ export default function Navbar(props) {
         right: false,
     });
 
+    function ListItemLink(props) {
+        return <ListItem button component="a" {...props} />;
+    }
+
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
@@ -88,21 +85,21 @@ export default function Navbar(props) {
             onKeyDown={toggleDrawer('left', false)}
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
+                {[{name:'My Profile', icon: <AccountCircleIcon/>, href:'/profile'}, {name: 'Adventures', icon:<ExploreIcon/>, href: '/adventures'}, {name: 'Favorite Adventures', icon: <StarIcon/>, href: '/myadventures'}].map((text) => (
+                    <ListItemLink key={text} href={text.href}>
+                        <ListItemIcon>{text.icon}</ListItemIcon>
+                        <ListItemText primary={text.name} />
+                    </ListItemLink>
                 ))}
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                
+                <ListItem button >
+                        <ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
+                        <ListItemText primary={'Logout'} />
                     </ListItem>
-                ))}
+               
             </List>
         </div>
     );
@@ -151,7 +148,20 @@ export default function Navbar(props) {
             <Switch>
                 <Route path="/home">
                 </Route>
-                <Route path="/about">
+                <Route path="/adventures">
+                    <AdventuresPage></AdventuresPage>
+
+                </Route>
+                <Route path="/signin">
+
+                </Route>
+                <Route path="/profile">
+                    <Profile />
+                </Route>
+                <Route path="/">
+                    <Hero/>
+                    <AdventureLanding/>
+                    <Userlandingpost/>
                 </Route>
                 {/* {props.profile.isLoggedIn? <Route path="/"/>: <Route path="/registerUser" />} */}
                 {props.profile.isLoggedIn ? <Route path="/profile"><Profile /></Route>: <Route path="/signin"/>}

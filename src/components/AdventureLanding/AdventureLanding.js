@@ -17,13 +17,13 @@ const useStyles = makeStyles( {
 });
 
 
-export default function Adventure() {
+export default function AdventureLanding() {
     const classes = useStyles();
 
     return (
         <div className={classes.root} >
 
-        <Grid container spacing={1} alignItems={'center'}>
+        <Grid container spacing={3} alignItems={'center'}>
             <Grid className={classes.cardRow} container item md={12} spacing={3}>
                 <AdventureCard></AdventureCard>
                 <AdventureCard></AdventureCard>

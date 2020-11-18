@@ -17,7 +17,7 @@ const useStyles = makeStyles( {
 });
 
 
-export default function Adventure() {
+export default function AdventureLanding() {
     const classes = useStyles();
 
     return (
