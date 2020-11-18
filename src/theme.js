@@ -10,11 +10,11 @@ const rawTheme = createMuiTheme({
     },
     secondary: {
       light: '#8FC1E3',
-      main: '#5085A5',
+      main: '#f44336',
       dark: '#31708E',
     },
     warning: {
-      main: '#ffc071',
+      main: '#f24b18',
       dark: '#ffb25e',
     },
     error: {
@@ -27,6 +27,7 @@ const rawTheme = createMuiTheme({
       main: green[500],
       dark: green[700],
     },
+    
   },
   typography: {
     fontFamily: "'Work Sans', sans-serif",
@@ -51,7 +52,7 @@ const theme = {
     ...rawTheme.palette,
     background: {
       ...rawTheme.palette.background,
-      default: rawTheme.palette.common.white,
+      default: rawTheme.palette.primary.main,
       placeholder: grey[200],
     },
   },

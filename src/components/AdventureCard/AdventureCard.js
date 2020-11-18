@@ -26,7 +26,7 @@ export default function AdventureCard(props) {
 
     return (
 
-        <Grid item xs={props.xs} sm={props.sm} md={props.md} className={classes.cardBack}>
+        <Grid item xs={props.xs} sm={props.sm} md={props.md}>
             <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
 
             <Card className={classes.card} onClick={handleClick}>
