@@ -112,5 +112,10 @@ export default {
             },
             headers: { Authorization: 'Bearer ' + `${token}` },
         });
+    },
+    getActivities: function (token) {
+        return axios.get(BASEURL + '/api/userPosts', {
+            headers: { Authorization: 'Bearer ' + `${token}` },
+        });
     }
 };
