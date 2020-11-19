@@ -50,19 +50,62 @@ export default {
         const data = qs.stringify({
             'name': adventureData.name,
             'description': adventureData.description,
-            'image': adventureData.longitude,
+            'image': adventureData.image,
             'longitude': adventureData.latitude,
             'latitude': adventureData.latitude,
             'AdventureCompanyId': adventureData.adventureCompanyId,
         });
         return axios({
             method: 'post',
-            url: 'http://localhost:3000/api/company/adventure/',
+            url: BASEURL + '/api/company/adventure/',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             data: data
+        })
+    },
+
+    addUserPost: function (postData, username, token) {
+        console.log("In API: ", postData);
+        console.log("In API: ", token)
+
+        const data = qs.stringify({
+            'title': postData.title,
+            'description': postData.description,
+            'image': `https://res.cloudinary.com/crowandrew/image/upload/c_scale,g_center,h_500,w_400/v1605816733/${postData.image}`,
+        });
+        return axios({
+            method: 'post',
+            url: BASEURL + `/api/userPost/${username}`,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: data
+        })
+    },
+
+    getAdventures: function (token) {
+        console.log("In API: ", token)
+
+        return axios({
+            method: 'get',
+            url: BASEURL + '/api/company/adventures/',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+
+        })
+    },
+
+    getAdventureLanding: function () {
+
+        return axios({
+            method: 'get',
+            url: BASEURL + '/company/adventures'
+
         })
     },
 
@@ -108,6 +151,11 @@ export default {
             },
         
         })
+    },
+    getActivities: function (token) {
+        return axios.get(BASEURL + '/api/userPosts', {
+            headers: { Authorization: 'Bearer ' + `${token}` },
+        });
     }
     
 };
