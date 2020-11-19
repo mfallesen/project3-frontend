@@ -2,14 +2,15 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import Typography from '../Typography';
+import { Grid } from '@material-ui/core';
 
 
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body1" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link underline='always' color="inherit" href="/home" variant='body1'>
         Minnesvärt
       </Link>{' '}
       {new Date().getFullYear()}
@@ -26,6 +27,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+function CompanySignIn() {
+  return (
+    <Typography
+    variant='body1' color='textSecondary' align='right'
+    >
+      {`Have Adventures to share? `}<Link underline='always' color='inherit' href='/companylogin' variant='body1'>Login</Link>
+      {` or `} <Link underline='always' color='inherit' href='/companysignup' variant='body1'>Sign Up</Link>
+      {`! We'd Love to hear about them!`}
+    </Typography>
+  )
+}
+
 
 export default function Footer() {
   const classes = useStyles();
@@ -34,12 +47,15 @@ export default function Footer() {
 
     < footer className={classes.footer} >
       <Typography variant="h6" align="center" gutterBottom>
-        Footer
+        Local Memories. Local Minnesvärt.
         </Typography>
       <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-        Something here to give the footer a purpose!
+        copy goes here
         </Typography>
-      <Copyright />
+        <Grid container justify='space-between'>
+      <CompanySignIn xs={6}/>
+      <Copyright xs={6}/>
+        </Grid>
     </footer >
 
   );
