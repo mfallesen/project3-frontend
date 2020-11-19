@@ -5,13 +5,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 
+
 const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(5),
     },
 }));
 
-export default function CompanyDashPanel() {
+export default function CompanyDashPanel(props) {
     const classes = useStyles();
 
 
@@ -29,6 +30,7 @@ export default function CompanyDashPanel() {
                 size="large"
                 className={classes.button}
                 startIcon={<AddIcon />}
+                onClick={props.handlePostAdventure}
             >
                 Add Adventure
             </Button>
@@ -38,6 +40,7 @@ export default function CompanyDashPanel() {
                 size="large"
                 className={classes.button}
                 startIcon={<EditIcon />}
+                onClick={props.handleEditCompany}
             >
                 Edit Company Profile
             </Button>
