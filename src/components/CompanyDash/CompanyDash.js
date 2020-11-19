@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import CompanyAdventureCard from '../CompanyAdventureCard';
@@ -101,40 +101,8 @@ export default function CompanyDash() {
                         </Grid>
                     </Grid>
             }
-
-
-
-
-
         </Grid>
     )
 }
 
 
-// {postAdventure ?
-//     <PostAdventure/>:
-//     <Grid container item spacing={3}>
-//         {adventureArr.map((adventure) => 
-//             <CompanyAdventureCard
-//             title={adventure.title}
-//             date={adventure.date}
-//             image={adventure.image}
-//             text={adventure.text}
-//             ></CompanyAdventureCard>
-//             )}
-//     </Grid>
-//     }
-
-//     {editCompany ?
-//     <CompanyAddInfo/>:
-//     <Grid container item spacing={3}>
-//         {adventureArr.map((adventure) => 
-//             <CompanyAdventureCard
-//             title={adventure.title}
-//             date={adventure.date}
-//             image={adventure.image}
-//             text={adventure.text}
-//             ></CompanyAdventureCard>
-//             )}
-//     </Grid>
-//     }

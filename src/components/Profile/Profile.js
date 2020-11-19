@@ -33,6 +33,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
+import API from '../../utils/API';
+import Box from '@material-ui/core/Container'
 
 
 
@@ -68,49 +70,11 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const cards = [{
-    actor: {
-        data: {
-            name: 'Nora Ferguson',
-            profileImage: 'https://randomuser.me/api/portraits/women/72.jpg',
-        },
-    },
-    verb: 'post',
-    object: 'Just came back from this hike! ',
-    image:
-        'https://handluggageonly.co.uk/wp-content/uploads/2017/08/IMG_0777.jpg',
-    time: new Date(),
-}, {
-    actor: {
-        data: {
-            name: 'Nora Ferguson',
-            profileImage: 'https://randomuser.me/api/portraits/women/72.jpg',
-        },
-    },
-    verb: 'post',
-    object: 'Just came back from this hike! ',
-    image:
-        'https://handluggageonly.co.uk/wp-content/uploads/2017/08/IMG_0777.jpg',
-    time: new Date(),
-}, {
-    actor: {
-        data: {
-            name: 'Nora Ferguson',
-            profileImage: 'https://randomuser.me/api/portraits/women/72.jpg',
-        },
-    },
-    verb: 'post',
-    object: 'Just came back from this hike! ',
-    image:
-        'https://handluggageonly.co.uk/wp-content/uploads/2017/08/IMG_0777.jpg',
-    time: new Date(),
-}];
-
-
-
 const client = stream.connect(process.env.REACT_APP_STREAM_API_KEY, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWNyb3cifQ.VBkmY5Jj7gurCqJLV69b4iOzxc7QTyAkLbKVYNvm6lg", process.env.REACT_APP_STREAM_APP_ID);
 
 function Feed() {
+
+
     const profileImage = "andrew_crow_2x_dpitw4.jpg"
     client.user('acrow').update({ name: "Andrew Crow", occupation: "Software Engineer", gender: "male", profileImage: `https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/portfolio/${profileImage}` });
     return (
@@ -125,11 +89,13 @@ function Feed() {
                 <Typography variant="h5">
                     Personal Feed
                     </Typography>
-                <Paper elevation={3}>
-                    <FlatFeed
-                        options={{ reactions: { recent: true } }}
-                        notify
-                        Activity={(props) => (
+
+                <FlatFeed
+                    options={{ reactions: { recent: true } }}
+                    notify
+                    paginator
+                    Activity={(props) => (
+                        <Paper elevation={3}>
                             <Activity
 
                                 {...props}
@@ -140,7 +106,7 @@ function Feed() {
                                                 <LikeButton {...props} />
                                             </Grid>
                                             <Grid item xs={4}>
-                                                <RepostButton {...props} />
+                                                {/* <RepostButton {...props} /> */}
                                             </Grid>
                                         </Grid>
                                         <CommentField
@@ -151,9 +117,10 @@ function Feed() {
                                     </div>
                                 )}
                             />
-                        )}
-                    />
-                </Paper>
+                        </Paper>
+                    )}
+                />
+
             </StreamApp>
         </div>
     );
@@ -162,6 +129,10 @@ function Feed() {
 
 function Profile() {
     const classes = useStyles();
+
+    const [activitiesState, setActivitiesState] = useState([])
+    const [followerListState, setFollowerListState] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    const [followingListState, setFollowersListState] = useState([])
 
     const UserImage = () => {
         const profileImage = "andrew_crow_2x_dpitw4.jpg"
@@ -179,48 +150,62 @@ function Profile() {
         return adventureStatement
     }
 
+    const Activities = () => {
+        const token = localStorage.getItem("JWT")
+
+
+        API.getActivities(token).then(activityData => {
+            let siteActivities = []
+            activityData.data.map(activity => {
+
+                let activityObj = {
+                    actor: {
+                        data: {
+                            name: activity.name,
+                            profileImage: activity.profileImage,
+                            userId: activity.user
+                        },
+                    },
+                    verb: activity.verb,
+                    object: activity.object,
+                    image:
+                        activity.image,
+                    time: activity.time,
+                }
+                siteActivities.push(activityObj)
+            })
+            console.log(siteActivities);
+            setActivitiesState(siteActivities)
+
+        })
+    }
+
     useEffect(() => {
-
-    });
-
-    const [followerList, setFollowersList] = useState(
-        [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    )
-
-    const UserFollowers = () => {
+        Activities()
+        UserFollowing()
+    }, []);
 
 
-        const classes = useStyles();
+
+    const UserFollowing = () => {
         const userOne = client.feed('timeline', client.userId);
-        userOne.follow('user', 'ccrow')
         userOne.following({ offset: 0, limit: 10 }).then((res) => {
-            console.log(res.results)
+
+            let List = []
+            for (let i = 0; i < res.results.length; i++) {
+                const user = res.results[i].target_id.slice(5);
+                List.push(user)
+            }
+            console.log(List)
+            setFollowersListState(List)
+
         })
-        userOne.followStats().then((res) => {
-            console.log(res);
-        })
+    }
 
-
-
-
-        return (
-            <Grid container spacing={1}>
-                {followerList.map((follower) => (
-                    <Grid item xs={12}>
-                        <Card className={classes.card} elevation={3}>
-
-                            <CardContent className={classes.cardContent}>
-                                <Typography variant="subtitle2">
-                                    Stacy Adams
-                            </Typography>
-                            </CardContent>
-                        </Card>
-                    </ Grid >
-                ))}
-            </Grid>
-        )
-
-
+    const followerUser = (userToFollow) => {
+        const userOne = client.feed('timeline', client.userId);
+        userOne.follow('user', userToFollow)
+        console.log("Followed: ", userToFollow)
     }
 
     return (
@@ -264,10 +249,10 @@ function Profile() {
                 </div>
                 <Container className={classes.cardGrid} maxWidth="lg">
                     <Grid container spacing={1}>
-                        <Grid item xs={12} sm={5}>
+                        <Grid item xs={12} sm={4}>
                             <Feed />
                         </Grid>
-                        <Grid item xs={12} sm={5} >
+                        <Grid item xs={12} sm={4} >
 
                             <Grid container spacing={1}>
                                 <Grid item xs={12}>
@@ -277,21 +262,29 @@ function Profile() {
                                 </Grid>
                             </Grid>
                             <Grid container spacing={1}>
-                                <StreamApp
-                                    apiKey={process.env.REACT_APP_STREAM_API_KEY}
-                                    appId={process.env.REACT_APP_STREAM_APP_ID}
-                                    token={streamString}
-                                >
-                                    {cards.map((card) => (
-                                        <Grid item key={card} xs={12} sm={12} md={12} lg={12} >
-                                            <Activity
-                                                onClickHashtag={(word) => console.log(`clicked on ${word}`)}
-                                                activity={card}
-                                                Footer={<ActivityFooter userId="123" activity={card} />}
-                                            />;
+                                <Grid item xs={12} sm={12}>
+                                    <StreamApp
+                                        apiKey={process.env.REACT_APP_STREAM_API_KEY}
+                                        appId={process.env.REACT_APP_STREAM_APP_ID}
+                                        token={streamString}
+                                    >
+
+                                        <Grid container spacing={1}>
+                                            {activitiesState.map((activity) => (
+                                                <Grid item xs={12}>
+                                                    <Paper elevation={3}>
+                                                        <Activity
+                                                            activity={activity}
+                                                        />
+                                                        <FollowButton onClick={() => followerUser(activity.actor.data.userId)} />
+
+                                                    </Paper>
+                                                </ Grid >
+                                            ))}
                                         </Grid>
-                                    ))}
-                                </StreamApp>
+
+                                    </StreamApp>
+                                </Grid>
                             </Grid>
 
                         </Grid>
@@ -299,23 +292,24 @@ function Profile() {
                             <Grid container spacing={1}>
                                 <Grid item xs={12}>
                                     <Typography variant="h5">
-                                        Followers
+                                        Following {followingListState.length}
                                     </Typography>
                                 </Grid>
                             </Grid>
-                            <StreamApp
-                                apiKey={process.env.REACT_APP_STREAM_API_KEY}
-                                appId={process.env.REACT_APP_STREAM_APP_ID}
-                                token={streamString}
-                            >
+                            <Grid container spacing={1}>
+                                {followingListState.map((follower) => (
+                                    <Grid item xs={12}>
+                                        <Card className={classes.card} elevation={3}>
 
-                                <UserBar
-
-                                    username="ccrow"
-
-                                />
-                            </StreamApp>
-
+                                            <CardContent className={classes.cardContent}>
+                                                <Typography variant="subtitle2">
+                                                    {follower}
+                                                </Typography>
+                                            </CardContent>
+                                        </Card>
+                                    </ Grid >
+                                ))}
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Container>
