@@ -80,6 +80,15 @@ export default {
         })
     },
 
+    getAdventureLanding: function () {
+    
+        return axios({
+            method: 'get',
+            url: BASEURL + '/company/adventures'
+        
+        })
+    },
+
     loginCompany: function (userData) {
         console.log(userData);
         return axios.post(BASEURL + '/company/loginCompanyUser', {
