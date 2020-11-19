@@ -20,7 +20,7 @@ export default function AdventuresPage() {
             text: "Whitewater Kayaking Fun!"
         },
         {
-            title: "Hikning",
+            title: "Hiking",
             image: "https://picsum.photos/150/200",
             text: "Whitewater Hiking Fun!"
         },

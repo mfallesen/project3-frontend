@@ -10,6 +10,8 @@ import Navbar from './components/Navbar';
 import theme from './theme'
 import API from './utils/API';
 import UserLogin from './components/UserLogin/UserLogin';
+import { Redirect } from 'react-router-dom';
+import UserSignUp from './components/UserSignUp/UserSignUp';
 
 function App() {
   const [loginFormState, setLoginFormState] = useState({
@@ -114,7 +116,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Navbar profile={profileState}></Navbar >
-      {profileState.isLoggedIn ? <Footer />: <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
+      {profileState.isLoggedIn ? `Welcome ${profileState.first_name}!` : <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
+      <Footer />
     </ThemeProvider>
 
   );
