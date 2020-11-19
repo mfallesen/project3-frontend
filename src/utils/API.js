@@ -98,5 +98,16 @@ export default {
             },
             headers: { Authorization: 'Bearer ' + `${token}` },
         });
+    }, 
+    getAdventureTags: function(token){
+        return axios({
+            method: 'get',
+            url: BASEURL + '/api/adventures',
+            headers: {
+                Authorization: 'Bearer ' + `${token}`
+            },
+        
+        })
     }
+    
 };
