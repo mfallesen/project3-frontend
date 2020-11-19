@@ -1,10 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {Card, CardHeader, CardMedia, CardContent, Typography, Button, Grid } from '@material-ui/core';
+import { Card, CardHeader, CardMedia, CardContent, Typography, Button, Grid } from '@material-ui/core';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { CloudinaryContext, Image } from "cloudinary-react";
+
+// *******UNCOMMENT BELOW FOR BUTTON FUNCTIONALITY******************
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import Menu from '@material-ui/core/Menu';
 // import MenuItem from '@material-ui/core/MenuItem';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 // import EditIcon from '@material-ui/icons/Edit';
 
 
@@ -31,7 +34,7 @@ export default function CompanyAdventureCard(props) {
   // };
 
 
-  
+
 
 
 
@@ -40,6 +43,7 @@ export default function CompanyAdventureCard(props) {
 
       <Card >
         <CardHeader
+          // *******UNCOMMENT BELOW FOR BUTTON FUNCTIONALITY******************
           // action={
           //   <IconButton aria-label="settings">
           //     <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}/>
@@ -58,17 +62,33 @@ export default function CompanyAdventureCard(props) {
           title={props.title}
           subheader={props.date}
         />
-        <CardMedia
-          className={classes.media}
-          image={props.image}
-          title="Adventure Picture"
-        />
+        <CardMedia>
+          <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
+
+
+            {props.image ? <Image
+              publicId={props.image}
+              fetch-format="auto"
+              quality="auto"
+              height="500"
+              width="400"
+              crop="fill"
+            /> : <Image
+                publicId="minnesvart/solo_travel_germany_gytbwl.jpg"
+                fetch-format="auto"
+                quality="auto"
+                height="500"
+                width="400"
+                crop="fill"
+              />}
+          </CloudinaryContext>
+        </CardMedia>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {props.text}
-        </Typography>
+          </Typography>
         </CardContent>
-        <Button  color={'secondary'} fullWidth={true}><DeleteForeverIcon /></Button>
+        <Button color={'secondary'} fullWidth={true}><DeleteForeverIcon /></Button>
       </Card>
     </Grid>
   );

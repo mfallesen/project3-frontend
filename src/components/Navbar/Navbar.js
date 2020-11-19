@@ -18,6 +18,7 @@ import CompanySignup from '../CompanySignup'
 import CompanyLogin from '../CompanyLogin'
 import CompanyAddInfo from '../CompanyAddInfo';
 import UserLogin from '../UserLogin';
+import CompanyDash from '../CompanyDash'
 
 
 const useStyles = makeStyles({
@@ -143,6 +144,10 @@ export default function Navbar(props) {
 
 
             <Switch>
+                <Route path="/companydashboard">
+                    <CompanyDash />
+                </Route>
+
                 <Route path="/companysignup">
                     <CompanySignup />
                 </Route>
