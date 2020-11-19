@@ -98,7 +98,7 @@ export default function Navbar(props) {
 
                 <ListItem button >
                     <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
-                    <ListItemText primary={'Logout'} onClick={logout}/>
+                    <ListItemText primary={'Logout'} onClick={logout} />
                     <Redirect to="/" />
                 </ListItem>
 
@@ -150,16 +150,16 @@ export default function Navbar(props) {
                     <CompanyLogin />
                 </Route>
                 <Route path="/companyaddinfo">
-                    <CompanyAddInfo /> 
+                    <CompanyAddInfo />
                 </Route>
 
                 <Route path="/adventures">
                     {props.profile.isLoggedIn ?
                         <AdventuresPage></AdventuresPage> : "To see adventures, please sign in first"}
                 </Route>
-                <Route path="/profile">
+                <Route path="/profile" >
                     {props.profile.isLoggedIn ?
-                        <Profile /> : "You must sign in before seeing profile data" }
+                        <Profile profile={props.profile} /> : "You must sign in before seeing profile data"}
                 </Route>
                 <Route path={["/", "/home"]}>
                     <Hero />
