@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Profile.css';
 import {
     StreamApp,
@@ -35,6 +35,7 @@ import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import API from '../../utils/API';
 import Box from '@material-ui/core/Container'
+import UserPost from '../UserPost'
 
 
 
@@ -70,13 +71,12 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const client = stream.connect(process.env.REACT_APP_STREAM_API_KEY, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWNyb3cifQ.VBkmY5Jj7gurCqJLV69b4iOzxc7QTyAkLbKVYNvm6lg", process.env.REACT_APP_STREAM_APP_ID);
+const client = stream.connect(process.env.REACT_APP_STREAM_API_KEY, streamString, process.env.REACT_APP_STREAM_APP_ID);
 
-function Feed() {
+function Feed(props) {
 
 
-    const profileImage = "andrew_crow_2x_dpitw4.jpg"
-    client.user('acrow').update({ name: "Andrew Crow", occupation: "Software Engineer", gender: "male", profileImage: `https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/portfolio/${profileImage}` });
+    client.user(client.userId).update({ name: `${props.profile.first_name} ${props.profile.last_name}`, profileImage: `https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/portfolio/${props.profile.image}` });
     return (
         <div >
             <StreamApp
@@ -127,21 +127,32 @@ function Feed() {
 }
 
 
-function Profile() {
+function Profile(props) {
     const classes = useStyles();
 
     const [activitiesState, setActivitiesState] = useState([])
-    const [followerListState, setFollowerListState] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-    const [followingListState, setFollowersListState] = useState([])
+    const [followerListState, setFollowerListState] = useState([])
+    const [followingListState, setFollowingListState] = useState([])
+    const [readOnlyEditState, setReadOnlyEditState] = useState(true)
+    const [viewPanelState, setViewPanelState] = useState("activityFeed")
+
+    const editProfile = () => {
+        console.log("EDIT PROFILE")
+    }
+
+
+
+    const viewPanelChange = (panelName) => {
+        setViewPanelState(panelName)
+    }
 
     const UserImage = () => {
-        const profileImage = "andrew_crow_2x_dpitw4.jpg"
-        const altName = "Andrew Crow"
-        return <img alt={altName} src={`https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/portfolio/${profileImage}`} alt="Logo" />
+        const altName = `${props.profile.first_name} ${props.profile.last_name}`
+        return <img alt={altName} src={`https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/portfolio/${props.profile.image}`} alt="Logo" />
     }
 
     const Name = () => {
-        let fullName = "Andrew Crow"
+        let fullName = `${props.profile.first_name} ${props.profile.last_name}`
         return fullName
     }
 
@@ -162,7 +173,7 @@ function Profile() {
                     actor: {
                         data: {
                             name: activity.name,
-                            profileImage: activity.profileImage,
+                            profileImage: `https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/portfolio/${activity.profileImage}`,
                             userId: activity.user
                         },
                     },
@@ -183,13 +194,14 @@ function Profile() {
     useEffect(() => {
         Activities()
         UserFollowing()
+        UserFollowers()
     }, []);
 
 
 
     const UserFollowing = () => {
         const userOne = client.feed('timeline', client.userId);
-        userOne.following({ offset: 0, limit: 10 }).then((res) => {
+        userOne.following().then((res) => {
 
             let List = []
             for (let i = 0; i < res.results.length; i++) {
@@ -197,10 +209,30 @@ function Profile() {
                 List.push(user)
             }
             console.log(List)
-            setFollowersListState(List)
+            setFollowingListState(List)
 
+        }).catch((err) => {
+            console.log(err)
         })
     }
+
+    const UserFollowers = () => {
+        const userOne = client.feed('timeline', client.userId);
+        userOne.followers().then((res) => {
+
+            let List = []
+            for (let i = 0; i < res.results.length; i++) {
+                const user = res.results[i].target_id.slice(5);
+                List.push(user)
+            }
+            console.log(List)
+            setFollowerListState(List)
+
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
 
     const followerUser = (userToFollow) => {
         const userOne = client.feed('timeline', client.userId);
@@ -231,18 +263,18 @@ function Profile() {
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={2}>
-                                        <Button>Edit</Button>
+                                        <Button onClick={() => { editProfile() }}>Edit</Button>
                                     </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item xs={6} sm={3} md={3}>
-                                <Button>Activity Feed</Button>
+                                <Button onClick={() => { viewPanelChange("activityFeed") }}>Activity Feed</Button>
                             </Grid>
                             <Grid item xs={6} sm={3} md={3}>
-                                <Button>Add Activity</Button>
+                                <Button onClick={() => { viewPanelChange("addActivity") }}>Add Activity</Button>
                             </Grid>
                             <Grid item xs={6} sm={3} md={3}>
-                                <Button>Fav Adventures</Button>
+                                <Button onClick={() => { viewPanelChange("favAdventures") }}>Fav Adventures</Button>
                             </Grid>
                         </Grid>
                     </Container>
@@ -250,44 +282,50 @@ function Profile() {
                 <Container className={classes.cardGrid} maxWidth="lg">
                     <Grid container spacing={1}>
                         <Grid item xs={12} sm={4}>
-                            <Feed />
-                        </Grid>
-                        <Grid item xs={12} sm={4} >
 
-                            <Grid container spacing={1}>
-                                <Grid item xs={12}>
-                                    <Typography variant="h5">
-                                        Activity Feed
+                            <Feed profile={props.profile} />
+
+                        </Grid>
+                        {viewPanelState === "activityFeed" ?
+                            <Grid item xs={12} sm={4} >
+
+                                <Grid container spacing={1}>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h5">
+                                            Activity Feed
                                     </Typography>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                            <Grid container spacing={1}>
-                                <Grid item xs={12} sm={12}>
-                                    <StreamApp
-                                        apiKey={process.env.REACT_APP_STREAM_API_KEY}
-                                        appId={process.env.REACT_APP_STREAM_APP_ID}
-                                        token={streamString}
-                                    >
+                                <Grid container spacing={1}>
+                                    <Grid item xs={12} sm={12}>
+                                        <StreamApp
+                                            apiKey={process.env.REACT_APP_STREAM_API_KEY}
+                                            appId={process.env.REACT_APP_STREAM_APP_ID}
+                                            token={streamString}
+                                        >
 
-                                        <Grid container spacing={1}>
-                                            {activitiesState.map((activity) => (
-                                                <Grid item xs={12}>
-                                                    <Paper elevation={3}>
-                                                        <Activity
-                                                            activity={activity}
-                                                        />
-                                                        <FollowButton onClick={() => followerUser(activity.actor.data.userId)} />
+                                            <Grid container spacing={1}>
+                                                {activitiesState.map((activity) => (
+                                                    <Grid item xs={12}>
+                                                        <Paper elevation={3}>
+                                                            <Activity
+                                                                activity={activity}
+                                                            />
+                                                            <FollowButton onClick={() => followerUser(activity.actor.data.userId)} />
 
-                                                    </Paper>
-                                                </ Grid >
-                                            ))}
-                                        </Grid>
+                                                        </Paper>
+                                                    </ Grid >
+                                                ))}
+                                            </Grid>
 
-                                    </StreamApp>
+                                        </StreamApp>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
 
-                        </Grid>
+
+                            </Grid> : ""}
+                        {viewPanelState === "addActivity" ? <Grid item xs={12} sm={4} ><UserPost /></Grid> : ""}
+                        {viewPanelState === "favAdventures" ? <Grid item xs={12} sm={4} ><div>Fav Adventures</div></Grid> : ""}
                         <Grid item xs={12} sm={2}>
                             <Grid container spacing={1}>
                                 <Grid item xs={12}>
@@ -297,7 +335,30 @@ function Profile() {
                                 </Grid>
                             </Grid>
                             <Grid container spacing={1}>
-                                {followingListState.map((follower) => (
+                                {followingListState.slice(0, 10).map((follower) => (
+                                    <Grid item xs={12}>
+                                        <Card className={classes.card} elevation={3}>
+
+                                            <CardContent className={classes.cardContent}>
+                                                <Typography variant="subtitle2">
+                                                    {follower}
+                                                </Typography>
+                                            </CardContent>
+                                        </Card>
+                                    </ Grid >
+                                ))}
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12} sm={2}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={12}>
+                                    <Typography variant="h5">
+                                        Followers {followerListState.length}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={1}>
+                                {followerListState.slice(0, 10).map((follower) => (
                                     <Grid item xs={12}>
                                         <Card className={classes.card} elevation={3}>
 
