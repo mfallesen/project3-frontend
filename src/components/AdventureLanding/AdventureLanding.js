@@ -26,9 +26,9 @@ export default function AdventureLanding(props) {
     }, []);
 
     const getDbAdventures = () => {
-        const token = localStorage.getItem("JWT");
+        
 
-        API.getAdventures(token).then(response => {
+        API.getAdventureLanding().then(response => {
             const data = response.data
             console.log("constant:data", data)
             var newItems = [];
