@@ -172,6 +172,7 @@ export default function UserPost() {
                                         id="image"
                                         label="Image"
                                         name="image"
+                                        disabled="true"
                                         autoComplete="image"
                                         onChange={inputChange}
                                         value={postInfoFormState.image}
