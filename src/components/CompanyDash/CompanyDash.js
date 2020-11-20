@@ -5,6 +5,7 @@ import CompanyAdventureCard from '../CompanyAdventureCard';
 import CompanyDashPanel from '../CompanyDashPanel';
 import PostAdventure from '../PostAdventure';
 import CompanyAddInfo from '../CompanyAddInfo';
+import { useParams } from 'react-router-dom';
 import API from '../../utils/API';
 import moment from 'moment';
 
@@ -19,12 +20,22 @@ const useStyles = makeStyles({
 
 
 
-export default function CompanyDash() {
+export default function CompanyDash(props) {
     const classes = useStyles();
     const [postAdventure, setPostAdventure] = useState(false);
     const [editCompany, setEditCompany] = useState(false);
     const [adventure, setAdventure] = useState([]);
 
+    let { companyusername } = useParams();
+    //If there is no "companyusername", we'll programmatically redirect the user to login
+    const token = localStorage.getItem("JWTCOMPANY");
+
+    //use useEffect to take token from localstorage and make a get req to backend to retrieve company info based on jwtcompany
+    useEffect(() => {
+        API.getCompanyProfile(companyusername, token).then(({data}) => {
+            props.handleCompanyData(data);
+        })
+    },[])
     function handlePostAdventure() {
         if (postAdventure) {
             return setPostAdventure(false)

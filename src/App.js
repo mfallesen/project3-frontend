@@ -73,12 +73,11 @@ function App() {
   const submitForm = event => {
     event.preventDefault();
     API.login(loginFormState).then(newToken => {
-      console.log(newToken);
+      console.log("NewToken :", newToken);
       localStorage.setItem('JWT', newToken.data.token);
       localStorage.setItem('STREAM', newToken.data.appToken);
       localStorage.setItem('USERNAME', loginFormState.username);
       API.getProfile(loginFormState.username, newToken.data.token).then(profileData => {
-        console.log(profileData);
         setProfileState({
           first_name: profileData.data.first_name,
           last_name: profileData.data.last_name,
@@ -103,15 +102,15 @@ function App() {
     })
   }
 
-  const handleFormSubmit = event => {
-    event.preventDefault();
-    API.login(loginFormState).then(loginData => {
-      console.log("You logged in");
+  // const handleFormSubmit = event => {
+  //   event.preventDefault();
+  //   API.login(loginFormState).then(loginData => {
+  //     console.log("You logged in");
 
-    }).then(function () {
-      // setLoggedInState(true)
-    }).catch((err) => console.log(err));
-  };
+  //   }).then(function () {
+  //     // setLoggedInState(true)
+  //   }).catch((err) => console.log(err));
+  // };
 
   return (
 
