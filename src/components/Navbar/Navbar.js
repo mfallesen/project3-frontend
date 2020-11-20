@@ -70,6 +70,15 @@ export default function Navbar(props) {
         right: false,
     });
 
+    const [companyData, setCompanyData] = React.useState({
+        auth: false,
+        email: "",
+        message: "",
+        password: "",
+        username: "",
+        isCompanyLoggedIn: false
+    });
+
     function ListItemLink(props) {
         return <ListItem button component="a" {...props} />;
     }
@@ -119,6 +128,11 @@ export default function Navbar(props) {
         localStorage.removeItem("USERNAMECOMPANY");
         window.location.href = "/home";
     }
+
+    const handleCompanyData = (companyData) => {
+        setCompanyData({...companyData, isCompanyLoggedIn: true});
+        // console.log("Company Data: ", companyData);
+    }
     return (
         <Router>
 
@@ -154,8 +168,9 @@ export default function Navbar(props) {
 
 
             <Switch>
-                <Route path="/companydashboard">
-                    <CompanyDash />
+                <Route path="/companydashboard/:companyusername">
+                    
+                    <CompanyDash setCompanyData={setCompanyData }handleCompanyData={handleCompanyData}/>
                 </Route>
 
                 <Route path="/companysignup">
@@ -174,7 +189,7 @@ export default function Navbar(props) {
                 </Route>
                 <Route path="/profile" >
                     {props.profile.isLoggedIn ?
-                        <Profile profile={props.profile} /> : "You must sign in before seeing profile data"}
+                        <Profile profile={props.profile} setProfile={props.setProfile} /> : "You must sign in before seeing profile data"}
                 </Route>
                 <Route path={["/", "/home"]}>
                     <Hero />
@@ -185,6 +200,9 @@ export default function Navbar(props) {
                         : "Please sign in first"}
                 </Route>
                 <Route path="/signin">
+
+                </Route>
+                <Route path = "/companydash">
 
                 </Route>
             </Switch>

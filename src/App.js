@@ -13,6 +13,8 @@ import UserLogin from './components/UserLogin/UserLogin';
 import { Redirect } from 'react-router-dom';
 import UserSignUp from './components/UserSignUp/UserSignUp';
 
+
+
 function App() {
   const [loginFormState, setLoginFormState] = useState({
     username: "",
@@ -71,12 +73,11 @@ function App() {
   const submitForm = event => {
     event.preventDefault();
     API.login(loginFormState).then(newToken => {
-      console.log(newToken);
+      console.log("NewToken :", newToken);
       localStorage.setItem('JWT', newToken.data.token);
       localStorage.setItem('STREAM', newToken.data.appToken);
       localStorage.setItem('USERNAME', loginFormState.username);
       API.getProfile(loginFormState.username, newToken.data.token).then(profileData => {
-        console.log(profileData);
         setProfileState({
           first_name: profileData.data.first_name,
           last_name: profileData.data.last_name,
@@ -101,21 +102,21 @@ function App() {
     })
   }
 
-  const handleFormSubmit = event => {
-    event.preventDefault();
-    API.login(loginFormState).then(loginData => {
-      console.log("You logged in");
+  // const handleFormSubmit = event => {
+  //   event.preventDefault();
+  //   API.login(loginFormState).then(loginData => {
+  //     console.log("You logged in");
 
-    }).then(function () {
-      // setLoggedInState(true)
-    }).catch((err) => console.log(err));
-  };
+  //   }).then(function () {
+  //     // setLoggedInState(true)
+  //   }).catch((err) => console.log(err));
+  // };
 
   return (
 
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navbar profile={profileState}></Navbar >
+      <Navbar profile={profileState} setProfile={setProfileState}></Navbar >
       {profileState.isLoggedIn ? `Welcome ${profileState.first_name}!` : <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
       <Footer />
     </ThemeProvider>

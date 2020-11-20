@@ -66,6 +66,30 @@ export default {
         })
     },
 
+    updateUserInfo: function (userData, userName, token) {
+        console.log("In API: ", userData);
+        console.log("In API: ", token)
+
+        const data = qs.stringify({
+            'username': userName,
+            'first_name': userData.first_name,
+            'last_name': userData.last_name,
+            'email': userData.email,
+            'city': userData.city,
+            'state': userData.state,
+            'image': userData.image,
+        });
+        return axios({
+            method: 'put',
+            url: BASEURL + '/user/updateUser',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: data
+        })
+    },
+
     addUserPost: function (postData, username, token) {
         console.log("In API: ", postData);
         console.log("In API: ", token)
@@ -141,21 +165,29 @@ export default {
             },
             headers: { Authorization: 'Bearer ' + `${token}` },
         });
-    }, 
-    getAdventureTags: function(token){
+    },
+    getAdventureTags: function (token) {
         return axios({
             method: 'get',
             url: BASEURL + '/api/adventures',
             headers: {
                 Authorization: 'Bearer ' + `${token}`
             },
-        
+
         })
+    },
+    getCompanyProfile: function (username, token) {
+        return axios.get(BASEURL + '/company/findCompanyUser', {
+            params: {
+                username: username
+            },
+            headers: { Authorization: 'Bearer ' + `${token}` },
+        });
     },
     getActivities: function (token) {
         return axios.get(BASEURL + '/api/userPosts', {
             headers: { Authorization: 'Bearer ' + `${token}` },
         });
     }
-    
+
 };
