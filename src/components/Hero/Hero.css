@@ -5,10 +5,22 @@ h1 {
 }
 section {
   text-align: center;
-  background: #687864
+  /* background: #687864
     url("https://res.cloudinary.com/crowandrew/image/upload/v1605219058/minnesvart/solo_travel_germany_gytbwl.png")
-    no-repeat center;
+    no-repeat center; */
   background-size: cover;
   height: 600px;
-  margin-top: -165px;
+  /* margin-top: -165px; */
+
+}
+video {
+  object-fit: cover;
+  width: 100vw;
+  height: 600px;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  /* margin-top: -165px; */
 }
