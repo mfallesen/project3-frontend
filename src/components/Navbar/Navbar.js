@@ -155,7 +155,7 @@ export default function Navbar(props) {
                             {/* <img className={classes.image} src={"https://res.cloudinary.com/crowandrew/image/upload/c_fit,w_300/v1605820413/minnesvart/logo_rdvtg7.png"} alt='logo' /> */}
 
                             <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
-                                <Image cloudname publicId="minnesvart/logo_rdvtg7.png" >
+                                <Image publicId="minnesvart/logo_rdvtg7.png" >
                                     <Transformation width="200" crop="fill" />
                                 </Image>
                             </CloudinaryContext>
