@@ -164,7 +164,7 @@ export default function Navbar(props) {
                 </Route>
                 <Route path="/profile" >
                     {props.profile.isLoggedIn ?
-                        <Profile profile={props.profile} /> : "You must sign in before seeing profile data"}
+                        <Profile profile={props.profile} setProfile={props.setProfile} /> : "You must sign in before seeing profile data"}
                 </Route>
                 <Route path={["/", "/home"]}>
                     <Hero />

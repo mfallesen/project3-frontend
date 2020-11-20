@@ -1,41 +1,32 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Profile.css';
 import {
     StreamApp,
-    NotificationDropdown,
     FlatFeed,
     LikeButton,
     Activity,
     CommentList,
     CommentField,
     StatusUpdateForm,
-    RepostButton,
-    UserBar,
-    EmojiPicker,
     FollowButton,
-    DataLabel,
-    ActivityFooter
 } from "react-activity-feed";
 import stream from 'getstream';
 import "react-activity-feed/dist/index.css";
-import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import API from '../../utils/API';
-import Box from '@material-ui/core/Container'
 import UserPost from '../UserPost'
+import TextField from '@material-ui/core/TextField';
+import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
+import { openUploadWidget } from "../Cloudinary/CloudinaryService";
+
 
 
 
@@ -71,12 +62,14 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+// Connection to client for getStream.io
 const client = stream.connect(process.env.REACT_APP_STREAM_API_KEY, streamString, process.env.REACT_APP_STREAM_APP_ID);
 
+// Left side personal feed
 function Feed(props) {
 
 
-    client.user(client.userId).update({ name: `${props.profile.first_name} ${props.profile.last_name}`, profileImage: `https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/portfolio/${props.profile.image}` });
+    client.user(client.userId).update({ name: `${props.profile.first_name} ${props.profile.last_name}`, profileImage: `https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/${props.profile.image}` });
     return (
         <div >
             <StreamApp
@@ -126,41 +119,59 @@ function Feed(props) {
     );
 }
 
-
+// This is the default export component
 function Profile(props) {
     const classes = useStyles();
 
+    // State for activities in middle of screen, followers on the right, read only for forms and navigation
     const [activitiesState, setActivitiesState] = useState([])
     const [followerListState, setFollowerListState] = useState([])
     const [followingListState, setFollowingListState] = useState([])
     const [readOnlyEditState, setReadOnlyEditState] = useState(true)
     const [viewPanelState, setViewPanelState] = useState("activityFeed")
 
+    // function to to change fields to be editable
     const editProfile = () => {
-        console.log("EDIT PROFILE")
+        console.log("EDIT")
+        setReadOnlyEditState(false)
     }
 
 
-
+    // function for navigation butttons
     const viewPanelChange = (panelName) => {
         setViewPanelState(panelName)
     }
 
-    const UserImage = () => {
-        const altName = `${props.profile.first_name} ${props.profile.last_name}`
-        return <img alt={altName} src={`https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/portfolio/${props.profile.image}`} alt="Logo" />
+    // function to change state of save profile
+    const saveProfile = () => {
+        setReadOnlyEditState(true)
     }
 
-    const Name = () => {
-        let fullName = `${props.profile.first_name} ${props.profile.last_name}`
-        return fullName
+    // input change handler for the profile save form
+    const inputChange = event => {
+        const { name, value } = event.target;
+        props.setProfile({
+            ...props.profile,
+            [name]: value
+        })
     }
 
-    const AdventureStatement = () => {
-        const adventureStatement = "Looking to explore the world one hike at a time"
-        return adventureStatement
+    // form submit handler for saving the profile data
+    const handleFormSubmit = event => {
+        event.preventDefault();
+        const token = localStorage.getItem("JWT")
+        const userName = localStorage.getItem("USERNAME")
+        API.updateUserInfo(props.profile, userName, token).then(userData => {
+            console.log("AFTER API: ", userData);
+
+        }).then(() => {
+            console.log("SAVE")
+            saveProfile()
+        })
+
     }
 
+    // function to query getStream.io for activity data the renders in middle of page
     const Activities = () => {
         const token = localStorage.getItem("JWT")
 
@@ -173,7 +184,7 @@ function Profile(props) {
                     actor: {
                         data: {
                             name: activity.name,
-                            profileImage: `https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/portfolio/${activity.profileImage}`,
+                            profileImage: `https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/${activity.profileImage}`,
                             userId: activity.user
                         },
                     },
@@ -191,6 +202,7 @@ function Profile(props) {
         })
     }
 
+    // loading activities and following stats from getStream.io
     useEffect(() => {
         Activities()
         UserFollowing()
@@ -198,7 +210,7 @@ function Profile(props) {
     }, []);
 
 
-
+    // function pulling following data from getStream.io
     const UserFollowing = () => {
         const userOne = client.feed('timeline', client.userId);
         userOne.following().then((res) => {
@@ -216,6 +228,7 @@ function Profile(props) {
         })
     }
 
+    // function pulling follower data from getStream.io   
     const UserFollowers = () => {
         const userOne = client.feed('timeline', client.userId);
         userOne.followers().then((res) => {
@@ -233,60 +246,189 @@ function Profile(props) {
         })
     }
 
-
+    // function to follow a user from the main activity in middle of page
     const followerUser = (userToFollow) => {
         const userOne = client.feed('timeline', client.userId);
         userOne.follow('user', userToFollow)
         console.log("Followed: ", userToFollow)
     }
 
+    // function to call Cloudinary widget to upload profile photo
+    const beginUpload = tag => {
+        const uploadOptions = {
+            cloudName: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME,
+            tags: [tag, 'anImage'],
+            uploadPreset: process.env.REACT_APP_CLOUDINARY_PRESET,
+        };
+        openUploadWidget(uploadOptions, (error, photos) => {
+            if (!error) {
+                console.log(photos);
+                if (photos.event === 'success') {
+                    props.setProfile({
+                        ...props.profile,
+                        image: photos.info.public_id
+                    })
+                }
+            } else {
+                console.log(error);
+            }
+        })
+    }
+
+
+    // return jsx to render on page
     return (
         <React.Fragment>
             <CssBaseline />
             <main>
                 <div className={classes.heroContent}>
                     <Container maxWidth="md">
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} sm={5} lg={3} >
-                                <UserImage />
-                            </Grid>
-                            <Grid item xs={12} sm={7} lg={9}>
+                        <form onSubmit={handleFormSubmit} noValidate>
+                            <Grid container spacing={3} >
+
+                                <Grid item xs={12} sm={5} lg={3} >
+
+                                    {readOnlyEditState ?
+                                        <img alt={props.profile.first_name} src={`https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/${props.profile.image}`} alt="Logo" />
+                                        : <Grid container spacing={2}>
+                                            <Grid item xs={12}>
+                                                <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
 
 
-                                <Grid container spacing={2}>
-                                    <Grid item xs={10} className={classes.heroText}>
-                                        <Typography variant="h4">
-                                            <Name />
-                                        </Typography>
-                                        <Typography variant="subtitle1">
-                                            <AdventureStatement />
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={2}>
-                                        <Button onClick={() => { editProfile() }}>Edit</Button>
-                                    </Grid>
+                                                    <Image
+                                                        publicId={props.profile.image}
+                                                        fetch-format="auto"
+                                                        quality="auto"
+
+                                                    >
+                                                        <Transformation gravity="face" height="400" radius="max" width="400" crop="crop" />
+                                                        <Transformation width="150" crop="scale" />
+                                                    </Image>
+                                                </CloudinaryContext>
+                                            </Grid>
+                                            <Grid item xs={12}>
+
+                                                <Button
+                                                    fullWidth
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={() => beginUpload("image")}>Upload Profile Pic</Button>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    variant="outlined"
+                                                    required
+                                                    fullWidth
+                                                    id="image"
+                                                    label="Image"
+                                                    name="image"
+                                                    autoComplete="image"
+                                                    onChange={inputChange}
+                                                    value={props.profile.image}
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                    }
                                 </Grid>
+                                <Grid item xs={12} sm={7} lg={9} >
+
+
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={10} className={classes.heroText}>
+                                            <Typography variant="h4">
+                                                {readOnlyEditState ? props.profile.first_name + " " + props.profile.last_name : <Grid container spacing={2}><Grid item={6}><TextField
+                                                    variant="outlined"
+                                                    required
+                                                    fullWidth
+                                                    id="first_name"
+                                                    label="First Name"
+                                                    name="first_name"
+                                                    autoComplete="first_name"
+                                                    onChange={inputChange}
+
+                                                    value={props.profile.first_name}
+                                                /></Grid><Grid item={6}><TextField
+                                                    variant="outlined"
+                                                    required
+                                                    fullWidth
+                                                    id="last_name"
+                                                    label="Last Name"
+                                                    name="last_name"
+                                                    autoComplete="last_name"
+                                                    onChange={inputChange}
+
+                                                    value={props.profile.last_name}
+                                                /></Grid></Grid>}
+                                            </Typography>
+                                            <Typography variant="subtitle1">
+                                                {readOnlyEditState ? props.profile.city + ", " + props.profile.state : <Grid container spacing={2}><Grid item={6}><TextField
+                                                    variant="outlined"
+                                                    required
+                                                    fullWidth
+                                                    id="city"
+                                                    label="City"
+                                                    name="city"
+                                                    autoComplete="city"
+                                                    onChange={inputChange}
+
+                                                    value={props.profile.city}
+                                                /></Grid><Grid item={6}><TextField
+                                                    variant="outlined"
+                                                    required
+                                                    fullWidth
+                                                    id="state"
+                                                    label="State"
+                                                    name="state"
+                                                    autoComplete="state"
+                                                    onChange={inputChange}
+
+                                                    value={props.profile.state}
+                                                /></Grid>
+                                                    <Grid item={6}><TextField
+                                                        variant="outlined"
+                                                        required
+                                                        fullWidth
+                                                        id="email"
+                                                        label="Email"
+                                                        name="email"
+                                                        autoComplete="email"
+                                                        onChange={inputChange}
+
+                                                        value={props.profile.email}
+                                                    /></Grid></Grid>}
+                                            </Typography>
+                                        </Grid>
+
+                                        <Grid item xs={2}>
+                                            {readOnlyEditState ? <Button onClick={() => { editProfile() }}>Edit</Button> : <Button onClick={handleFormSubmit} >Save</Button>}
+                                        </Grid>
+
+                                    </Grid>
+
+                                </Grid>
+                                <Grid item xs={6} sm={3} md={3}>
+                                    <Button onClick={() => { viewPanelChange("activityFeed") }}>Activity Feed</Button>
+                                </Grid>
+                                <Grid item xs={6} sm={3} md={3}>
+                                    <Button onClick={() => { viewPanelChange("addActivity") }}>Add Activity</Button>
+                                </Grid>
+                                <Grid item xs={6} sm={3} md={3}>
+                                    <Button onClick={() => { viewPanelChange("favAdventures") }}>Fav Adventures</Button>
+                                </Grid>
+
                             </Grid>
-                            <Grid item xs={6} sm={3} md={3}>
-                                <Button onClick={() => { viewPanelChange("activityFeed") }}>Activity Feed</Button>
-                            </Grid>
-                            <Grid item xs={6} sm={3} md={3}>
-                                <Button onClick={() => { viewPanelChange("addActivity") }}>Add Activity</Button>
-                            </Grid>
-                            <Grid item xs={6} sm={3} md={3}>
-                                <Button onClick={() => { viewPanelChange("favAdventures") }}>Fav Adventures</Button>
-                            </Grid>
-                        </Grid>
+                        </form>
                     </Container>
                 </div>
                 <Container className={classes.cardGrid} maxWidth="lg">
-                    <Grid container spacing={1}>
+                    <Grid container spacing={1} >
                         <Grid item xs={12} sm={4}>
 
                             <Feed profile={props.profile} />
 
                         </Grid>
                         {viewPanelState === "activityFeed" ?
+
                             <Grid item xs={12} sm={4} >
 
                                 <Grid container spacing={1}>
@@ -323,15 +465,20 @@ function Profile(props) {
                                 </Grid>
 
 
-                            </Grid> : ""}
+                            </Grid>
+
+                            : ""}
                         {viewPanelState === "addActivity" ? <Grid item xs={12} sm={4} ><UserPost /></Grid> : ""}
                         {viewPanelState === "favAdventures" ? <Grid item xs={12} sm={4} ><div>Fav Adventures</div></Grid> : ""}
+
                         <Grid item xs={12} sm={2}>
                             <Grid container spacing={1}>
                                 <Grid item xs={12}>
+                                    {/* <ScrollableAnchor id={'potatoes'}> */}
                                     <Typography variant="h5">
                                         Following {followingListState.length}
                                     </Typography>
+                                    {/* </ScrollableAnchor> */}
                                 </Grid>
                             </Grid>
                             <Grid container spacing={1}>
@@ -349,6 +496,7 @@ function Profile(props) {
                                 ))}
                             </Grid>
                         </Grid>
+
                         <Grid item xs={12} sm={2}>
                             <Grid container spacing={1}>
                                 <Grid item xs={12}>
