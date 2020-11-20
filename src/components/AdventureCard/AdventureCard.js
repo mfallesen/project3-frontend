@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { Button, Card, CardContent, CardHeader, CardMedia, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
@@ -6,12 +6,15 @@ import ReactCardFlip from 'react-card-flip';
 import { CloudinaryContext, Image } from "cloudinary-react";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import IconButton from '@material-ui/core/IconButton';
+import API from "../../utils/API";
 
 const useStyles = makeStyles({
     card: {
         textAlign: 'center'
     },
 })
+
+
 
 export default function AdventureCard(props) {
     const classes = useStyles();
@@ -20,6 +23,22 @@ export default function AdventureCard(props) {
     const handleClick = () => {
         setIsFlipped(!isFlipped);
     }
+
+    useEffect(() => {
+        postRatingDB();
+    }, []);
+    
+    
+    const postRatingDB = (id) =>{
+        console.log("Click", id);
+        const token = localStorage.getItem("JWT");
+        API.postAdventureRating(token, id).then(response => {
+            const data = response.data
+            console.log("constant:data", data)
+            
+        })
+    }
+    
 
     return (
 
@@ -58,9 +77,12 @@ export default function AdventureCard(props) {
                                 props.text
                             }
                         </Typography>
+                        {console.log(props, "Props")}
                         <Grid container justify='space-between'>
 
-                            <Typography align='justify' variant='button'><Button disabled>0 Likes</Button><IconButton color='primary'><ThumbUpAltIcon /></IconButton></Typography>
+                            <Typography align='justify' variant='button'><Button disabled>0 Likes</Button><IconButton onClick = {() =>{
+                                postRatingDB(props.id)
+                            }}color='primary'><ThumbUpAltIcon /></IconButton></Typography>
 
                             <Button onClick={handleClick} >More Info</Button>
 
