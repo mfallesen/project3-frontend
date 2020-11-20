@@ -122,6 +122,14 @@ export default {
             headers: { Authorization: 'Bearer ' + `${token}` },
         });
     },
+    getCompanyProfile: function (username, token) {
+        return axios.get(BASEURL + '/company/findCompanyUser', {
+            params: {
+                username: username
+            },
+            headers: { Authorization: 'Bearer ' + `${token}` },
+        });
+    },
     getActivities: function (token) {
         return axios.get(BASEURL + '/api/userPosts', {
             headers: { Authorization: 'Bearer ' + `${token}` },

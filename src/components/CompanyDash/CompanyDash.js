@@ -1,10 +1,12 @@
 import { Grid, Typography } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import CompanyAdventureCard from '../CompanyAdventureCard';
 import CompanyDashPanel from '../CompanyDashPanel';
 import PostAdventure from '../PostAdventure';
 import CompanyAddInfo from '../CompanyAddInfo';
+import { useParams } from 'react-router-dom';
+import API from '../../utils/API';
 
 
 const useStyles = makeStyles({
@@ -14,11 +16,22 @@ const useStyles = makeStyles({
     }
 });
 
-export default function CompanyDash() {
+export default function CompanyDash(props) {
     const classes = useStyles();
     const [postAdventure, setPostAdventure] = useState(false);
     const [editCompany, setEditCompany] = useState(false);
+    
 
+    let { companyusername } = useParams();
+    //If there is no "companyusername", we'll programmatically redirect the user to login
+    const token = localStorage.getItem("JWTCOMPANY");
+
+    //use useEffect to take token from localstorage and make a get req to backend to retrieve company info based on jwtcompany
+    useEffect(() => {
+        API.getCompanyProfile(companyusername, token).then(({data}) => {
+            props.handleCompanyData(data);
+        })
+    },[])
     function handlePostAdventure() {
         if (postAdventure) {
             return setPostAdventure(false)
@@ -46,7 +59,7 @@ export default function CompanyDash() {
             text: "Whitewater Kayaking Fun!"
         },
         {
-            title: "Hikning",
+            title: "Hiking",
             image: "https://picsum.photos/150/200",
             date: 'January 1, 2021',
             text: "Whitewater Hiking Fun!"
