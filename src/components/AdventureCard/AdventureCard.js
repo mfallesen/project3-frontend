@@ -17,24 +17,33 @@ const useStyles = makeStyles({
 
 
 export default function AdventureCard(props) {
+    console.log(props.id)
     const classes = useStyles();
 
     const [isFlipped, setIsFlipped] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
     const handleClick = () => {
         setIsFlipped(!isFlipped);
     }
 
     useEffect(() => {
-        postRatingDB();
+        postRatingDB(props.id);
+        postLikeCount(props.id);
     }, []);
     
-    
+    const postLikeCount = (id) => {
+        const token = localStorage.getItem("JWT");
+        API.countAdventureRating(token, id).then(response => {
+            setLikeCount(response.data);
+            
+        })
+    }
     const postRatingDB = (id) =>{
-        console.log("Click", id);
+   
         const token = localStorage.getItem("JWT");
         API.postAdventureRating(token, id).then(response => {
             const data = response.data
-            console.log("constant:data", data)
+            
             
         })
     }
@@ -80,7 +89,7 @@ export default function AdventureCard(props) {
                         {console.log(props, "Props")}
                         <Grid container justify='space-between'>
 
-                            <Typography align='justify' variant='button'><Button disabled>0 Likes</Button><IconButton onClick = {() =>{
+                            <Typography align='justify' variant='button'><Button disabled>{likeCount} Likes</Button><IconButton onClick = {() =>{
                                 postRatingDB(props.id)
                             }}color='primary'><ThumbUpAltIcon /></IconButton></Typography>
 
