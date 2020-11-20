@@ -60,27 +60,28 @@ export default function SignUp() {
     function getCompanyData() {
         const token = localStorage.getItem("JWTCOMPANY");
         const username = localStorage.getItem("USERNAMECOMPANY");
-        API.getCompanyProfile(username, token).then(companyProfileData => {
-            if (companyProfileData) {
-                setCompanyProfileState({
-                    username: companyProfileData.data.username,
-                    email: companyProfileData.data.email,
-                    id: companyProfileData.data.id,
-                    isCompanyLoggedIn: true
-                })
-            } else {
-                localStorage.removeItem("JWTCOMPANY");
-                setCompanyProfileState({
-                    username: "",
-                    email: "",
-                    token: "",
-                    id: "",
-                    isCompanyLoggedIn: false
-                })
-            }
-        })
+        if (token && username) {
+            API.getCompanyProfile(username, token).then(companyProfileData => {
+                if (companyProfileData) {
+                    setCompanyProfileState({
+                        username: companyProfileData.data.username,
+                        email: companyProfileData.data.email,
+                        id: companyProfileData.data.id,
+                        isCompanyLoggedIn: true
+                    })
+                } else {
+                    localStorage.removeItem("JWTCOMPANY");
+                    setCompanyProfileState({
+                        username: "",
+                        email: "",
+                        token: "",
+                        id: "",
+                        isCompanyLoggedIn: false
+                    })
+                }
+            })
+        }
     }
-
 
     // })
     const inputChange = event => {
