@@ -1,16 +1,25 @@
 import React from 'react';
 import SearchBar from 'material-ui-search-bar';
-import './SearchForm.css';
+import { makeStyles } from '@material-ui/styles'
 
 
-export default function SearchForm(props){
 
-    return (
-        <SearchBar
-          value={props.search}
-          onChange={props.handleInputChange}
-          
-        />
-      );
+const useStyles = makeStyles({
+  searchbarRoot: {
+    marginLeft: 'auto',
+    marginTop: 15,
+  },
+})
+
+export default function SearchForm(props) {
+  const classes = useStyles();
+  return (
+    <SearchBar
+    className={classes.searchbarRoot}
+      value={props.search}
+      onChange={props.handleInputChange}
+
+    />
+  );
 }
 

@@ -198,7 +198,12 @@ export default {
             },
 
         })
-    }
-   
+    },
 
+    countAdventureRating: function (token, id) {
+        return axios.get(BASEURL + '/api/adventure_rating/' + id, {
+            headers: { Authorization: 'Bearer ' + `${token}` },
+        }
+        )
+    }
 };
