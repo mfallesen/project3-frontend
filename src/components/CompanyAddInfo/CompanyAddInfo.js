@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
     const classes = useStyles();
 
-    const currentCompanyUserId = localStorage.getItem("COMPANYUSERNAME");
+    const currentCompanyUserId = localStorage.getItem("COMPANYUSERID");
 
     const [businessInfoFormState, setBusinessInfoFormState] = useState({
         name: "",

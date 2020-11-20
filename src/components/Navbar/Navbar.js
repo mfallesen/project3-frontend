@@ -65,6 +65,15 @@ export default function Navbar(props) {
         right: false,
     });
 
+    const [companyData, setCompanyData] = React.useState({
+        auth: false,
+        email: "",
+        message: "",
+        password: "",
+        username: "",
+        isCompanyLoggedIn: false
+    });
+
     function ListItemLink(props) {
         return <ListItem button component="a" {...props} />;
     }
@@ -114,6 +123,11 @@ export default function Navbar(props) {
         localStorage.removeItem("USERNAMECOMPANY");
         window.location.href = "/home";
     }
+
+    const handleCompanyData = (companyData) => {
+        setCompanyData({...companyData, isCompanyLoggedIn: true});
+        // console.log("Company Data: ", companyData);
+    }
     return (
         <Router>
 
@@ -134,7 +148,7 @@ export default function Navbar(props) {
 
                     <img className={classes.image} src={"https://logoipsum.com/logo/logo-25.svg"} alt='logo' />
 
-                    {props.profile.isLoggedIn ?
+                    {props.profile.isLoggedIn || companyData.isCompanyLoggedIn ?
                         <NavLink to="/" edge="end"><Button className={classes.navBtn} onClick={logout}>Logout</Button> </NavLink>
                         :
                         <NavLink to="/signin" edge="end"><Button className={classes.navBtn}>Login</Button> </NavLink>}
@@ -144,8 +158,9 @@ export default function Navbar(props) {
 
 
             <Switch>
-                <Route path="/companydashboard">
-                    <CompanyDash />
+                <Route path="/companydashboard/:companyusername">
+                    
+                    <CompanyDash setCompanyData={setCompanyData }handleCompanyData={handleCompanyData}/>
                 </Route>
 
                 <Route path="/companysignup">
@@ -175,6 +190,9 @@ export default function Navbar(props) {
                         : "Please sign in first"}
                 </Route>
                 <Route path="/signin">
+
+                </Route>
+                <Route path = "/companydash">
 
                 </Route>
             </Switch>
