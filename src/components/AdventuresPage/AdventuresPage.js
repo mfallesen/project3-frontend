@@ -1,9 +1,10 @@
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import AdventureCard from '../AdventureCard'
 import { makeStyles } from '@material-ui/styles'
 import SearchForm from '../SearchForm/SearchForm'
 import API from "../../utils/API";
+
 
 const useStyles = makeStyles({
     cardRow: {
@@ -57,10 +58,18 @@ export default function AdventuresPage(props) {
         }
     }
 
+
     return (
         <div className={classes.root} >
-            <Grid container spacing={3} alignItems={'center'}>
-                <SearchForm handleInputChange={handleInputChange} search={searchResults} />
+            <Grid container spacing={3} alignItems={'center'} justify={'center'}>
+                <Grid container item justify={'center'} direction='column' md={6}>
+                    <Grid container item justify={'center'}>
+                    <Typography variant='h6' gutterBottom={true} justify={'center'}>Ready to start a local adventure?</Typography>
+                    </Grid>
+
+                <SearchForm  handleInputChange={handleInputChange} search={searchResults} />
+                </Grid>
+
                 <Grid className={classes.cardRow} container item md={12} spacing={3}>
                     {filteredData.map(
                         card => <AdventureCard id={card.id} title={card.name} image={card.image} text={card.Tags.name} description={card.description} xs={12} sm={6} md={6}></AdventureCard>
