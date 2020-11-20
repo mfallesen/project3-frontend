@@ -13,6 +13,8 @@ import UserLogin from './components/UserLogin/UserLogin';
 import { Redirect } from 'react-router-dom';
 import UserSignUp from './components/UserSignUp/UserSignUp';
 
+import { goToAnchor, ScrollableAnchor } from 'react-scrollable-anchor';
+
 function App() {
   const [loginFormState, setLoginFormState] = useState({
     username: "",
@@ -115,7 +117,7 @@ function App() {
 
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navbar profile={profileState}></Navbar >
+      <Navbar profile={profileState} setProfile={setProfileState}></Navbar >
       {profileState.isLoggedIn ? `Welcome ${profileState.first_name}!` : <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
       <Footer />
     </ThemeProvider>
