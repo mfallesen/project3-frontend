@@ -4,17 +4,13 @@ import { Button, Card, CardContent, CardHeader, CardMedia, Typography } from '@m
 import { makeStyles } from '@material-ui/styles'
 import ReactCardFlip from 'react-card-flip';
 import { CloudinaryContext, Image } from "cloudinary-react";
-
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles({
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
     card: {
         textAlign: 'center'
     },
-
 })
 
 export default function AdventureCard(props) {
@@ -30,7 +26,7 @@ export default function AdventureCard(props) {
         <Grid item xs={props.xs} sm={props.sm} md={props.md}>
             <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
 
-                <Card className={classes.card} onClick={handleClick}>
+                <Card className={classes.card} elevation='6'>
                     <CardHeader
                         title={props.title}
                     />
@@ -56,15 +52,31 @@ export default function AdventureCard(props) {
                         </CloudinaryContext>
                     </CardMedia>
                     <CardContent>
-                        <Typography>{props.text}</Typography>
+                        <Typography>
+                            {props.description.length > 100 ?
+                                `${props.description.substring(0, 100)} ...` :
+                                props.text
+                            }
+                        </Typography>
+                        <Grid container justify='space-between'>
+
+                            <Typography align='justify' variant='button'><Button disabled>0 Likes</Button><IconButton color='primary'><ThumbUpAltIcon /></IconButton></Typography>
+
+                            <Button onClick={handleClick} >More Info</Button>
+
+
+                        </Grid>
                     </CardContent>
                 </Card>
 
-                <Card onClick={handleClick} >
+                <Card  elevation='6'>
                     <CardContent>
                         <Typography>{props.description}</Typography>
+                        <hr/>
+                        <Grid container justify='flex-end'>
+                            <Button onClick={handleClick}>Less Info</Button>
+                        </Grid>
                     </CardContent>
-                    <Button>More Info</Button>
                     {/* Add to favorites button */}
                 </Card>
 
