@@ -50,7 +50,7 @@ export default {
         const data = qs.stringify({
             'name': adventureData.name,
             'description': adventureData.description,
-            'image': adventureData.longitude,
+            'image': adventureData.image,
             'longitude': adventureData.latitude,
             'latitude': adventureData.latitude,
             'AdventureCompanyId': adventureData.adventureCompanyId,
@@ -58,6 +58,26 @@ export default {
         return axios({
             method: 'post',
             url: BASEURL + '/api/company/adventure/',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: data
+        })
+    },
+
+    addUserPost: function (postData, username, token) {
+        console.log("In API: ", postData);
+        console.log("In API: ", token)
+
+        const data = qs.stringify({
+            'title': postData.title,
+            'description': postData.description,
+            'image': `https://res.cloudinary.com/crowandrew/image/upload/c_scale,g_center,h_500,w_400/v1605816733/${postData.image}`,
+        });
+        return axios({
+            method: 'post',
+            url: BASEURL + `/api/userPost/${username}`,
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -76,16 +96,16 @@ export default {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-        
+
         })
     },
 
     getAdventureLanding: function () {
-    
+
         return axios({
             method: 'get',
             url: BASEURL + '/company/adventures'
-        
+
         })
     },
 
@@ -121,6 +141,16 @@ export default {
             },
             headers: { Authorization: 'Bearer ' + `${token}` },
         });
+    }, 
+    getAdventureTags: function(token){
+        return axios({
+            method: 'get',
+            url: BASEURL + '/api/adventures',
+            headers: {
+                Authorization: 'Bearer ' + `${token}`
+            },
+        
+        })
     },
     getCompanyProfile: function (username, token) {
         return axios.get(BASEURL + '/company/findCompanyUser', {
@@ -135,4 +165,5 @@ export default {
             headers: { Authorization: 'Bearer ' + `${token}` },
         });
     }
+    
 };
