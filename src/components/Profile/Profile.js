@@ -217,7 +217,7 @@ function Profile(props) {
 
             let List = []
             for (let i = 0; i < res.results.length; i++) {
-                const user = res.results[i].target_id.slice(5);
+                const user = res.results[i].target_id.slice(9);
                 List.push(user)
             }
             console.log(List)
@@ -235,7 +235,7 @@ function Profile(props) {
 
             let List = []
             for (let i = 0; i < res.results.length; i++) {
-                const user = res.results[i].target_id.slice(5);
+                const user = res.results[i].target_id.slice(9);
                 List.push(user)
             }
             console.log(List)
@@ -249,7 +249,7 @@ function Profile(props) {
     // function to follow a user from the main activity in middle of page
     const followerUser = (userToFollow) => {
         const userOne = client.feed('timeline', client.userId);
-        userOne.follow('user', userToFollow)
+        userOne.follow('timeline', userToFollow)
         console.log("Followed: ", userToFollow)
     }
 
@@ -420,7 +420,7 @@ function Profile(props) {
                         </form>
                     </Container>
                 </div>
-                <Container className={classes.cardGrid} maxWidth="lg">
+                <Container className={classes.cardGrid} maxWidth="md">
                     <Grid container spacing={1} >
                         <Grid item xs={12} sm={4}>
 
