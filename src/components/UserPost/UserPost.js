@@ -162,7 +162,7 @@ export default function UserPost() {
                                     <Button onClick={() => beginUpload("image")}
                                         fullWidth
                                         variant="contained"
-                                        color="secondary">Upload Logo</Button>
+                                        color="secondary">Upload Photo</Button>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
