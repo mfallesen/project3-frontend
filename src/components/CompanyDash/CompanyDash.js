@@ -7,6 +7,7 @@ import PostAdventure from '../PostAdventure';
 import CompanyAddInfo from '../CompanyAddInfo';
 import { useParams } from 'react-router-dom';
 import API from '../../utils/API';
+import moment from 'moment';
 
 
 const useStyles = makeStyles({
@@ -16,11 +17,14 @@ const useStyles = makeStyles({
     }
 });
 
+
+
+
 export default function CompanyDash(props) {
     const classes = useStyles();
     const [postAdventure, setPostAdventure] = useState(false);
     const [editCompany, setEditCompany] = useState(false);
-    
+    const [adventure, setAdventure] = useState([]);
 
     let { companyusername } = useParams();
     //If there is no "companyusername", we'll programmatically redirect the user to login
@@ -50,42 +54,60 @@ export default function CompanyDash(props) {
         }
     }
 
+    useEffect(() => {
+        getDbAdventures();
+    }, []);
 
-    const adventureArr = [
-        {
-            title: "Kayaking",
-            image: "https://picsum.photos/150/200",
-            date: 'January 1, 2021',
-            text: "Whitewater Kayaking Fun!"
-        },
-        {
-            title: "Hiking",
-            image: "https://picsum.photos/150/200",
-            date: 'January 1, 2021',
-            text: "Whitewater Hiking Fun!"
-        },
-        {
-            title: "BeirGarten",
-            image: "https://picsum.photos/150/200",
-            date: 'January 1, 2021',
-            text: "Brews and Nature"
-        },
-        {
-            title: "Paddleboarding",
-            image: "https://picsum.photos/150/200",
-            date: 'January 1, 2021',
-            text: "See the Sound!"
-        },
-        {
-            title: "RC Car Racing",
-            image: "https://picsum.photos/150/200",
-            date: 'January 1, 2021',
-            text: "Rally rush in miniature!"
-        }
-    ]
+    const getDbAdventures = () => {
+
+        const token = localStorage.getItem("JWT");
+
+        API.getAdventures(token).then(response => {
+            const data = response.data
+            console.log("constant:data", data)
+            
+            setAdventure(data);
+        })
+    }
+
+    const adventureArr = adventure;
+    // [
+    //     {
+    //         title: "Kayaking",
+    //         image: "https://picsum.photos/150/200",
+    //         date: 'January 1, 2021',
+    //         text: "Whitewater Kayaking Fun!"
+    //     },
+    //     {
+    //         title: "Hikning",
+    //         image: "https://picsum.photos/150/200",
+    //         date: 'January 1, 2021',
+    //         text: "Whitewater Hiking Fun!"
+    //     },
+    //     {
+    //         title: "BeirGarten",
+    //         image: "https://picsum.photos/150/200",
+    //         date: 'January 1, 2021',
+    //         text: "Brews and Nature"
+    //     },
+    //     {
+    //         title: "Paddleboarding",
+    //         image: "https://picsum.photos/150/200",
+    //         date: 'January 1, 2021',
+    //         text: "See the Sound!"
+    //     },
+    //     {
+    //         title: "RC Car Racing",
+    //         image: "https://picsum.photos/150/200",
+    //         date: 'January 1, 2021',
+    //         text: "Rally rush in miniature!"
+    //     }
+    // ]
 
     return (
         <Grid container xs={12} sm={12} md={12}>
+
+
             <Grid
                 container
                 direction="column"
@@ -104,11 +126,13 @@ export default function CompanyDash(props) {
                         <Typography className={classes.heading} variant='h3'>Current Active Adventures</Typography>
                         <Grid container item spacing={3}>
                             {adventureArr.map((adventure) =>
+
+
                                 <CompanyAdventureCard
-                                    title={adventure.title}
-                                    date={adventure.date}
+                                    title={adventure.name}
+                                    date={moment(adventure.createdAt).format('D MMM YYYY')}
                                     image={adventure.image}
-                                    text={adventure.text}
+                                    text={adventure.description}
                                 ></CompanyAdventureCard>
                             )}
                         </Grid>
