@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import API from "../../utils/API";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -46,6 +46,44 @@ export default function SignUp() {
         username: "",
         password: ""
     })
+
+    const [companyProfileState, setCompanyProfileState] = useState({
+        username: "",
+        email: "",
+        token: "",
+        id: "",
+        isCompanyLoggedIn: false
+    })
+
+    useEffect(getCompanyData, [])
+
+    function getCompanyData() {
+        const token = localStorage.getItem("JWTCOMPANY");
+        const username = localStorage.getItem("USERNAMECOMPANY");
+        if (token && username) {
+            API.getCompanyProfile(username, token).then(companyProfileData => {
+                if (companyProfileData) {
+                    setCompanyProfileState({
+                        username: companyProfileData.data.username,
+                        email: companyProfileData.data.email,
+                        id: companyProfileData.data.id,
+                        isCompanyLoggedIn: true
+                    })
+                } else {
+                    localStorage.removeItem("JWTCOMPANY");
+                    setCompanyProfileState({
+                        username: "",
+                        email: "",
+                        token: "",
+                        id: "",
+                        isCompanyLoggedIn: false
+                    })
+                }
+            })
+        }
+    }
+
+    // })
     const inputChange = event => {
         const { name, value } = event.target;
         setLoginFormState({
@@ -57,11 +95,11 @@ export default function SignUp() {
     const handleFormSubmit = event => {
         event.preventDefault();
         API.loginCompany(loginFormState).then(newToken => {
-            console.log(newToken);
+            console.log("NewToken in CompanyLogin: ", newToken);
             localStorage.setItem('JWTCOMPANY', newToken.data.token);
             localStorage.setItem('USERNAMECOMPANY', loginFormState.username);
         }).then(() => {
-            window.location.href = "/";
+            window.location.href = `/companydashboard/${loginFormState.username}`;//if we do this, then it erases all local state
         })
         setLoginFormState({
             username: "",
