@@ -180,6 +180,17 @@ export default {
         return axios.get(BASEURL + '/api/userPosts', {
             headers: { Authorization: 'Bearer ' + `${token}` },
         });
+    },
+    postAdventureRating: function (token, id) {
+        return axios({
+            method: 'post',
+            url: BASEURL + '/api/adventure_rating/' + id,
+            headers: {
+                Authorization: 'Bearer ' + `${token}`
+            },
+
+        })
     }
+   
 
 };

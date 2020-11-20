@@ -63,7 +63,7 @@ export default function AdventuresPage(props) {
                 <SearchForm handleInputChange={handleInputChange} search={searchResults} />
                 <Grid className={classes.cardRow} container item md={12} spacing={3}>
                     {filteredData.map(
-                        card => <AdventureCard title={card.name} image={card.image} text={card.Tags.name} description={card.description} xs={12} sm={6} md={6}></AdventureCard>
+                        card => <AdventureCard id={card.id} title={card.name} image={card.image} text={card.Tags.name} description={card.description} xs={12} sm={6} md={6}></AdventureCard>
                     )}
                 </Grid>
             </Grid>
