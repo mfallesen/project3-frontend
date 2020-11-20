@@ -1,6 +1,6 @@
 // Code to add to API Route
 import axios from "axios";
-const BASEURL = "http://localhost:3000";
+const BASEURL = process.env.REACT_APP_API_SERVER;
 const qs = require('qs');
 
 export default {
