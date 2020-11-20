@@ -26,6 +26,8 @@ import UserPost from '../UserPost'
 import TextField from '@material-ui/core/TextField';
 import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
 import { openUploadWidget } from "../Cloudinary/CloudinaryService";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff'
+import IconButton from '@material-ui/core/IconButton';
 
 
 
@@ -59,7 +61,10 @@ const useStyles = makeStyles((theme) => ({
     cardContent: {
         flexGrow: 1,
     },
-
+    followGrids: {
+        padding: theme.spacing(1),
+        height: theme.spacing(5)
+    }
 }));
 
 // Connection to client for getStream.io
@@ -140,6 +145,9 @@ function Profile(props) {
     // function for navigation butttons
     const viewPanelChange = (panelName) => {
         setViewPanelState(panelName)
+        if (panelName === "activityFeed") {
+            Activities()
+        }
     }
 
     // function to change state of save profile
@@ -209,6 +217,10 @@ function Profile(props) {
         UserFollowers()
     }, []);
 
+    const isFollowing = () => {
+        const result = followingListState.includes()
+    }
+
 
     // function pulling following data from getStream.io
     const UserFollowing = () => {
@@ -217,7 +229,7 @@ function Profile(props) {
 
             let List = []
             for (let i = 0; i < res.results.length; i++) {
-                const user = res.results[i].target_id.slice(5);
+                const user = res.results[i].target_id.slice(9);
                 List.push(user)
             }
             console.log(List)
@@ -232,10 +244,10 @@ function Profile(props) {
     const UserFollowers = () => {
         const userOne = client.feed('timeline', client.userId);
         userOne.followers().then((res) => {
-
+            console.log("FOLLOWER: ", res)
             let List = []
             for (let i = 0; i < res.results.length; i++) {
-                const user = res.results[i].target_id.slice(5);
+                const user = res.results[i].feed_id.slice(9);
                 List.push(user)
             }
             console.log(List)
@@ -249,8 +261,20 @@ function Profile(props) {
     // function to follow a user from the main activity in middle of page
     const followerUser = (userToFollow) => {
         const userOne = client.feed('timeline', client.userId);
-        userOne.follow('user', userToFollow)
+        userOne.follow('timeline', userToFollow)
         console.log("Followed: ", userToFollow)
+        UserFollowing()
+        UserFollowers()
+        Activities()
+    }
+
+    const unfollowerUser = (userToUnFollow) => {
+        const userOne = client.feed('timeline', client.userId);
+        userOne.unfollow('timeline', userToUnFollow, { keepHistory: true })
+        console.log("UnFollowed: ", userToUnFollow)
+        UserFollowing()
+        UserFollowers()
+        Activities()
     }
 
     // function to call Cloudinary widget to upload profile photo
@@ -420,7 +444,7 @@ function Profile(props) {
                         </form>
                     </Container>
                 </div>
-                <Container className={classes.cardGrid} maxWidth="lg">
+                <Container className={classes.cardGrid} maxWidth="md">
                     <Grid container spacing={1} >
                         <Grid item xs={12} sm={4}>
 
@@ -453,7 +477,8 @@ function Profile(props) {
                                                             <Activity
                                                                 activity={activity}
                                                             />
-                                                            <FollowButton onClick={() => followerUser(activity.actor.data.userId)} />
+
+                                                            {followingListState.includes(activity.actor.data.userId) ? <FollowButton followed onClick={() => unfollowerUser(activity.actor.data.userId)} /> : <FollowButton onClick={() => followerUser(activity.actor.data.userId)} />}
 
                                                         </Paper>
                                                     </ Grid >
@@ -484,14 +509,20 @@ function Profile(props) {
                             <Grid container spacing={1}>
                                 {followingListState.slice(0, 10).map((follower) => (
                                     <Grid item xs={12}>
-                                        <Card className={classes.card} elevation={3}>
-
-                                            <CardContent className={classes.cardContent}>
-                                                <Typography variant="subtitle2">
-                                                    {follower}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
+                                        <Paper>
+                                            <Grid container className={classes.followGrids}>
+                                                <Grid item xs={10}>
+                                                    <Typography variant="subtitle2">
+                                                        {follower}
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={2}>
+                                                    <IconButton color="secondary" aria-label="add an alarm" size="small">
+                                                        <HighlightOffIcon onClick={() => unfollowerUser(follower)} fontSize="inherit" />
+                                                    </IconButton>
+                                                </Grid>
+                                            </Grid>
+                                        </Paper>
                                     </ Grid >
                                 ))}
                             </Grid>
@@ -508,14 +539,16 @@ function Profile(props) {
                             <Grid container spacing={1}>
                                 {followerListState.slice(0, 10).map((follower) => (
                                     <Grid item xs={12}>
-                                        <Card className={classes.card} elevation={3}>
+                                        <Paper>
+                                            <Grid container className={classes.followGrids}>
+                                                <Grid item xs={12}>
 
-                                            <CardContent className={classes.cardContent}>
-                                                <Typography variant="subtitle2">
-                                                    {follower}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
+                                                    <Typography variant="subtitle2">
+                                                        {follower}
+                                                    </Typography>
+                                                </Grid>
+                                            </Grid>
+                                        </Paper>
                                     </ Grid >
                                 ))}
                             </Grid>

@@ -97,7 +97,7 @@ export default {
         const data = qs.stringify({
             'title': postData.title,
             'description': postData.description,
-            'image': `https://res.cloudinary.com/crowandrew/image/upload/c_scale,g_center,h_500,w_400/v1605816733/${postData.image}`,
+            'image': `https://res.cloudinary.com/crowandrew/image/upload/c_fit,g_center,h_1600,w_1200/v1605816733/${postData.image}`,
         });
         return axios({
             method: 'post',
