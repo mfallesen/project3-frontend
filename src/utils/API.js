@@ -1,6 +1,6 @@
 // Code to add to API Route
 import axios from "axios";
-const BASEURL = "http://localhost:3000";
+const BASEURL = process.env.REACT_APP_API_SERVER;
 const qs = require('qs');
 
 export default {
@@ -198,7 +198,12 @@ export default {
             },
 
         })
-    }
-   
+    },
 
+    countAdventureRating: function (token, id) {
+        return axios.get(BASEURL + '/api/adventure_rating/' + id, {
+            headers: { Authorization: 'Bearer ' + `${token}` },
+        }
+        )
+    }
 };

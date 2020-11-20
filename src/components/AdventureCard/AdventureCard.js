@@ -17,28 +17,39 @@ const useStyles = makeStyles({
 
 
 export default function AdventureCard(props) {
+    console.log(props.id)
     const classes = useStyles();
 
     const [isFlipped, setIsFlipped] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
     const handleClick = () => {
         setIsFlipped(!isFlipped);
     }
 
     useEffect(() => {
-        postRatingDB();
+        // postRatingDB(props.id);
+        postLikeCount(props.id);
     }, []);
-    
-    
-    const postRatingDB = (id) =>{
-        console.log("Click", id);
+
+    const postLikeCount = (id) => {
+        const token = localStorage.getItem("JWT");
+        API.countAdventureRating(token, id).then(response => {
+            setLikeCount(response.data);
+
+        })
+    }
+    const postRatingDB = (id) => {
+
         const token = localStorage.getItem("JWT");
         API.postAdventureRating(token, id).then(response => {
             const data = response.data
-            console.log("constant:data", data)
-            
+
+
+        }).then(() => {
+            postLikeCount(props.id);
         })
     }
-    
+
 
     return (
 
@@ -80,9 +91,9 @@ export default function AdventureCard(props) {
                         {console.log(props, "Props")}
                         <Grid container justify='space-between'>
 
-                            <Typography align='justify' variant='button'><Button disabled>0 Likes</Button><IconButton onClick = {() =>{
+                            <Typography align='justify' variant='button'><Button disabled>{likeCount} Likes</Button><IconButton onClick={() => {
                                 postRatingDB(props.id)
-                            }}color='primary'><ThumbUpAltIcon /></IconButton></Typography>
+                            }} color='primary'><ThumbUpAltIcon /></IconButton></Typography>
 
                             <Button onClick={handleClick} >More Info</Button>
 
@@ -91,10 +102,10 @@ export default function AdventureCard(props) {
                     </CardContent>
                 </Card>
 
-                <Card  elevation='6'>
+                <Card elevation='6'>
                     <CardContent>
                         <Typography>{props.description}</Typography>
-                        <hr/>
+                        <hr />
                         <Grid container justify='flex-end'>
                             <Button onClick={handleClick}>Less Info</Button>
                         </Grid>
