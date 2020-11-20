@@ -2,9 +2,9 @@ import React from 'react';
 import clsx from 'clsx';
 import { BrowserRouter as Router, Link as NavLink, Switch, Route, Redirect } from 'react-router-dom'
 import './Navbar.css'
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, withStyles } from '@material-ui/styles';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-import { AppBar, Button, Toolbar, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Drawer } from '@material-ui/core';
+import { AppBar, Button, Toolbar, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Drawer, Grid } from '@material-ui/core';
 import AdventureLanding from '../AdventureLanding';
 import Hero from '../Hero/Hero';
 import Userlandingpost from '../Userlandingpost';
@@ -19,13 +19,12 @@ import CompanyLogin from '../CompanyLogin'
 import CompanyAddInfo from '../CompanyAddInfo';
 import UserLogin from '../UserLogin';
 import CompanyDash from '../CompanyDash'
-
+import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
 
 const useStyles = makeStyles({
     appbar: {
-        background: '#5085A5',
-        opacity: '0.7',
-        width: '100%',
+        background: 'rgb(247,249,251, 0.6)',
+        opacity: '0.9999'
     },
     navBtn: {
         background: '#687864',
@@ -34,18 +33,12 @@ const useStyles = makeStyles({
         opacity: '1.0',
         float: 'right',
     },
-    toolbar: {
-        float: 'right'
-    },
     image: {
         paddingTop: '20px',
         paddingBottom: '20px',
         flexGrow: 1,
     },
-    menuButton: {
-        marginRight: '20px',
-
-    },
+    
     list: {
         width: 250,
     },
@@ -53,6 +46,18 @@ const useStyles = makeStyles({
         width: 'auto',
     },
 });
+
+const StyledMenuOpenIcon = withStyles({
+    root: {
+      background: '#687864',
+      color: '#F7F9FB',
+      borderRadius: 5,
+      boxSizing: 'initial',
+      padding: 6,
+    },
+    
+  })(MenuOpenIcon);
+
 
 export default function Navbar(props) {
 
@@ -134,25 +139,30 @@ export default function Navbar(props) {
             <AppBar className={classes.appbar} position="static">
 
                 <Toolbar className={classes.toolbar}>
+                    <Grid container justify='space-between' alignItems='center'>
+                        <Grid containter item >
+                            <React.Fragment key={'left'}>
+                                {props.profile.isLoggedIn ? <IconButton edge="start" color="primary" aria-label="menu">
+                                    <MenuOpenIcon color='primary' onClick={toggleDrawer('left', true)}>{'left'}</MenuOpenIcon>
+                                </IconButton> : <StyledMenuOpenIcon color="primary" />}
 
-                    <React.Fragment key={'left'}>
-                        {props.profile.isLoggedIn ? <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                            <MenuOpenIcon onClick={toggleDrawer('left', true)}>{'left'}</MenuOpenIcon>
-                        </IconButton> : <MenuOpenIcon />}
+                                <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+                                    {list('left')}
+                                </Drawer>
+                            </React.Fragment>
+                        </Grid>
+                        <Grid containter item >
+                            <img className={classes.image} src={"https://res.cloudinary.com/crowandrew/image/upload/c_fit,w_300/v1605820413/minnesvart/logo_rdvtg7.png"} alt='logo' />
+                            
+                        </Grid>
 
-
-                        <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
-                            {list('left')}
-                        </Drawer>
-                    </React.Fragment>
-
-                    <img className={classes.image} src={"https://logoipsum.com/logo/logo-25.svg"} alt='logo' />
-
-                    {props.profile.isLoggedIn || companyData.isCompanyLoggedIn ?
-                        <NavLink to="/" edge="end"><Button className={classes.navBtn} onClick={logout}>Logout</Button> </NavLink>
-                        :
-                        <NavLink to="/signin" edge="end"><Button className={classes.navBtn}>Login</Button> </NavLink>}
-
+                        <Grid containter item >
+                            {props.profile.isLoggedIn ?
+                                <NavLink to="/" edge="end"><Button className={classes.navBtn} onClick={logout}>Logout</Button> </NavLink>
+                                :
+                                <NavLink to="/signin" edge="end"><Button className={classes.navBtn}>Login</Button> </NavLink>}
+                        </Grid>
+                    </Grid>
                 </Toolbar>
             </AppBar>
 
