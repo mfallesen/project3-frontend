@@ -17,6 +17,7 @@ import CompanyLogin from './components/CompanyLogin';
 import CompanyDash from './components/CompanyDash';
 import CompanyAddInfo from './components/CompanyAddInfo';
 import Footer from './components/Footer';
+import Gallery from './components/Gallery'
 
 
 
@@ -42,7 +43,7 @@ function App() {
   useEffect(() => {
     getUserData()
     getCompanyData()
-}, []);
+  }, []);
 
   function getUserData() {
     const token = localStorage.getItem("JWT");
@@ -83,27 +84,27 @@ function App() {
     const token = localStorage.getItem("JWTCOMPANY");
     const username = localStorage.getItem("USERNAMECOMPANY");
     if (token && username) {
-        API.getCompanyProfile(username, token).then(companyProfileData => {
-            if (companyProfileData) {
-                setCompanyProfileState({
-                    username: companyProfileData.data.username,
-                    email: companyProfileData.data.email,
-                    id: companyProfileData.data.id,
-                    isCompanyLoggedIn: true
-                })
-            } else {
-                localStorage.removeItem("JWTCOMPANY");
-                setCompanyProfileState({
-                    username: "",
-                    email: "",
-                    token: "",
-                    id: "",
-                    isCompanyLoggedIn: false
-                })
-            }
-        })
+      API.getCompanyProfile(username, token).then(companyProfileData => {
+        if (companyProfileData) {
+          setCompanyProfileState({
+            username: companyProfileData.data.username,
+            email: companyProfileData.data.email,
+            id: companyProfileData.data.id,
+            isCompanyLoggedIn: true
+          })
+        } else {
+          localStorage.removeItem("JWTCOMPANY");
+          setCompanyProfileState({
+            username: "",
+            email: "",
+            token: "",
+            id: "",
+            isCompanyLoggedIn: false
+          })
+        }
+      })
     }
-}
+  }
 
   const submitForm = event => {
     event.preventDefault();
@@ -167,9 +168,9 @@ function App() {
 
   const handleCompanyData = (companyProfileState) => {
     console.log("CompanyProfileState", companyProfileState);
-    setCompanyProfileState({...companyProfileState, isCompanyLoggedIn: true});
+    setCompanyProfileState({ ...companyProfileState, isCompanyLoggedIn: true });
     console.log("Company Data: ", companyProfileState);
-}
+  }
 
   const inputChangeRegister = event => {
     const { name, value } = event.target;
@@ -194,13 +195,13 @@ function App() {
     token: "",
     id: "",
     isCompanyLoggedIn: false
-})
+  })
   return (
     <Router>
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Navbar profile={profileState} setProfile={setProfileState} companyProfile={companyProfileState} setCompanyProfileState={setCompanyProfileState}/>
+        <Navbar profile={profileState} setProfile={setProfileState} companyProfile={companyProfileState} setCompanyProfileState={setCompanyProfileState} />
 
         <Switch>
           <Route exact path="/registerUser">
@@ -217,22 +218,24 @@ function App() {
             {profileState.isLoggedIn ? <AdventureLanding /> : <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
           </Route>
           <Route path="/companydashboard/:companyname">
-              <CompanyDash companyProfile={companyProfileState} setCompanyData={setCompanyProfileState} handleCompanyData={handleCompanyData}/> 
+            <CompanyDash companyProfile={companyProfileState} setCompanyData={setCompanyProfileState} handleCompanyData={handleCompanyData} />
           </Route>
           <Route exact path="/companysignup">
             <CompanySignup />
           </Route>
           <Route exact path="/companylogin">
-            <CompanyLogin companyProfile={companyProfileState} setCompanyProfileState={setCompanyProfileState} handleCompanyData={handleCompanyData}/>
+            <CompanyLogin companyProfile={companyProfileState} setCompanyProfileState={setCompanyProfileState} handleCompanyData={handleCompanyData} />
           </Route>
           <Route path="/companyaddinfo">
-              <CompanyAddInfo /> 
+            <CompanyAddInfo />
           </Route>
           <Route exact path={["/", "/home"]}>
             <Hero />
-            <AdventureLanding>
-              <Userlandingpost />
-            </AdventureLanding>
+            <div>
+              <AdventureLanding />
+              <Gallery />
+            </div>
+
           </Route>
         </Switch>
         <Footer />
