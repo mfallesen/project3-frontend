@@ -213,6 +213,9 @@ function App() {
           <Route exact path="/signin">
             {profileState.isLoggedIn ? <Redirect to="/profile" /> : <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
           </Route>
+          <Route exact path="/adventures">
+            {profileState.isLoggedIn ? <AdventureLanding /> : <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
+          </Route>
           <Route path="/companydashboard/:companyname">
               <CompanyDash companyProfile={companyProfileState} setCompanyData={setCompanyProfileState} handleCompanyData={handleCompanyData}/> 
           </Route>
