@@ -31,7 +31,7 @@ export default function AdventuresPage(props) {
 
                     for (let i = 0; i < adventures.Adventure_ratings.length; i++) {
 
-                        if (adventures.Adventure_ratings[i].UserId === 1) {
+                        if (adventures.Adventure_ratings[i].UserId === props.profile.id) {
                             return true
                         }
                     }
