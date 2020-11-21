@@ -1,25 +1,16 @@
 import React from 'react';
 import clsx from 'clsx';
-import { BrowserRouter as Router, Link as NavLink, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Link as NavLink, Redirect } from 'react-router-dom'
 import './Navbar.css'
 import { makeStyles, withStyles } from '@material-ui/styles';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { AppBar, Button, Toolbar, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Drawer, Grid } from '@material-ui/core';
-import AdventureLanding from '../AdventureLanding';
-import Hero from '../Hero/Hero';
-import Userlandingpost from '../Userlandingpost';
-import Profile from '../Profile/Profile'
 import ExploreIcon from '@material-ui/icons/Explore';
 import StarIcon from '@material-ui/icons/Star';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AdventuresPage from '../AdventuresPage/AdventuresPage';
-import CompanySignup from '../CompanySignup'
-import CompanyLogin from '../CompanyLogin'
-import CompanyAddInfo from '../CompanyAddInfo';
-import UserLogin from '../UserLogin';
-import CompanyDash from '../CompanyDash'
 import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
+
 
 const useStyles = makeStyles({
     appbar: {
@@ -68,15 +59,6 @@ export default function Navbar(props) {
         left: false,
         bottom: false,
         right: false,
-    });
-
-    const [companyData, setCompanyData] = React.useState({
-        auth: false,
-        email: "",
-        message: "",
-        password: "",
-        username: "",
-        isCompanyLoggedIn: false
     });
 
     function ListItemLink(props) {
@@ -128,11 +110,10 @@ export default function Navbar(props) {
         localStorage.removeItem("USERNAMECOMPANY");
         window.location.href = "/home";
     }
-
-    const handleCompanyData = (companyData) => {
-        setCompanyData({ ...companyData, isCompanyLoggedIn: true });
-        // console.log("Company Data: ", companyData);
+    const login = () => {
+        window.location.href = "/signin";
     }
+
     return (
         <Router>
 
@@ -155,7 +136,7 @@ export default function Navbar(props) {
                             {/* <img className={classes.image} src={"https://res.cloudinary.com/crowandrew/image/upload/c_fit,w_300/v1605820413/minnesvart/logo_rdvtg7.png"} alt='logo' /> */}
 
                             <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
-                                <Image cloudname publicId="minnesvart/logo_rdvtg7.png" >
+                                <Image publicId="minnesvart/logo_rdvtg7.png" >
                                     <Transformation width="200" crop="fill" />
                                 </Image>
                             </CloudinaryContext>
@@ -166,52 +147,12 @@ export default function Navbar(props) {
                             {props.profile.isLoggedIn ?
                                 <NavLink to="/" edge="end"><Button className={classes.navBtn} onClick={logout}>Logout</Button> </NavLink>
                                 :
-                                <NavLink to="/signin" edge="end"><Button className={classes.navBtn}>Login</Button> </NavLink>}
+                                <NavLink to="/signin" edge="end"><Button onClick={login} className={classes.navBtn}>Login</Button> </NavLink>}
                         </Grid>
                     </Grid>
                 </Toolbar>
             </AppBar>
 
-
-            <Switch>
-                <Route path="/companydashboard/:companyusername">
-
-                    <CompanyDash setCompanyData={setCompanyData} handleCompanyData={handleCompanyData} />
-                </Route>
-
-                <Route path="/companysignup">
-                    <CompanySignup />
-                </Route>
-                <Route path="/companylogin">
-                    <CompanyLogin />
-                </Route>
-                <Route path="/companyaddinfo">
-                    <CompanyAddInfo />
-                </Route>
-
-                <Route path="/adventures">
-                    {props.profile.isLoggedIn ?
-                        <AdventuresPage></AdventuresPage> : "To see adventures, please sign in first"}
-                </Route>
-                <Route path="/profile" >
-                    {props.profile.isLoggedIn ?
-                        <Profile profile={props.profile} setProfile={props.setProfile} /> : "You must sign in before seeing profile data"}
-                </Route>
-                <Route path={["/", "/home"]}>
-                    <Hero />
-                    {props.profile.isLoggedIn ?
-                        <AdventureLanding>
-                            <Userlandingpost />
-                        </AdventureLanding>
-                        : "Please sign in first"}
-                </Route>
-                <Route path="/signin">
-
-                </Route>
-                <Route path="/companydash">
-
-                </Route>
-            </Switch>
 
         </Router >
     )

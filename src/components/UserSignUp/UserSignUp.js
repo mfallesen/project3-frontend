@@ -37,30 +37,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserSignUp() {
+export default function UserSignUp(props) {
   const classes = useStyles();
+  console.log(props);
 
-  const [signUpFormState, setUserSignUpFormState] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    username: "",
-    password: ""
-  })
-  const inputChange = event => {
-    const { name, value } = event.target;
-    setUserSignUpFormState({
-      ...signUpFormState,
-      [name]: value
-    })
-  }
-
-  const handleFormSubmit = event => {
-    event.preventDefault();
-    API.registerUser(signUpFormState).then(userData => {
-      console.log(userData);
-    })
-  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -72,7 +52,7 @@ export default function UserSignUp() {
         <Typography component="h1" variant="h5" className={classes.h1Text}>
           Sign up
         </Typography>
-        <form className={classes.form} onSubmit={handleFormSubmit} noValidate>
+        <form className={classes.form} onSubmit={props.handleUserRegFormSubmit} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} >
               <TextField
@@ -83,8 +63,8 @@ export default function UserSignUp() {
                 label="First Name"
                 name="first_name"
                 autoComplete="first name"
-                onChange={inputChange}
-                value={signUpFormState.first_name}
+                onChange={props.inputChange}
+                value={props.form.first_name}
               />
               </Grid>
               <Grid item xs={12} >
@@ -96,8 +76,8 @@ export default function UserSignUp() {
                   label="Last Name"
                   name="last_name"
                   autoComplete="Last Name"
-                  onChange={inputChange}
-                  value={signUpFormState.last_name}
+                  onChange={props.inputChange}
+                  value={props.form.last_name}
                 />
                 </Grid>
                 <Grid item xs={12}>
@@ -109,8 +89,8 @@ export default function UserSignUp() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
-                    onChange={inputChange}
-                    value={signUpFormState.email}
+                    onChange={props.inputChange}
+                    value={props.form.email}
                   />
                 </Grid>
                 <Grid item xs={12} >
@@ -122,8 +102,8 @@ export default function UserSignUp() {
                     label="User Name"
                     name="username"
                     autoComplete="username"
-                    onChange={inputChange}
-                    value={signUpFormState.username}
+                    onChange={props.inputChange}
+                    value={props.form.username}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -136,8 +116,8 @@ export default function UserSignUp() {
                     type="password"
                     id="password"
                     autoComplete="current-password"
-                    onChange={inputChange}
-                    value={signUpFormState.password}
+                    onChange={props.inputChange}
+                    value={props.form.password}
                   />
                 </Grid>
               </Grid>
