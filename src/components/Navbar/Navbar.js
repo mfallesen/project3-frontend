@@ -24,7 +24,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles({
     appbar: {
-        background: 'rgb(247,249,251, 0.6)',
+        background: 'rgb(247,249,251, 0.7)',
         opacity: '0.9999'
     },
     navBtn: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
         paddingBottom: '20px',
         flexGrow: 1,
     },
-    
+
     list: {
         width: 250,
     },
@@ -50,14 +50,14 @@ const useStyles = makeStyles({
 
 const StyledMenuOpenIcon = withStyles({
     root: {
-      background: '#687864',
-      color: '#F7F9FB',
-      borderRadius: 5,
-      boxSizing: 'initial',
-      padding: 6,
+        background: '#687864',
+        color: '#F7F9FB',
+        borderRadius: 5,
+        boxSizing: 'initial',
+        padding: 6,
     },
-    
-  })(MenuOpenIcon);
+
+})(MenuOpenIcon);
 
 
 export default function Navbar(props) {
@@ -131,6 +131,10 @@ export default function Navbar(props) {
     }
     const login = () => {
         window.location.href = "/signin";
+
+    const handleCompanyData = (companyData) => {
+        setCompanyData({ ...companyData, isCompanyLoggedIn: true });
+        // console.log("Company Data: ", companyData);
     }
 
     // const handleCompanyData = (companyData) => {
@@ -155,9 +159,15 @@ export default function Navbar(props) {
                                 </Drawer>
                             </React.Fragment>
                         </Grid>
-                        <Grid container item >
-                            <img className={classes.image} src={"https://res.cloudinary.com/crowandrew/image/upload/c_fit,w_300/v1605820413/minnesvart/logo_rdvtg7.png"} alt='logo' />
-                            
+                        <Grid containter item >
+                            {/* <img className={classes.image} src={"https://res.cloudinary.com/crowandrew/image/upload/c_fit,w_300/v1605820413/minnesvart/logo_rdvtg7.png"} alt='logo' /> */}
+
+                            <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
+                                <Image publicId="minnesvart/logo_rdvtg7.png" >
+                                    <Transformation width="200" crop="fill" />
+                                </Image>
+                            </CloudinaryContext>
+
                         </Grid>
 
                         <Grid container item >
@@ -173,8 +183,8 @@ export default function Navbar(props) {
 
             {/* <Switch>
                 <Route path="/companydashboard/:companyusername">
-                    
-                    <CompanyDash setCompanyData={setCompanyData }handleCompanyData={handleCompanyData}/>
+
+                    <CompanyDash setCompanyData={setCompanyData} handleCompanyData={handleCompanyData} />
                 </Route>
 
                 <Route path="/companysignup">
@@ -206,7 +216,7 @@ export default function Navbar(props) {
                 <Route path="/signin">
                         <UserLogin />
                 </Route>
-                <Route path = "/companydash">
+                <Route path="/companydash">
 
                 </Route>
                 <Route path = "/registeruser">

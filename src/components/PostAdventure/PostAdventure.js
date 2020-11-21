@@ -205,6 +205,7 @@ export default function AdventurePost() {
                                         id="image"
                                         label="Image"
                                         name="image"
+                                        disabled="true"
                                         autoComplete="image"
                                         onChange={inputChange}
                                         value={adventureInfoFormState.image}

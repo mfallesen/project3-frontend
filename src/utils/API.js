@@ -96,7 +96,7 @@ export default {
         const data = qs.stringify({
             'title': postData.title,
             'description': postData.description,
-            'image': `https://res.cloudinary.com/crowandrew/image/upload/c_scale,g_center,h_500,w_400/v1605816733/${postData.image}`,
+            'image': `https://res.cloudinary.com/crowandrew/image/upload/c_fit,g_center,h_1600,w_1200/v1605816733/${postData.image}`,
         });
         return axios({
             method: 'post',
@@ -187,6 +187,22 @@ export default {
         return axios.get(BASEURL + '/api/userPosts', {
             headers: { Authorization: 'Bearer ' + `${token}` },
         });
-    }
+    },
+    postAdventureRating: function (token, id) {
+        return axios({
+            method: 'post',
+            url: BASEURL + '/api/adventure_rating/' + id,
+            headers: {
+                Authorization: 'Bearer ' + `${token}`
+            },
 
+        })
+    },
+
+    countAdventureRating: function (token, id) {
+        return axios.get(BASEURL + '/api/adventure_rating/' + id, {
+            headers: { Authorization: 'Bearer ' + `${token}` },
+        }
+        )
+    }
 };

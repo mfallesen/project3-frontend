@@ -26,6 +26,10 @@ import UserPost from '../UserPost'
 import TextField from '@material-ui/core/TextField';
 import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
 import { openUploadWidget } from "../Cloudinary/CloudinaryService";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff'
+import IconButton from '@material-ui/core/IconButton';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 
 
 
@@ -59,7 +63,13 @@ const useStyles = makeStyles((theme) => ({
     cardContent: {
         flexGrow: 1,
     },
-
+    followGrids: {
+        padding: theme.spacing(1),
+        height: theme.spacing(5)
+    },
+    buttonWidth: {
+        width: 170
+    }
 }));
 
 // Connection to client for getStream.io
@@ -123,6 +133,8 @@ function Feed(props) {
 function Profile(props) {
     const classes = useStyles();
 
+    const largeScreen = useMediaQuery('(min-width:600px)')
+
     // State for activities in middle of screen, followers on the right, read only for forms and navigation
     const [activitiesState, setActivitiesState] = useState([])
     const [followerListState, setFollowerListState] = useState([])
@@ -136,10 +148,21 @@ function Profile(props) {
         setReadOnlyEditState(false)
     }
 
+    const checkScreenSize = () => {
+        if (largeScreen) {
+            setViewPanelState("activityFeed")
+        } else {
+            setViewPanelState("personalFeed")
+        }
+    }
+
 
     // function for navigation butttons
     const viewPanelChange = (panelName) => {
         setViewPanelState(panelName)
+        if (panelName === "activityFeed") {
+            Activities()
+        }
     }
 
     // function to change state of save profile
@@ -207,7 +230,10 @@ function Profile(props) {
         Activities()
         UserFollowing()
         UserFollowers()
+        checkScreenSize()
     }, []);
+
+
 
 
     // function pulling following data from getStream.io
@@ -217,7 +243,7 @@ function Profile(props) {
 
             let List = []
             for (let i = 0; i < res.results.length; i++) {
-                const user = res.results[i].target_id.slice(5);
+                const user = res.results[i].target_id.slice(9);
                 List.push(user)
             }
             console.log(List)
@@ -232,10 +258,10 @@ function Profile(props) {
     const UserFollowers = () => {
         const userOne = client.feed('timeline', client.userId);
         userOne.followers().then((res) => {
-
+            console.log("FOLLOWER: ", res)
             let List = []
             for (let i = 0; i < res.results.length; i++) {
-                const user = res.results[i].target_id.slice(5);
+                const user = res.results[i].feed_id.slice(9);
                 List.push(user)
             }
             console.log(List)
@@ -249,8 +275,20 @@ function Profile(props) {
     // function to follow a user from the main activity in middle of page
     const followerUser = (userToFollow) => {
         const userOne = client.feed('timeline', client.userId);
-        userOne.follow('user', userToFollow)
+        userOne.follow('timeline', userToFollow)
         console.log("Followed: ", userToFollow)
+        UserFollowing()
+        UserFollowers()
+        Activities()
+    }
+
+    const unfollowerUser = (userToUnFollow) => {
+        const userOne = client.feed('timeline', client.userId);
+        userOne.unfollow('timeline', userToUnFollow, { keepHistory: true })
+        console.log("UnFollowed: ", userToUnFollow)
+        UserFollowing()
+        UserFollowers()
+        Activities()
     }
 
     // function to call Cloudinary widget to upload profile photo
@@ -275,6 +313,110 @@ function Profile(props) {
         })
     }
 
+    const FollowingComponent = () => {
+        return <Grid item xs={12} sm={2}>
+            <Grid container spacing={1}>
+                <Grid item xs={12}>
+                    {/* <ScrollableAnchor id={'potatoes'}> */}
+                    <Typography variant="h6">
+                        Following {followingListState.length}
+                    </Typography>
+                    {/* </ScrollableAnchor> */}
+                </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+                {followingListState.slice(0, 10).map((follower) => (
+                    <Grid item xs={12}>
+                        <Paper>
+                            <Grid container className={classes.followGrids}>
+                                <Grid item xs={10}>
+                                    <Typography variant="subtitle2">
+                                        {follower}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <IconButton color="secondary" aria-label="add an alarm" size="small">
+                                        <HighlightOffIcon onClick={() => unfollowerUser(follower)} fontSize="inherit" />
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </ Grid >
+                ))}
+            </Grid>
+        </Grid>
+
+    }
+
+    const FollowerComponent = () => {
+        return <Grid item xs={12} sm={2} >
+            <Grid container spacing={1}>
+                <Grid item xs={12}>
+                    <Typography variant="h6">
+                        Followers {followerListState.length}
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+                {followerListState.slice(0, 10).map((follower) => (
+                    <Grid item xs={12}>
+                        <Paper>
+                            <Grid container className={classes.followGrids}>
+                                <Grid item xs={12}>
+
+                                    <Typography variant="subtitle2">
+                                        {follower}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </ Grid >
+                ))}
+            </Grid>
+        </Grid >
+    }
+
+    const ActivityFeed = () => {
+        return <Grid item xs={12} sm={4} >
+
+            <Grid container spacing={1}>
+                <Grid item xs={12}>
+                    <Typography variant="h5">
+                        Activity Feed
+                                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+                <Grid item xs={12} sm={12}>
+                    <StreamApp
+                        apiKey={process.env.REACT_APP_STREAM_API_KEY}
+                        appId={process.env.REACT_APP_STREAM_APP_ID}
+                        token={streamString}
+                    >
+
+                        <Grid container spacing={1}>
+                            {activitiesState.map((activity) => (
+                                <Grid item xs={12}>
+                                    <Paper elevation={3}>
+                                        <Activity
+                                            activity={activity}
+                                        />
+
+                                        {followingListState.includes(activity.actor.data.userId) ? <FollowButton followed onClick={() => unfollowerUser(activity.actor.data.userId)} /> : <FollowButton onClick={() => followerUser(activity.actor.data.userId)} />}
+
+                                    </Paper>
+                                </ Grid >
+                            ))}
+                        </Grid>
+
+                    </StreamApp>
+                </Grid>
+            </Grid>
+
+
+        </Grid>
+    }
+
 
     // return jsx to render on page
     return (
@@ -289,7 +431,7 @@ function Profile(props) {
                                 <Grid item xs={12} sm={5} lg={3} >
 
                                     {readOnlyEditState ?
-                                        <img alt={props.profile.first_name} src={`https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/${props.profile.image}`} alt="Logo" />
+                                        <img alt={props.profile.first_name} src={`https://res.cloudinary.com/crowandrew/image/upload/w_500,h_500,c_crop,g_face,r_max/w_150/v1603932299/${props.profile.image}`} alt="Logo" />
                                         : <Grid container spacing={2}>
                                             <Grid item xs={12}>
                                                 <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
@@ -301,7 +443,7 @@ function Profile(props) {
                                                         quality="auto"
 
                                                     >
-                                                        <Transformation gravity="face" height="400" radius="max" width="400" crop="crop" />
+                                                        <Transformation gravity="face" height="500" radius="max" width="500" crop="crop" />
                                                         <Transformation width="150" crop="scale" />
                                                     </Image>
                                                 </CloudinaryContext>
@@ -322,6 +464,7 @@ function Profile(props) {
                                                     id="image"
                                                     label="Image"
                                                     name="image"
+                                                    disabled="true"
                                                     autoComplete="image"
                                                     onChange={inputChange}
                                                     value={props.profile.image}
@@ -400,126 +543,63 @@ function Profile(props) {
                                         </Grid>
 
                                         <Grid item xs={2}>
-                                            {readOnlyEditState ? <Button onClick={() => { editProfile() }}>Edit</Button> : <Button onClick={handleFormSubmit} >Save</Button>}
+                                            {readOnlyEditState ? <Button color="primary" variant="contained" onClick={() => { editProfile() }}>Edit</Button> : <Button color="secondary" variant="contained" onClick={handleFormSubmit} >Save</Button>}
                                         </Grid>
 
                                     </Grid>
 
                                 </Grid>
-                                <Grid item xs={6} sm={3} md={3}>
-                                    <Button onClick={() => { viewPanelChange("activityFeed") }}>Activity Feed</Button>
+                                <Grid item xs={6} sm={4} md={3}>
+                                    <Button className={classes.buttonWidth} color="primary" variant="contained" onClick={() => { viewPanelChange("activityFeed") }}>Activity Feed</Button>
                                 </Grid>
-                                <Grid item xs={6} sm={3} md={3}>
-                                    <Button onClick={() => { viewPanelChange("addActivity") }}>Add Activity</Button>
+                                <Grid item xs={6} sm={4} md={3}>
+                                    <Button className={classes.buttonWidth} color="primary" variant="contained" onClick={() => { viewPanelChange("addActivity") }}>Add Activity</Button>
                                 </Grid>
-                                <Grid item xs={6} sm={3} md={3}>
-                                    <Button onClick={() => { viewPanelChange("favAdventures") }}>Fav Adventures</Button>
+                                <Grid item xs={6} sm={4} md={3}>
+                                    <Button className={classes.buttonWidth} color="primary" variant="contained" onClick={() => { viewPanelChange("favAdventures") }}>Fav Adventures</Button>
                                 </Grid>
-
+                                {!largeScreen ?
+                                    <Grid item xs={6} sm={4} md={3}>
+                                        <Button className={classes.buttonWidth} color="primary" variant="contained" onClick={() => { viewPanelChange("followPanel") }}>Follow</Button>
+                                    </Grid>
+                                    : " "}
+                                {!largeScreen ?
+                                    <Grid item xs={12} sm={4} md={3}>
+                                        <Button className={classes.buttonWidth} color="primary" variant="contained" onClick={() => { viewPanelChange("personalFeed") }}>Personal Feed</Button>
+                                    </Grid>
+                                    : " "}
                             </Grid>
                         </form>
                     </Container>
                 </div>
-                <Container className={classes.cardGrid} maxWidth="lg">
+                <Container className={classes.cardGrid} maxWidth="md">
                     <Grid container spacing={1} >
-                        <Grid item xs={12} sm={4}>
+                        {viewPanelState === "activityFeed" && !largeScreen ? <ActivityFeed /> : ""}
+                        {viewPanelState === "addActivity" && !largeScreen ? <Grid item xs={12}><UserPost /></Grid> : ""}
+                        {viewPanelState === "favAdventures" && !largeScreen ? <Grid item xs={12}><div>Fav Adventures</div></Grid> : ""}
+                        {viewPanelState === "followPanel" && !largeScreen ? <FollowingComponent /> : " "}
+                        {viewPanelState === "followPanel" && !largeScreen ? <FollowerComponent /> : " "}
+                        {viewPanelState === "personalFeed" && !largeScreen ? <Grid item xs={12} sm={4}>
 
                             <Feed profile={props.profile} />
 
-                        </Grid>
-                        {viewPanelState === "activityFeed" ?
+                        </Grid> : " "}
+                        {largeScreen ?
+                            <Grid item xs={12} sm={4}>
 
-                            <Grid item xs={12} sm={4} >
-
-                                <Grid container spacing={1}>
-                                    <Grid item xs={12}>
-                                        <Typography variant="h5">
-                                            Activity Feed
-                                    </Typography>
-                                    </Grid>
-                                </Grid>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={12} sm={12}>
-                                        <StreamApp
-                                            apiKey={process.env.REACT_APP_STREAM_API_KEY}
-                                            appId={process.env.REACT_APP_STREAM_APP_ID}
-                                            token={streamString}
-                                        >
-
-                                            <Grid container spacing={1}>
-                                                {activitiesState.map((activity) => (
-                                                    <Grid item xs={12}>
-                                                        <Paper elevation={3}>
-                                                            <Activity
-                                                                activity={activity}
-                                                            />
-                                                            <FollowButton onClick={() => followerUser(activity.actor.data.userId)} />
-
-                                                        </Paper>
-                                                    </ Grid >
-                                                ))}
-                                            </Grid>
-
-                                        </StreamApp>
-                                    </Grid>
-                                </Grid>
-
+                                <Feed profile={props.profile} />
 
                             </Grid>
-
-                            : ""}
-                        {viewPanelState === "addActivity" ? <Grid item xs={12} sm={4} ><UserPost /></Grid> : ""}
-                        {viewPanelState === "favAdventures" ? <Grid item xs={12} sm={4} ><div>Fav Adventures</div></Grid> : ""}
-
-                        <Grid item xs={12} sm={2}>
-                            <Grid container spacing={1}>
-                                <Grid item xs={12}>
-                                    {/* <ScrollableAnchor id={'potatoes'}> */}
-                                    <Typography variant="h5">
-                                        Following {followingListState.length}
-                                    </Typography>
-                                    {/* </ScrollableAnchor> */}
-                                </Grid>
-                            </Grid>
-                            <Grid container spacing={1}>
-                                {followingListState.slice(0, 10).map((follower) => (
-                                    <Grid item xs={12}>
-                                        <Card className={classes.card} elevation={3}>
-
-                                            <CardContent className={classes.cardContent}>
-                                                <Typography variant="subtitle2">
-                                                    {follower}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                                    </ Grid >
-                                ))}
-                            </Grid>
-                        </Grid>
-
-                        <Grid item xs={12} sm={2}>
-                            <Grid container spacing={1}>
-                                <Grid item xs={12}>
-                                    <Typography variant="h5">
-                                        Followers {followerListState.length}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container spacing={1}>
-                                {followerListState.slice(0, 10).map((follower) => (
-                                    <Grid item xs={12}>
-                                        <Card className={classes.card} elevation={3}>
-
-                                            <CardContent className={classes.cardContent}>
-                                                <Typography variant="subtitle2">
-                                                    {follower}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                                    </ Grid >
-                                ))}
-                            </Grid>
-                        </Grid>
+                            : " "}
+                        {viewPanelState === "activityFeed" && largeScreen ? <ActivityFeed /> : ""}
+                        {viewPanelState === "addActivity" && largeScreen ? <Grid item xs={12} sm={4} ><UserPost /></Grid> : ""}
+                        {viewPanelState === "favAdventures" && largeScreen ? <Grid item xs={12} sm={4} ><div>Fav Adventures</div></Grid> : ""}
+                        {largeScreen ?
+                            <FollowingComponent />
+                            : " "}
+                        {largeScreen ?
+                            <FollowerComponent />
+                            : " "}
                     </Grid>
                 </Container>
             </main>

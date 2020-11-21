@@ -13,7 +13,10 @@ const useStyles = makeStyles({
     root: {
         paddingTop: "200px",
     },
-
+    textColor: {
+        color: 'white',
+        paddingBottom: 10,
+    }
 });
 
 export default function Overlay(props) {
@@ -25,8 +28,8 @@ export default function Overlay(props) {
     return (
         <Grid container className={classes.root}>
             <Grid item xs={12}>
-                <Typography>
-                    <h1>Memorable Microadventures</h1>
+                <Typography variant='h5' className={classes.textColor}>
+                    Memorable Microadventures
                 </Typography>
                 <Link to={"/registeruser"} ><Button className={props.btn} onclick={signup}>Sign Up</Button></Link>
             </Grid>
