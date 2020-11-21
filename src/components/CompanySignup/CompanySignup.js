@@ -58,7 +58,7 @@ export default function SignUp() {
     const handleFormSubmit = event => {
         event.preventDefault();
         API.signupCompany(signUpFormState).then(userData => {
-
+            console.log("userData.data.id is: ", userData.data.id);
             localStorage.setItem('COMPANYUSERID', userData.data.id);
             console.log(userData.data.id);
         }).then(() => {
