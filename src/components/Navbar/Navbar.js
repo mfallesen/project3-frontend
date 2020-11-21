@@ -5,21 +5,22 @@ import './Navbar.css'
 import { makeStyles, withStyles } from '@material-ui/styles';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { AppBar, Button, Toolbar, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Drawer, Grid } from '@material-ui/core';
-import AdventureLanding from '../AdventureLanding';
-import Hero from '../Hero/Hero';
-import Userlandingpost from '../Userlandingpost';
-import Profile from '../Profile/Profile'
+// import AdventureLanding from '../AdventureLanding';
+// import Hero from '../Hero/Hero';
+// import Userlandingpost from '../Userlandingpost';
+// import Profile from '../Profile/Profile'
 import ExploreIcon from '@material-ui/icons/Explore';
 import StarIcon from '@material-ui/icons/Star';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AdventuresPage from '../AdventuresPage/AdventuresPage';
-import CompanySignup from '../CompanySignup'
-import CompanyLogin from '../CompanyLogin'
-import CompanyAddInfo from '../CompanyAddInfo';
-import UserLogin from '../UserLogin';
-import CompanyDash from '../CompanyDash'
-import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
+// import AdventuresPage from '../AdventuresPage/AdventuresPage';
+// import CompanySignup from '../CompanySignup'
+// import CompanyLogin from '../CompanyLogin'
+// import CompanyAddInfo from '../CompanyAddInfo';
+// import UserLogin from '../UserLogin';
+// import CompanyDash from '../CompanyDash'
+// import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
+// import UserSignUp from '../UserSignUp/UserSignUp';
 
 const useStyles = makeStyles({
     appbar: {
@@ -70,14 +71,14 @@ export default function Navbar(props) {
         right: false,
     });
 
-    const [companyData, setCompanyData] = React.useState({
-        auth: false,
-        email: "",
-        message: "",
-        password: "",
-        username: "",
-        isCompanyLoggedIn: false
-    });
+    // const [companyData, setCompanyData] = React.useState({
+    //     auth: false,
+    //     email: "",
+    //     message: "",
+    //     password: "",
+    //     username: "",
+    //     isCompanyLoggedIn: false
+    // });
 
     function ListItemLink(props) {
         return <ListItem button component="a" {...props} />;
@@ -128,19 +129,22 @@ export default function Navbar(props) {
         localStorage.removeItem("USERNAMECOMPANY");
         window.location.href = "/home";
     }
-
-    const handleCompanyData = (companyData) => {
-        setCompanyData({...companyData, isCompanyLoggedIn: true});
-        // console.log("Company Data: ", companyData);
+    const login = () => {
+        window.location.href = "/signin";
     }
+
+    // const handleCompanyData = (companyData) => {
+    //     setCompanyData({...companyData, isCompanyLoggedIn: true});
+    //     // console.log("Company Data: ", companyData);
+    // }
     return (
         <Router>
-
+            
             <AppBar className={classes.appbar} position="static">
 
                 <Toolbar className={classes.toolbar}>
                     <Grid container justify='space-between' alignItems='center'>
-                        <Grid containter item >
+                        <Grid container item >
                             <React.Fragment key={'left'}>
                                 {props.profile.isLoggedIn ? <IconButton edge="start" color="primary" aria-label="menu">
                                     <MenuOpenIcon color='primary' onClick={toggleDrawer('left', true)}>{'left'}</MenuOpenIcon>
@@ -151,23 +155,23 @@ export default function Navbar(props) {
                                 </Drawer>
                             </React.Fragment>
                         </Grid>
-                        <Grid containter item >
+                        <Grid container item >
                             <img className={classes.image} src={"https://res.cloudinary.com/crowandrew/image/upload/c_fit,w_300/v1605820413/minnesvart/logo_rdvtg7.png"} alt='logo' />
                             
                         </Grid>
 
-                        <Grid containter item >
+                        <Grid container item >
                             {props.profile.isLoggedIn ?
                                 <NavLink to="/" edge="end"><Button className={classes.navBtn} onClick={logout}>Logout</Button> </NavLink>
                                 :
-                                <NavLink to="/signin" edge="end"><Button className={classes.navBtn}>Login</Button> </NavLink>}
+                                <NavLink to="/signin" edge="end"><Button onClick={login}className={classes.navBtn}>Login</Button> </NavLink>}
                         </Grid>
                     </Grid>
                 </Toolbar>
             </AppBar>
 
 
-            <Switch>
+            {/* <Switch>
                 <Route path="/companydashboard/:companyusername">
                     
                     <CompanyDash setCompanyData={setCompanyData }handleCompanyData={handleCompanyData}/>
@@ -200,12 +204,15 @@ export default function Navbar(props) {
                         : "Please sign in first"}
                 </Route>
                 <Route path="/signin">
-
+                        <UserLogin />
                 </Route>
                 <Route path = "/companydash">
 
                 </Route>
-            </Switch>
+                <Route path = "/registeruser">
+                        <UserSignUp />
+                </Route>
+            </Switch> */}
 
         </Router >
     )
