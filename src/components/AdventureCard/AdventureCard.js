@@ -7,6 +7,8 @@ import { CloudinaryContext, Image } from "cloudinary-react";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import IconButton from '@material-ui/core/IconButton';
 import API from "../../utils/API";
+import GoogleMaps from '../GoogleMaps/GoogleMaps';
+
 
 const useStyles = makeStyles({
     card: {
@@ -50,6 +52,8 @@ export default function AdventureCard(props) {
         })
     }
 
+
+    // console.log("Lat: ", props.lat);
 
     return (
 
@@ -99,6 +103,7 @@ export default function AdventureCard(props) {
 
 
                         </Grid>
+                        
                     </CardContent>
                 </Card>
 
@@ -106,9 +111,16 @@ export default function AdventureCard(props) {
                     <CardContent>
                         <Typography>{props.description}</Typography>
                         <hr />
-                        <Grid container justify='flex-end'>
-                            <Button onClick={handleClick}>Less Info</Button>
+                        <GoogleMaps lat={props.lat} lon={props.lon}/>
+                        <Grid>
+                            <Grid>
+                                <Button></Button>
+                            </Grid>
+                            <Grid container justify='flex-end'>
+                                <Button onClick={handleClick}>Less Info</Button>
+                            </Grid>
                         </Grid>
+
                     </CardContent>
                     {/* Add to favorites button */}
                 </Card>
