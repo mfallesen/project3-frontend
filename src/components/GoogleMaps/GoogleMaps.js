@@ -2,10 +2,10 @@ import React from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const MapContainer = (props) => {
-    // const lat = props.lat;
-    // console.log("Lat: ", lat);
-    // const lon = props.lat;
-    // console.log("Lon: ", lon);
+    const lat = props.lon;
+    console.log("Lat: ", lat);
+    const lon = props.lat;
+    console.log("Lon: ", lon);
 
     const mapStyles = {
         height: "250px",
@@ -13,7 +13,7 @@ const MapContainer = (props) => {
     };
 
     const location = {
-        lat: 0, lng: 0
+        lat: lat, lng: lon
     }
 
 

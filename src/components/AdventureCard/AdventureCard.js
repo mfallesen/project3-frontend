@@ -52,9 +52,6 @@ export default function AdventureCard(props) {
         })
     }
 
-
-    // console.log("Lat: ", props.lat);
-
     return (
 
         <Grid item xs={props.xs} sm={props.sm} md={props.md}>
@@ -92,7 +89,6 @@ export default function AdventureCard(props) {
                                 props.text
                             }
                         </Typography>
-                        {console.log(props, "Props")}
                         <Grid container justify='space-between'>
 
                             <Typography align='justify' variant='button'><Button disabled>{likeCount} Likes</Button><IconButton onClick={() => {

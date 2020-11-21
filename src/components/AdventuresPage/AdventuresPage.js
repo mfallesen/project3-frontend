@@ -32,7 +32,7 @@ export default function AdventuresPage(props) {
             return data
         })
     }
-    console.log("Data Bitch!: ", data);
+    
 
     const handleInputChange = event => {
 
@@ -60,7 +60,7 @@ export default function AdventuresPage(props) {
         }
     }
 
-    console.log("Filtered on adventure page: ", data);
+    
 
     return (
         
