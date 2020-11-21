@@ -92,6 +92,7 @@ function App() {
             username: companyProfileData.data.username,
             email: companyProfileData.data.email,
             id: companyProfileData.data.id,
+            Adventure_company: companyProfileData.data.Adventure_company,
             isCompanyLoggedIn: true
           })
         } else {
@@ -196,6 +197,7 @@ function App() {
     email: "",
     token: "",
     id: "",
+    Adventure_company: "",
     isCompanyLoggedIn: false
   })
   return (

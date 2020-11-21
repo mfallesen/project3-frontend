@@ -39,17 +39,17 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function AdventurePost() {
+export default function AdventurePost(props) {
     const classes = useStyles();
 
-    const adventureCompanyId = localStorage.getItem("ADVENTURECOMPANYID");
+    // const adventureCompanyId = localStorage.getItem("ADVENTURECOMPANYID");
     const [adventureInfoFormState, setAdventureInfoFormState] = useState({
         name: "",
         description: "",
         longitude: "",
         latitude: "",
         image: "",
-        AdventureCompanyId: 5,
+        AdventureCompanyId: props.companyProfile.Adventure_company.id,
     });
 
     const [image, setImage] = useState([])
@@ -76,7 +76,7 @@ export default function AdventurePost() {
         event.preventDefault();
         const token = localStorage.getItem('JWTCOMPANY');
         let tags = extract(adventureInfoFormState.description)
-        API.addAdventure(adventureInfoFormState, tags, token).then(userData => {
+        API.addAdventure(adventureInfoFormState, tags, props.companyProfile.Adventure_company.id, token).then(userData => {
             console.log("AFTER API: ", userData);
         })
         setAdventureInfoFormState({
@@ -85,7 +85,7 @@ export default function AdventurePost() {
             longitude: "",
             latitude: "",
             image: "",
-            AdventureCompanyId: adventureCompanyId,
+            AdventureCompanyId: props.companyProfile.Adventure_company.id,
         })
     }
 
