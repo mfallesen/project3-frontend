@@ -49,7 +49,7 @@ export default function AdventurePost() {
         longitude: "",
         latitude: "",
         image: "",
-        AdventureCompanyId: 5,
+        AdventureCompanyId: ""
     });
 
     const [image, setImage] = useState([])
@@ -66,7 +66,7 @@ export default function AdventurePost() {
         event.preventDefault();
         const token = localStorage.getItem('JWTCOMPANY');
         API.addAdventure(adventureInfoFormState, token).then(userData => {
-            console.log("AFTER API: ", userData);
+            console.log("UserData AFTER API: ", userData);
         })
         setAdventureInfoFormState({
             name: "",
