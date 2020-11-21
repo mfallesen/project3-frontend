@@ -53,6 +53,7 @@ export default {
             'longitude': adventureData.latitude,
             'latitude': adventureData.latitude,
             'AdventureCompanyId': adventureData.adventureCompanyId,
+            'tags': tagsArr
         });
         return axios({
             method: 'post',

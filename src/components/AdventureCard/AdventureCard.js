@@ -7,6 +7,7 @@ import { CloudinaryContext, Image } from "cloudinary-react";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import IconButton from '@material-ui/core/IconButton';
 import API from "../../utils/API";
+import GoogleMaps from '../GoogleMaps';
 
 const useStyles = makeStyles({
     card: {
@@ -17,7 +18,6 @@ const useStyles = makeStyles({
 
 
 export default function AdventureCard(props) {
-    console.log(props.id)
     const classes = useStyles();
 
     const [isFlipped, setIsFlipped] = useState(false);
@@ -50,7 +50,6 @@ export default function AdventureCard(props) {
         })
     }
 
-
     return (
 
         <Grid item xs={props.xs} sm={props.sm} md={props.md}>
@@ -64,20 +63,23 @@ export default function AdventureCard(props) {
                         <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
 
 
-                            {props.image === undefined ? <Image
+                            {props.image ? <Image
                                 publicId={props.image}
-                                fetch-format="auto"
-                                quality="auto"
-                                height="400"
-                                width="300"
-                                crop="fill"
+                                dpr="auto"
+                                responsive
+                                width="auto"
+                                crop="scale"
+                                responsiveUseBreakpoints="true"
+
+                                loading="lazy"
                             /> : <Image
                                     publicId="minnesvart/solo_travel_germany_gytbwl.jpg"
-                                    fetch-format="auto"
-                                    quality="auto"
-                                    height="400"
-                                    width="300"
-                                    crop="fill"
+                                    dpr="auto"
+                                    responsive
+                                    width="auto"
+                                    crop="scale"
+                                    responsiveUseBreakpoints="true"
+                                    loading="lazy"
                                 />}
                         </CloudinaryContext>
                     </CardMedia>
@@ -88,7 +90,6 @@ export default function AdventureCard(props) {
                                 props.text
                             }
                         </Typography>
-                        {console.log(props, "Props")}
                         <Grid container justify='space-between'>
 
                             <Typography align='justify' variant='button'><Button disabled>{likeCount} Likes</Button><IconButton onClick={() => {
@@ -99,6 +100,7 @@ export default function AdventureCard(props) {
 
 
                         </Grid>
+
                     </CardContent>
                 </Card>
 
@@ -106,9 +108,16 @@ export default function AdventureCard(props) {
                     <CardContent>
                         <Typography>{props.description}</Typography>
                         <hr />
-                        <Grid container justify='flex-end'>
-                            <Button onClick={handleClick}>Less Info</Button>
+                        <GoogleMaps lat={props.lat} lon={props.lon} />
+                        <Grid container justify='space-between'>
+                            <Grid item >
+                                <Button href={`https://${props.website}`}>Check out the company!</Button>
+                            </Grid>
+                            <Grid item justify='flex-end'>
+                                <Button onClick={handleClick}>Less Info</Button>
+                            </Grid>
                         </Grid>
+
                     </CardContent>
                     {/* Add to favorites button */}
                 </Card>
