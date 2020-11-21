@@ -43,8 +43,8 @@ export default {
     },
 
     addAdventure: function (adventureData, token) {
-        console.log("In API: ", adventureData);
-        console.log("In API: ", token)
+        console.log("adventureData In API: ", adventureData);
+        console.log("Token In API: ", token)
 
         const data = qs.stringify({
             'name': adventureData.name,
@@ -110,7 +110,7 @@ export default {
     },
 
     getAdventures: function (token) {
-        console.log("In API: ", token)
+        console.log("In getAdventures API: ", token)
 
         return axios({
             method: 'get',
