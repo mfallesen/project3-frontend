@@ -62,10 +62,21 @@ export default function AdventurePost() {
         })
     }
 
+    const extract = (str) => {
+        var rgx = /#(\w+)\b/gi;
+        var result = [];
+        var temp;
+        while (temp = rgx.exec(str)) {
+            result.push(temp[1])
+        }
+        return result;
+    }
+
     const handleFormSubmit = event => {
         event.preventDefault();
         const token = localStorage.getItem('JWTCOMPANY');
-        API.addAdventure(adventureInfoFormState, token).then(userData => {
+        let tags = extract(adventureInfoFormState.description)
+        API.addAdventure(adventureInfoFormState, tags, token).then(userData => {
             console.log("AFTER API: ", userData);
         })
         setAdventureInfoFormState({
@@ -156,6 +167,7 @@ export default function AdventurePost() {
                                         fullWidth
                                         id="description"
                                         label="Description"
+                                        placeholder="Describe your adventure and then add hashtags # to make this adventure searchable"
                                         name="description"
                                         autoComplete="description"
                                         onChange={inputChange}
@@ -233,7 +245,8 @@ export default function AdventurePost() {
                                 title={adventureInfoFormState.name}
                                 description={adventureInfoFormState.description}
                                 image={adventureInfoFormState.image}
-
+                                lat={adventureInfoFormState.latitude}
+                                lon={adventureInfoFormState.longitude}
                             />
                         </div>
                     </div>

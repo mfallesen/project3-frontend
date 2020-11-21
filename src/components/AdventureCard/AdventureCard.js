@@ -63,7 +63,7 @@ export default function AdventureCard(props) {
                         <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
 
 
-                            {!props.image === undefined ? <Image
+                            {props.image ? <Image
                                 publicId={props.image}
                                 dpr="auto"
                                 responsive
@@ -100,7 +100,7 @@ export default function AdventureCard(props) {
 
 
                         </Grid>
-                        
+
                     </CardContent>
                 </Card>
 
@@ -108,12 +108,12 @@ export default function AdventureCard(props) {
                     <CardContent>
                         <Typography>{props.description}</Typography>
                         <hr />
-                        <GoogleMaps lat={props.lat} lon={props.lon}/>
+                        <GoogleMaps lat={props.lat} lon={props.lon} />
                         <Grid container justify='space-between'>
-                            <Grid  item >
+                            <Grid item >
                                 <Button href={`https://${props.website}`}>Check out the company!</Button>
                             </Grid>
-                            <Grid  item justify='flex-end'>
+                            <Grid item justify='flex-end'>
                                 <Button onClick={handleClick}>Less Info</Button>
                             </Grid>
                         </Grid>
