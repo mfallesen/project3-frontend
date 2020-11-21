@@ -48,7 +48,7 @@ export default function AdventureLanding(props) {
             <Grid container spacing={3} alignItems={'center'}>
                 <Grid className={classes.cardRow} container item md={12} spacing={3}>
                     {adventure.map(
-                        card => <AdventureCard title={card.name} image={card.image} text={card.Tags.name} description={card.description} xs={12} sm={6} md={6}></AdventureCard>
+                        card => <AdventureCard id={card.id} title={card.name} image={card.image} text={card.Tags.name} description={card.description} lat={card.latitude} lon={card.longitude} website={card.Adventure_company.website} xs={12} sm={6} md={6}></AdventureCard>
                     )}
 
 
