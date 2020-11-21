@@ -121,7 +121,7 @@ export default function Navbar(props) {
 
                 <Toolbar className={classes.toolbar}>
                     <Grid container justify='space-between' alignItems='center'>
-                        <Grid container item >
+                        <Grid item >
                             <React.Fragment key={'left'}>
                                 {props.profile.isLoggedIn ? <IconButton edge="start" color="primary" aria-label="menu">
                                     <MenuOpenIcon color='primary' onClick={toggleDrawer('left', true)}>{'left'}</MenuOpenIcon>
@@ -132,7 +132,7 @@ export default function Navbar(props) {
                                 </Drawer>
                             </React.Fragment>
                         </Grid>
-                        <Grid containter item >
+                        <Grid item >
                             {/* <img className={classes.image} src={"https://res.cloudinary.com/crowandrew/image/upload/c_fit,w_300/v1605820413/minnesvart/logo_rdvtg7.png"} alt='logo' /> */}
 
                             <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
@@ -143,7 +143,7 @@ export default function Navbar(props) {
 
                         </Grid>
 
-                        <Grid container item >
+                        <Grid item >
                             {props.profile.isLoggedIn ?
                                 <NavLink to="/" edge="end"><Button className={classes.navBtn} onClick={logout}>Logout</Button> </NavLink>
                                 :
