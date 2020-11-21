@@ -18,7 +18,6 @@ const useStyles = makeStyles({
 
 
 export default function AdventureCard(props) {
-    console.log(props.id)
     const classes = useStyles();
 
     const [isFlipped, setIsFlipped] = useState(false);
@@ -50,7 +49,6 @@ export default function AdventureCard(props) {
             postLikeCount(props.id);
         })
     }
-
 
     return (
 
@@ -92,7 +90,6 @@ export default function AdventureCard(props) {
                                 props.text
                             }
                         </Typography>
-                        {console.log(props, "Props")}
                         <Grid container justify='space-between'>
 
                             <Typography align='justify' variant='button'><Button disabled>{likeCount} Likes</Button><IconButton onClick={() => {
@@ -103,6 +100,7 @@ export default function AdventureCard(props) {
 
 
                         </Grid>
+                        
                     </CardContent>
                 </Card>
 
@@ -110,10 +108,16 @@ export default function AdventureCard(props) {
                     <CardContent>
                         <Typography>{props.description}</Typography>
                         <hr />
-                        <GoogleMaps />
-                        <Grid container justify='flex-end'>
-                            <Button onClick={handleClick}>Less Info</Button>
+                        <GoogleMaps lat={props.lat} lon={props.lon}/>
+                        <Grid container justify='space-between'>
+                            <Grid  item >
+                                <Button href={`https://${props.website}`}>Check out the company!</Button>
+                            </Grid>
+                            <Grid  item justify='flex-end'>
+                                <Button onClick={handleClick}>Less Info</Button>
+                            </Grid>
                         </Grid>
+
                     </CardContent>
                     {/* Add to favorites button */}
                 </Card>
