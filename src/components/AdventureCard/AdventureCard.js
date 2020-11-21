@@ -64,19 +64,19 @@ export default function AdventureCard(props) {
                         <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
 
 
-                            {props.image ? <Image
+                            {props.image === undefined ? <Image
                                 publicId={props.image}
                                 fetch-format="auto"
                                 quality="auto"
-                                height="500"
-                                width="400"
+                                height="400"
+                                width="300"
                                 crop="fill"
                             /> : <Image
                                     publicId="minnesvart/solo_travel_germany_gytbwl.jpg"
                                     fetch-format="auto"
                                     quality="auto"
-                                    height="500"
-                                    width="400"
+                                    height="400"
+                                    width="300"
                                     crop="fill"
                                 />}
                         </CloudinaryContext>
