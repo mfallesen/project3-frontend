@@ -7,6 +7,7 @@ import { CloudinaryContext, Image } from "cloudinary-react";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import IconButton from '@material-ui/core/IconButton';
 import API from "../../utils/API";
+import GoogleMaps from '../GoogleMaps';
 
 const useStyles = makeStyles({
     card: {
@@ -64,20 +65,23 @@ export default function AdventureCard(props) {
                         <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
 
 
-                            {props.image === undefined ? <Image
+                            {!props.image === undefined ? <Image
                                 publicId={props.image}
-                                fetch-format="auto"
-                                quality="auto"
-                                height="400"
-                                width="300"
-                                crop="fill"
+                                dpr="auto"
+                                responsive
+                                width="auto"
+                                crop="scale"
+                                responsiveUseBreakpoints="true"
+
+                                loading="lazy"
                             /> : <Image
                                     publicId="minnesvart/solo_travel_germany_gytbwl.jpg"
-                                    fetch-format="auto"
-                                    quality="auto"
-                                    height="400"
-                                    width="300"
-                                    crop="fill"
+                                    dpr="auto"
+                                    responsive
+                                    width="auto"
+                                    crop="scale"
+                                    responsiveUseBreakpoints="true"
+                                    loading="lazy"
                                 />}
                         </CloudinaryContext>
                     </CardMedia>
@@ -106,6 +110,7 @@ export default function AdventureCard(props) {
                     <CardContent>
                         <Typography>{props.description}</Typography>
                         <hr />
+                        <GoogleMaps />
                         <Grid container justify='flex-end'>
                             <Button onClick={handleClick}>Less Info</Button>
                         </Grid>
