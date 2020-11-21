@@ -49,7 +49,7 @@ export default function AdventurePost(props) {
         longitude: "",
         latitude: "",
         image: "",
-        AdventureCompanyId: props.companyProfile.id,
+        AdventureCompanyId: props.companyProfile.Adventure_company.id,
     });
 
     const [image, setImage] = useState([])
@@ -85,7 +85,7 @@ export default function AdventurePost(props) {
             longitude: "",
             latitude: "",
             image: "",
-            AdventureCompanyId: props.companyProfile.id,
+            AdventureCompanyId: props.companyProfile.Adventure_company.id,
         })
     }
 
