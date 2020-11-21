@@ -29,16 +29,17 @@ export default function AdventuresPage(props) {
             // console.log("constant:data", data)
             setOriginalData(data);
             setFilteredData(data);
+            return data
         })
     }
-
+    console.log("Data Bitch!: ", data);
 
     const handleInputChange = event => {
 
         setSearchResults(event);
         if (!searchResults) {
             const newList = originalData.filter(adventures => {
-
+                console.log("Adventure Potato: ", adventures);
                 if (adventures.Tags.length > 0) {
 
                     for (let i = 0; i < adventures.Tags.length; i++) {
