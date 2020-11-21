@@ -103,6 +103,35 @@ export default function Navbar(props) {
         </div>
     );
 
+    const companylist = (anchor) => (
+        <div
+            className={clsx(classes.list, {
+                [classes.fullList]: 'left' === 'top' || 'left' === 'bottom',
+            })}
+            role="presentation"
+            onClick={toggleDrawer('left', false)}
+            onKeyDown={toggleDrawer('left', false)}
+        >
+            <List>
+                {[{ name: 'My Dashboard', icon: <AccountCircleIcon />, href: '/companydashboard/'+localStorage.getItem("USERNAMECOMPANY") }, { name: 'New Employee', icon: <ExploreIcon />, href: '/companysignup' }].map((text) => (
+                    <ListItemLink key={text} href={text.href}>
+                        <ListItemIcon>{text.icon}</ListItemIcon>
+                        <ListItemText primary={text.name} />
+                    </ListItemLink>
+                ))}
+            </List>
+            <Divider />
+            <List>
+
+                <ListItem button >
+                    <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
+                    <ListItemText primary={'Logout'} onClick={logout} />
+                    <Redirect to="/" />
+                </ListItem>
+
+            </List>
+        </div>
+    );
     const logout = () => {
         localStorage.removeItem("JWT");
         localStorage.removeItem("USERNAME");
@@ -121,15 +150,18 @@ export default function Navbar(props) {
 
                 <Toolbar className={classes.toolbar}>
                     <Grid container justify='space-between' alignItems='center'>
+                        
                         <Grid item >
-                            <React.Fragment key={'left'}>
-                                {props.profile.isLoggedIn ? <IconButton edge="start" color="primary" aria-label="menu">
+                        <React.Fragment key={'left'}>
+                                {props.profile.isLoggedIn || props.companyProfile.isCompanyLoggedIn? <IconButton edge="start" color="primary" aria-label="menu">
                                     <MenuOpenIcon color='primary' onClick={toggleDrawer('left', true)}>{'left'}</MenuOpenIcon>
                                 </IconButton> : <StyledMenuOpenIcon color="primary" />}
 
-                                <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+                                {props.profile.isLoggedIn ?<Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
                                     {list('left')}
-                                </Drawer>
+                                </Drawer>: <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+                                    {companylist('left')}
+                                </Drawer>}
                             </React.Fragment>
                         </Grid>
                         <Grid item >
@@ -144,7 +176,7 @@ export default function Navbar(props) {
                         </Grid>
 
                         <Grid item >
-                            {props.profile.isLoggedIn ?
+                            {props.profile.isLoggedIn || props.companyProfile.isCompanyLoggedIn ?
                                 <NavLink to="/" edge="end"><Button className={classes.navBtn} onClick={logout}>Logout</Button> </NavLink>
                                 :
                                 <NavLink to="/signin" edge="end"><Button onClick={login} className={classes.navBtn}>Login</Button> </NavLink>}
