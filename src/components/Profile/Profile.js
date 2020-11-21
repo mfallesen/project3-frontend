@@ -585,7 +585,7 @@ function Profile(props) {
                             : " "}
                         {viewPanelState === "activityFeed" && largeScreen ? <ActivityFeed /> : ""}
                         {viewPanelState === "addActivity" && largeScreen ? <Grid item xs={12} sm={4} ><UserPost /></Grid> : ""}
-                        {viewPanelState === "favAdventures" && largeScreen ? <Grid item xs={12} sm={4} ><FavAdventuresPage /></Grid> : ""}
+                        {viewPanelState === "favAdventures" && largeScreen ? <Grid item xs={12} sm={4} ><FavAdventuresPage profile={props.profile} /></Grid> : ""}
                         {largeScreen ?
                             <FollowingComponent />
                             : " "}
