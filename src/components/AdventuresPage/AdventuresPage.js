@@ -4,6 +4,7 @@ import AdventureCard from '../AdventureCard'
 import SearchForm from '../SearchForm/SearchForm'
 import API from "../../utils/API";
 import { makeStyles } from '@material-ui/styles'
+import Fuse from 'fuse.js'
 
 const useStyles = makeStyles({
     pageTitle: {
@@ -32,39 +33,89 @@ export default function AdventuresPage(props) {
             return data
         })
     }
-    
+
+
+    const fuseOptions = {
+        isCaseSensitive: false,
+        // includeScore: false,
+        // shouldSort: true,
+        // includeMatches: true,
+        // findAllMatches: true,
+        // minMatchCharLength: 3,
+        // location: 0,
+        // threshold: 0.6,
+        // distance: 100,
+        // useExtendedSearch: false,
+        // ignoreLocation: true,
+        // ignoreFieldNorm: false,
+        keys: [
+            {
+                name: 'name',
+                weight: 2
+            },
+            {
+                name: 'description',
+                weight: 2,
+            },
+            // 'Adventure_company.name',
+            // 'Adventure_company.city',
+            // 'Adventure_company.state',
+            // 'Adventure_company.description',
+            // 'Adventure_company.zip_code',
+            {
+                name: 'Tags.name',
+                weight: 3
+            }
+        ]
+    };
+
+
+    const fuse = new Fuse(originalData, fuseOptions);
+
 
     const handleInputChange = event => {
 
         setSearchResults(event);
-        if (!searchResults) {
-            const newList = originalData.filter(adventures => {
-                
-                if (adventures.Tags.length > 0) {
 
-                    for (let i = 0; i < adventures.Tags.length; i++) {
+        // if (!searchResults) {
+        //     const newList = originalData.filter(adventures => {
 
-                        if (adventures.Tags[i].name.indexOf(searchResults) > -1) {
-                            return true
-                        }
-                    }
-                }
+        //         if (adventures.Tags.length > 0) {
 
-            })
-            setFilteredData(newList)
-            
-        }
-        else {
+        //             for (let i = 0; i < adventures.Tags.length; i++) {
 
+        //                 if (adventures.Tags[i].name.indexOf(searchResults) > -1) {
+        //                     return true
+        //                 }
+        //             }
+        //         }
+        const fuseSearch = fuse.search(searchResults);
+        if (fuseSearch.length > 0) {
+            let newFuseSearch = []
+            for (let i = 0; i < fuseSearch.length; i++) {
+                const result = fuseSearch[i];
+                newFuseSearch.push(result.item)
+            }
+            setFilteredData(newFuseSearch)
+        } else {
             setFilteredData(originalData)
-            
         }
+        //     })
+
+
+
+        // }
+        // else {
+
+        //     setFilteredData(originalData)
+
+        // }
     }
 
-    
+
 
     return (
-        
+
         <Grid container spacing={4} alignItems={'center'} justify={'center'} md={12}>
             <Grid container spacing={4} item justify={'center'} direction='column' md={12}>
 
@@ -86,6 +137,6 @@ export default function AdventuresPage(props) {
             </Grid>
 
         </Grid>
-       
+
     )
 }
