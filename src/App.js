@@ -17,6 +17,7 @@ import CompanyLogin from './components/CompanyLogin';
 import CompanyDash from './components/CompanyDash';
 import CompanyAddInfo from './components/CompanyAddInfo';
 import Footer from './components/Footer';
+import AdventuresPage from './components/AdventuresPage';
 
 
 
@@ -214,7 +215,7 @@ function App() {
             {profileState.isLoggedIn ? <Redirect to="/profile" /> : <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
           </Route>
           <Route exact path="/adventures">
-            {profileState.isLoggedIn ? <AdventureLanding /> : <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
+            {profileState.isLoggedIn ? <AdventuresPage /> : <UserLogin handleFormSubmit={submitForm} inputChange={inputChange} form={loginFormState} />}
           </Route>
           <Route path="/companydashboard/:companyname">
               <CompanyDash companyProfile={companyProfileState} setCompanyData={setCompanyProfileState} handleCompanyData={handleCompanyData}/> 
