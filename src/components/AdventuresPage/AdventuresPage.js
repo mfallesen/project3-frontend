@@ -26,7 +26,7 @@ export default function AdventuresPage(props) {
         const token = localStorage.getItem("JWT");
         API.getAdventureTags(token).then(response => {
             const data = response.data
-            // console.log("constant:data", data)
+            console.log("constant:data", data)
             setOriginalData(data);
             setFilteredData(data);
             return data
@@ -39,7 +39,7 @@ export default function AdventuresPage(props) {
         setSearchResults(event);
         if (!searchResults) {
             const newList = originalData.filter(adventures => {
-                console.log("Adventure Potato: ", adventures);
+                
                 if (adventures.Tags.length > 0) {
 
                     for (let i = 0; i < adventures.Tags.length; i++) {
@@ -57,6 +57,7 @@ export default function AdventuresPage(props) {
         else {
 
             setFilteredData(originalData)
+            
         }
     }
 
@@ -80,7 +81,7 @@ export default function AdventuresPage(props) {
             </Grid>
             <Grid container item md={12} spacing={3}>
                 {filteredData.map(
-                    card => <AdventureCard id={card.id} title={card.name} image={card.image} text={card.Tags.name} description={card.description} lat={card.latitude} lon={card.longitude} xs={12} sm={6} md={6}></AdventureCard>
+                    card => <AdventureCard id={card.id} title={card.name} image={card.image} text={card.Tags.name} description={card.description} lat={card.latitude} lon={card.longitude} website={card.Adventure_company.website} xs={12} sm={6} md={6}></AdventureCard>
                 )}
             </Grid>
 

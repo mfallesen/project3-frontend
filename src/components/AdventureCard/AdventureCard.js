@@ -19,7 +19,6 @@ const useStyles = makeStyles({
 
 
 export default function AdventureCard(props) {
-    console.log(props.id)
     const classes = useStyles();
 
     const [isFlipped, setIsFlipped] = useState(false);
@@ -108,11 +107,11 @@ export default function AdventureCard(props) {
                         <Typography>{props.description}</Typography>
                         <hr />
                         <GoogleMaps lat={props.lat} lon={props.lon}/>
-                        <Grid>
-                            <Grid>
-                                <Button></Button>
+                        <Grid container justify='space-between'>
+                            <Grid  item >
+                                <Button href={`https://${props.website}`}>Check out the company!</Button>
                             </Grid>
-                            <Grid container justify='flex-end'>
+                            <Grid  item justify='flex-end'>
                                 <Button onClick={handleClick}>Less Info</Button>
                             </Grid>
                         </Grid>
