@@ -6,7 +6,6 @@ const qs = require('qs');
 export default {
     //Register user
     registerUser: function (userData) {
-        console.log(userData);
         return axios.post(BASEURL + '/user/registerUser', {
             first_name: userData.first_name,
             last_name: userData.last_name,
