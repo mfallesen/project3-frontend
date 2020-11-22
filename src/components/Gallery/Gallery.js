@@ -6,12 +6,13 @@ import {
 } from "react-activity-feed";
 import { Grid, Container } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     gallery: {
+        backgroundColor: theme.palette.background.paper,
         padding: 12,
         border: "none"
     }
-})
+}));
 
 const galleryImages = [
     'https://res.cloudinary.com/crowandrew/image/upload/c_scale,w_800/v1605937401/minnesvart/wojciech-then-DijA5f0voGQ-unsplash_yy3yf1.jpg',
