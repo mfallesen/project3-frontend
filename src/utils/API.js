@@ -117,8 +117,7 @@ export default {
             method: 'get',
             url: BASEURL + '/api_company/adventures/',
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Authorization': `Bearer ${token}`
             },
 
         })
