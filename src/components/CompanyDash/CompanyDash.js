@@ -25,7 +25,7 @@ export default function CompanyDash(props) {
     const history = useHistory();
     const [postAdventure, setPostAdventure] = useState(false);
     const [editCompany, setEditCompany] = useState(false);
-    const [adventure, setAdventure] = useState([]);
+    const [adventureState, setAdventure] = useState([]);
 
     let { companyname } = useParams();
     //If there is no "companyname", we'll programmatically redirect the user to login
@@ -66,17 +66,19 @@ export default function CompanyDash(props) {
 
     const getDbAdventures = () => {
 
-        const token = localStorage.getItem("JWT");
+        // const token = localStorage.getItem("JWT");
 
-        API.getAdventures(token).then(response => {
+        API.getAdventureLanding().then(response => {
             const data = response.data
             console.log("constant:data", data)
-
-            setAdventure(data);
+            const filteredAdventures = data.filter(adventure => {
+                return adventure.AdventureCompanyId === props.companyProfile.Adventure_company.id
+            })
+            setAdventure(filteredAdventures);
         })
     }
 
-    const adventureArr = adventure;
+    // const adventureArr = adventure;
     // [
     //     {
     //         title: "Kayaking",
@@ -131,7 +133,7 @@ export default function CompanyDash(props) {
 
                         <Typography className={classes.heading} variant='h3'>Current Active Adventures</Typography>
                         <Grid container item spacing={3}>
-                            {adventureArr.map((adventure) =>
+                            {adventureState.map((adventure) =>
 
 
                                 <CompanyAdventureCard
