@@ -85,8 +85,8 @@ export default function AdventureCard(props) {
                     </CardMedia>
                     <CardContent>
                         <Typography>
-                            {props.description.length > 100 ?
-                                `${props.description.substring(0, 100)} ...` :
+                            {props.description.length > 80 ?
+                                `${props.description.substring(0, 80)} ...` :
                                 props.text
                             }
                         </Typography>
