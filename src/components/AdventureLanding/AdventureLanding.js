@@ -5,8 +5,9 @@ import { makeStyles } from '@material-ui/styles'
 import API from "../../utils/API";
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
+        backgroundColor: theme.palette.background.paper,
         flexGrow: 1,
         alignItems: 'center',
         alignContent: 'center',
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
     cardRow: {
         margin: 0,
     },
-});
+}));
 
 
 export default function AdventureLanding(props) {
