@@ -110,20 +110,6 @@ export default {
         })
     },
 
-    getAdventures: function (token) {
-        console.log("In API: ", token)
-
-        return axios({
-            method: 'get',
-            url: BASEURL + '/api/company/adventures/',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-
-        })
-    },
-
     getAdventureLanding: function () {
 
         return axios({
