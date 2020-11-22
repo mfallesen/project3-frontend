@@ -29,7 +29,7 @@ export default function CompanyDash(props) {
 
     let { companyname } = useParams();
     //If there is no "companyname", we'll programmatically redirect the user to login
-    if(!companyname){
+    if (!companyname) {
         history.push('/companylogin')
     }
     const token = localStorage.getItem("JWTCOMPANY");
@@ -37,11 +37,11 @@ export default function CompanyDash(props) {
 
     //use useEffect to take token from localstorage and make a get req to backend to retrieve company info based on jwtcompany
     useEffect(() => {
-        API.getCompanyProfile(companyname, token).then(({data}) => {
+        API.getCompanyProfile(companyname, token).then(({ data }) => {
             props.handleCompanyData(data);
             console.log("Data from getCompanyProfile", data);
         }).catch(err => history.push('/companylogin'))
-    },[])
+    }, [])
     function handlePostAdventure() {
         if (postAdventure) {
             return setPostAdventure(false)
@@ -71,7 +71,7 @@ export default function CompanyDash(props) {
         API.getAdventures(token).then(response => {
             const data = response.data
             console.log("constant:data", data)
-            
+
             setAdventure(data);
         })
     }
@@ -119,14 +119,14 @@ export default function CompanyDash(props) {
                 direction="column"
                 justify="space-evenly"
                 alignItems="center" >
-                <Typography className={classes.heading} variant='h1'>Company name Here! </Typography>
+                <Typography className={classes.heading} variant='h1'>{props.companyProfile.Adventure_company.name}</Typography>
                 <CompanyDashPanel handlePostAdventure={handlePostAdventure} handleEditCompany={handleEditCompany}></CompanyDashPanel>
             </Grid>
 
             {postAdventure ?
-                <PostAdventure /> :
+                <PostAdventure companyProfile={props.companyProfile} /> :
                 (editCompany) ?
-                    <CompanyAddInfo /> :
+                    <CompanyAddInfo companyProfile={props.companyProfile} setCompanyData={props.setCompanyData} /> :
                     <Grid container>
 
                         <Typography className={classes.heading} variant='h3'>Current Active Adventures</Typography>

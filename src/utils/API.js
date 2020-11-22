@@ -42,7 +42,7 @@ export default {
         });
     },
 
-    addAdventure: function (adventureData, token) {
+    addAdventure: function (adventureData, tagsArr, adventureCompanyId, token) {
         console.log("In API: ", adventureData);
         console.log("In API: ", token)
 
@@ -52,7 +52,8 @@ export default {
             'image': adventureData.image,
             'longitude': adventureData.latitude,
             'latitude': adventureData.latitude,
-            'AdventureCompanyId': adventureData.adventureCompanyId,
+            'AdventureCompanyId': adventureCompanyId,
+            'tags': tagsArr
         });
         return axios({
             method: 'post',
