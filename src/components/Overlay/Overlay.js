@@ -1,13 +1,7 @@
 import React from "react";
 import './Overlay.css'
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid"
-import {Link} from 'react-router-dom';
-// import UserSignUp from "../UserSignUp/UserSignUp";
-
-
+import {Typography, Button, Grid} from "@material-ui/core/";
 
 const useStyles = makeStyles({
     root: {
@@ -31,7 +25,7 @@ export default function Overlay(props) {
                 <Typography variant='h5' className={classes.textColor}>
                     Memorable Microadventures
                 </Typography>
-                <Link to={"/registeruser"} ><Button className={props.btn} onclick={signup}>Sign Up</Button></Link>
+                <Button href={'/registeruser'} className={props.btn} onclick={signup}>Sign Up</Button>
             </Grid>
         </Grid>
     );
