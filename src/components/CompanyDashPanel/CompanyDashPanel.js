@@ -16,12 +16,21 @@ const useStyles = makeStyles((theme) => ({
 export default function CompanyDashPanel(props) {
     const classes = useStyles();
     const [addButton, setAddButton] = useState(false);
+    const [editButton, setEditButton] = useState(false);
 
     function addButtonChange() {
         if (addButton) {
             return setAddButton(false)
         } else {
             return setAddButton(true)
+        }
+    }
+
+    function editButtonChange() {
+        if (editButton) {
+            return setEditButton(false)
+        } else {
+            return setEditButton(true)
         }
     }
 
@@ -47,7 +56,7 @@ export default function CompanyDashPanel(props) {
                     }}
                 >
                     Back to Dashboard
-                </Button> 
+                </Button>
                 :
                 <Button
                     variant="contained"
@@ -64,18 +73,37 @@ export default function CompanyDashPanel(props) {
                 </Button>
             }
 
-
-
-            <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                className={classes.button}
-                startIcon={<EditIcon />}
-                onClick={props.handleEditCompany}
-            >
-                Edit Company Profile
+            {editButton ?
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    className={classes.button}
+                    startIcon={<DashboardIcon />}
+                    onClick={() => {
+                        props.handleEditCompany();
+                        editButtonChange();
+                    }}
+                >
+                    Back to Dashboard
+                </Button>
+                :
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    className={classes.button}
+                    startIcon={<EditIcon />}
+                    onClick={() => {
+                        props.handleEditCompany();
+                        editButtonChange();
+                    }}
+                >
+                    Edit Company Profile
             </Button>
+            }
+
+
         </Grid>
     )
 }
