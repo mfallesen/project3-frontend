@@ -37,73 +37,77 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const goToSignup = () => {
+  window.location.href = "/registerUser"
+}
+
 
 export default function UserLogin(props) {
   const classes = useStyles();
-      return (
-        <Container component="main" maxWidth="xs">
+  return (
+    <Container component="main" maxWidth="xs">
 
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5" className={classes.h1Text}>
-            Sign In
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5" className={classes.h1Text}>
+          Sign In
           </Typography>
-          <form className={classes.form} onSubmit={props.handleFormSubmit} noValidate>
-            <Grid container spacing={2}>
-             
-                  <Grid item xs={12} >
-                    <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="username"
-                      label="User Name"
-                      name="username"
-                      autoComplete="username"
-                      onChange={props.inputChange}
-                      value={props.username}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      variant="outlined"
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="current-password"
-                      onChange={props.inputChange}
-                      value={props.password}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  value="submit"
-                >
-                  Sign In
+        <form className={classes.form} onSubmit={props.handleFormSubmit} noValidate>
+          <Grid container spacing={2}>
+
+            <Grid item xs={12} >
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="username"
+                label="User Name"
+                name="username"
+                autoComplete="username"
+                onChange={props.inputChange}
+                value={props.username}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={props.inputChange}
+                value={props.password}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            value="submit"
+          >
+            Sign In
                       </Button>
-                <Grid container justify="flex-end">
-                  <Grid item>
-                    <Link href="#" variant="body2">
-                      Don't have an account? Sign up!
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link onClick={() => goToSignup()} variant="body2">
+                Don't have an account? Sign up!
                     </Link>
-                  </Grid>
-                </Grid>
-            </form>
+            </Grid>
+          </Grid>
+        </form>
       </div>
     </Container>
-       
-      );
-    
+
+  );
+
 }
 
 

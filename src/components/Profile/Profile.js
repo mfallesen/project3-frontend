@@ -29,6 +29,7 @@ import { openUploadWidget } from "../Cloudinary/CloudinaryService";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import IconButton from '@material-ui/core/IconButton';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import FavAdventuresPage from '../FavAdventuresPage';
 
 
 
@@ -148,14 +149,6 @@ function Profile(props) {
         setReadOnlyEditState(false)
     }
 
-    const checkScreenSize = () => {
-        if (largeScreen) {
-            setViewPanelState("activityFeed")
-        } else {
-            setViewPanelState("personalFeed")
-        }
-    }
-
 
     // function for navigation butttons
     const viewPanelChange = (panelName) => {
@@ -230,7 +223,6 @@ function Profile(props) {
         Activities()
         UserFollowing()
         UserFollowers()
-        checkScreenSize()
     }, []);
 
 
@@ -572,11 +564,11 @@ function Profile(props) {
                         </form>
                     </Container>
                 </div>
-                <Container className={classes.cardGrid} maxWidth="md">
+                <Container className={classes.cardGrid} maxWidth="lg">
                     <Grid container spacing={1} >
                         {viewPanelState === "activityFeed" && !largeScreen ? <ActivityFeed /> : ""}
                         {viewPanelState === "addActivity" && !largeScreen ? <Grid item xs={12}><UserPost /></Grid> : ""}
-                        {viewPanelState === "favAdventures" && !largeScreen ? <Grid item xs={12}><div>Fav Adventures</div></Grid> : ""}
+                        {viewPanelState === "favAdventures" && !largeScreen ? <Grid item xs={12}><FavAdventuresPage /></Grid> : ""}
                         {viewPanelState === "followPanel" && !largeScreen ? <FollowingComponent /> : " "}
                         {viewPanelState === "followPanel" && !largeScreen ? <FollowerComponent /> : " "}
                         {viewPanelState === "personalFeed" && !largeScreen ? <Grid item xs={12} sm={4}>
@@ -593,7 +585,7 @@ function Profile(props) {
                             : " "}
                         {viewPanelState === "activityFeed" && largeScreen ? <ActivityFeed /> : ""}
                         {viewPanelState === "addActivity" && largeScreen ? <Grid item xs={12} sm={4} ><UserPost /></Grid> : ""}
-                        {viewPanelState === "favAdventures" && largeScreen ? <Grid item xs={12} sm={4} ><div>Fav Adventures</div></Grid> : ""}
+                        {viewPanelState === "favAdventures" && largeScreen ? <Grid item xs={12} sm={4} ><FavAdventuresPage profile={props.profile} /></Grid> : ""}
                         {largeScreen ?
                             <FollowingComponent />
                             : " "}

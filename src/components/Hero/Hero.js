@@ -13,11 +13,11 @@ const useStyles = makeStyles({
 })
 
 const VideoBackground = () => {
-    
+
     return (
 
         <Grid>
-            <video src="https://res.cloudinary.com/crowandrew/video/upload/v1605856063/minnesvart/Pexels_Videos_2040075_l0ekbp.mp4" playsInline autoPlay='autoplay' muted loop='loop'>
+            <video src="https://res.cloudinary.com/crowandrew/video/upload/v1605856063/minnesvart/Pexels_Videos_2040075_l0ekbp.mp4" playsInline autoPlay='autoplay' muted >
             </video>
         </Grid>
     )
