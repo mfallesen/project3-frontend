@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
-import { Button, Card, CardContent, CardHeader, CardMedia, Typography } from '@material-ui/core'
+import { Button, Card, CardContent, CardHeader, CardMedia, Container, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import ReactCardFlip from 'react-card-flip';
-import { CloudinaryContext, Image } from "cloudinary-react";
+import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import IconButton from '@material-ui/core/IconButton';
 import API from "../../utils/API";
@@ -11,7 +11,8 @@ import GoogleMaps from '../GoogleMaps';
 
 const useStyles = makeStyles({
     card: {
-        textAlign: 'center'
+        textAlign: 'center',
+        height: '500'
     },
 })
 
@@ -56,56 +57,68 @@ export default function AdventureCard(props) {
             <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
 
                 <Card className={classes.card} elevation='6'>
-                    <CardHeader
-                        title={props.title}
-                    />
-                    <CardMedia>
-                        <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
-
-
-                            {props.image ? <Image
-                                publicId={props.image}
-                                dpr="auto"
-                                responsive
-                                width="auto"
-                                crop="scale"
-                                responsiveUseBreakpoints="true"
-
-                                loading="lazy"
-                            /> : <Image
-                                    publicId="minnesvart/solo_travel_germany_gytbwl.jpg"
-                                    dpr="auto"
-                                    responsive
-                                    width="auto"
-                                    crop="scale"
-                                    responsiveUseBreakpoints="true"
-                                    loading="lazy"
-                                />}
-                        </CloudinaryContext>
-                    </CardMedia>
-                    <CardContent>
-                        <Typography>
-                            {props.description.length > 80 ?
-                                `${props.description.substring(0, 80)} ...` :
-                                props.text
-                            }
-                        </Typography>
-                        <Grid container justify='space-between'>
-
-                            <Typography align='justify' variant='button'><Button disabled>{likeCount} Likes</Button><IconButton onClick={() => {
-                                postRatingDB(props.id)
-                            }} color='primary'><ThumbUpAltIcon /></IconButton></Typography>
-
-                            <Button onClick={handleClick} >More Info</Button>
-
-
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <CardHeader
+                                title={props.title}
+                            />
                         </Grid>
+                        <Grid item xs={12}>
+                            <CardMedia>
 
-                    </CardContent>
+                                <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME} >
+                                    {props.image ?
+                                        <Image
+                                            publicId={props.image}
+                                            dpr="auto"
+                                            responsive
+                                            width="auto"
+                                            crop="scale"
+                                            responsiveUseBreakpoints="true"
+                                            loading="lazy"
+                                            height="400"
+                                        >
+                                        </Image>
+                                        : <Image
+                                            publicId="minnesvart/solo_travel_germany_gytbwl.jpg"
+                                            dpr="auto"
+                                            responsive
+                                            width="auto"
+                                            crop="scale"
+                                            responsiveUseBreakpoints="true"
+                                            loading="lazy"
+                                        />}
+                                </CloudinaryContext>
+
+                            </CardMedia>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <CardContent>
+                                <Typography>
+                                    {props.description.length > 80 ?
+                                        `${props.description.substring(0, 80)} ...` :
+                                        props.text
+                                    }
+                                </Typography>
+                                <Grid container justify='space-between'>
+
+                                    <Typography align='justify' variant='button'><Button disabled>{likeCount} Likes</Button><IconButton onClick={() => {
+                                        postRatingDB(props.id)
+                                    }} color='primary'><ThumbUpAltIcon /></IconButton></Typography>
+
+                                    <Button onClick={handleClick} >More Info</Button>
+
+
+                                </Grid>
+
+                            </CardContent>
+                        </Grid>
+                    </Grid>
+
                 </Card>
 
-                <Card elevation='6'>
-                    <CardContent>
+                <Card elevation='6' >
+                    <CardContent >
                         <Typography>{props.description}</Typography>
                         <hr />
                         <GoogleMaps lat={props.lat} lon={props.lon} />
