@@ -1,11 +1,10 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import React, { useState } from 'react'
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -102,7 +101,6 @@ export default function CompanyDashPanel(props) {
                     Edit Company Profile
             </Button>
             }
-
 
         </Grid>
     )
