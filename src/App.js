@@ -108,9 +108,11 @@ function App() {
   const submitForm = event => {
     event.preventDefault();
     API.login(loginFormState).then(newToken => {
+      console.log("LOOK", newToken)
       localStorage.setItem('JWT', newToken.data.token);
       localStorage.setItem('STREAM', newToken.data.appToken);
       localStorage.setItem('USERNAME', loginFormState.username);
+      window.location.href = "/profile"
       API.getProfile(loginFormState.username, newToken.data.token).then(profileData => {
         setProfileState({
           first_name: profileData.data.first_name,
@@ -147,7 +149,7 @@ function App() {
   const handleUserRegisterFormSubmit = event => {
     event.preventDefault();
     API.registerUser(signUpFormState).then(userData => {
-      window.location.href="/signin"
+      window.location.href = "/signin"
     })
   }
 
