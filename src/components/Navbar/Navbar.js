@@ -83,7 +83,7 @@ export default function Navbar(props) {
             onKeyDown={toggleDrawer('left', false)}
         >
             <List>
-                {[{ name: 'My Profile', icon: <AccountCircleIcon />, href: '/profile' }, { name: 'Adventures', icon: <ExploreIcon />, href: '/adventures' }, { name: 'Favorite Adventures', icon: <StarIcon />, href: '/myadventures' }].map((text) => (
+                {[{ name: 'My Profile', icon: <AccountCircleIcon />, href: '/profile' }, { name: 'Adventures', icon: <ExploreIcon />, href: '/adventures' }].map((text) => (
                     <ListItemLink key={text} href={text.href}>
                         <ListItemIcon>{text.icon}</ListItemIcon>
                         <ListItemText primary={text.name} />
