@@ -6,7 +6,6 @@ const qs = require('qs');
 export default {
     //Register user
     registerUser: function (userData) {
-        console.log(userData);
         return axios.post(BASEURL + '/user/registerUser', {
             first_name: userData.first_name,
             last_name: userData.last_name,
@@ -43,7 +42,7 @@ export default {
         });
     },
 
-    addAdventure: function (adventureData, token) {
+    addAdventure: function (adventureData, tagsArr, adventureCompanyId, token) {
         console.log("In API: ", adventureData);
         console.log("In API: ", token)
 
@@ -53,11 +52,12 @@ export default {
             'image': adventureData.image,
             'longitude': adventureData.latitude,
             'latitude': adventureData.latitude,
-            'AdventureCompanyId': adventureData.adventureCompanyId,
+            'AdventureCompanyId': adventureCompanyId,
+            'tags': tagsArr
         });
         return axios({
             method: 'post',
-            url: BASEURL + '/api/company/adventure/',
+            url: BASEURL + '/api_company/adventure/',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -65,6 +65,20 @@ export default {
             data: data
         })
     },
+
+    deleteAdventure: function (adventureId, token) {
+        console.log("AdventureDeleteinAPI: ", adventureId);
+
+        return axios({
+            method: 'delete',
+            url: BASEURL + `/api_company/adventure/${adventureId}`,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+
+        })
+    },
+
 
     updateUserInfo: function (userData, userName, token) {
         console.log("In API: ", userData);
@@ -82,6 +96,34 @@ export default {
         return axios({
             method: 'put',
             url: BASEURL + '/user/updateUser',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: data
+        })
+    },
+
+    updateCompanyInfo: function (companyData, token) {
+        console.log("In API: ", companyData);
+        console.log("In API: ", token)
+
+        const data = qs.stringify({
+            'name': companyData.name,
+            'address_1': companyData.address_1,
+            'address_2': companyData.address_2,
+            'city': companyData.city,
+            'state': companyData.state,
+            'zip_code': companyData.zip_code,
+            'phone': companyData.phone,
+            'email': companyData.email,
+            'website': companyData.website,
+            'description': companyData.description,
+            'image': companyData.image,
+        });
+        return axios({
+            method: 'put',
+            url: BASEURL + `/api_company/edit/company/${companyData.id}`,
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -115,10 +157,9 @@ export default {
 
         return axios({
             method: 'get',
-            url: BASEURL + '/api/company/adventures/',
+            url: BASEURL + '/api_company/adventures/',
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Authorization': `Bearer ${token}`
             },
 
         })

@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/styles'
 import CompanyAdventureCard from '../CompanyAdventureCard';
 import CompanyDashPanel from '../CompanyDashPanel';
 import PostAdventure from '../PostAdventure';
-import CompanyAddInfo from '../CompanyAddInfo';
-import { useParams } from 'react-router-dom';
+import CompanyEditInfo from '../CompanyEditInfo';
+import { useParams, useHistory } from 'react-router-dom';
 import API from '../../utils/API';
 import moment from 'moment';
 
@@ -22,87 +22,74 @@ const useStyles = makeStyles({
 
 export default function CompanyDash(props) {
     const classes = useStyles();
-    const [postAdventure, setPostAdventure] = useState(false);
-    const [editCompany, setEditCompany] = useState(false);
-    const [adventure, setAdventure] = useState([]);
+    const history = useHistory();
+    const [postAdventureState, setPostAdventureState] = useState(false);
+    const [editCompanyState, setEditCompanyState] = useState(false);
+    const [adventureState, setAdventureState] = useState([]);
 
-    let { companyusername } = useParams();
-    //If there is no "companyusername", we'll programmatically redirect the user to login
-    const token = localStorage.getItem("JWTCOMPANY");
+    let { companyname } = useParams();
+    //If there is no "companyname", we'll programmatically redirect the user to login
+    if (!companyname) {
+        history.push('/companylogin')
+    }
 
     //use useEffect to take token from localstorage and make a get req to backend to retrieve company info based on jwtcompany
     useEffect(() => {
-        API.getCompanyProfile(companyusername, token).then(({data}) => {
+        const token = localStorage.getItem("JWTCOMPANY");
+        const companyUserName = localStorage.getItem("USERNAMECOMPANY")
+        API.getCompanyProfile(companyUserName, token).then(({ data }) => {
             props.handleCompanyData(data);
-        })
-    },[])
-    function handlePostAdventure() {
-        if (postAdventure) {
-            return setPostAdventure(false)
+            console.log("Data from getCompanyProfile", data);
+        }).catch(err => console.log(err))
+        setTimeout(() => {
+            getDbAdventures()
+        }, 1000)
+    }, [props.companyProfile.Adventure_company.id])
+
+
+
+    const handlePostAdventure = () => {
+        if (postAdventureState) {
+            return setPostAdventureState(false)
         } else {
-            setEditCompany(false)
-            return setPostAdventure(true)
+            setEditCompanyState(false)
+            return setPostAdventureState(true)
         }
     }
 
-    function handleEditCompany() {
-        if (editCompany) {
-            return setEditCompany(false)
+    const handleEditCompany = () => {
+        if (editCompanyState) {
+            return setEditCompanyState(false)
         } else {
-            setPostAdventure(false)
-            return setEditCompany(true)
+            setPostAdventureState(false)
+            return setEditCompanyState(true)
         }
     }
-
-    useEffect(() => {
-        getDbAdventures();
-    }, []);
 
     const getDbAdventures = () => {
-
-        const token = localStorage.getItem("JWT");
-
-        API.getAdventures(token).then(response => {
-            const data = response.data
-            console.log("constant:data", data)
-            
-            setAdventure(data);
+        const token = localStorage.getItem("JWTCOMPANY");
+        API.getAdventures(token).then(res => {
+            const newList = res.data.filter(adventure => {
+                console.log("FILTER Id:", props.companyProfile.Adventure_company.id)
+                console.log("FILTER LIST", adventure)
+                return adventure.AdventureCompanyId === props.companyProfile.Adventure_company.id
+            })
+            setAdventureState(newList);
         })
     }
 
-    const adventureArr = adventure;
-    // [
-    //     {
-    //         title: "Kayaking",
-    //         image: "https://picsum.photos/150/200",
-    //         date: 'January 1, 2021',
-    //         text: "Whitewater Kayaking Fun!"
-    //     },
-    //     {
-    //         title: "Hikning",
-    //         image: "https://picsum.photos/150/200",
-    //         date: 'January 1, 2021',
-    //         text: "Whitewater Hiking Fun!"
-    //     },
-    //     {
-    //         title: "BeirGarten",
-    //         image: "https://picsum.photos/150/200",
-    //         date: 'January 1, 2021',
-    //         text: "Brews and Nature"
-    //     },
-    //     {
-    //         title: "Paddleboarding",
-    //         image: "https://picsum.photos/150/200",
-    //         date: 'January 1, 2021',
-    //         text: "See the Sound!"
-    //     },
-    //     {
-    //         title: "RC Car Racing",
-    //         image: "https://picsum.photos/150/200",
-    //         date: 'January 1, 2021',
-    //         text: "Rally rush in miniature!"
-    //     }
-    // ]
+    const adventureCardDelete = (num) => {
+        const token = localStorage.getItem('JWTCOMPANY')
+        console.log("Num : ", num);
+        console.log("token : ", token);
+        API.deleteAdventure(num, token).then(res => {
+            console.log("adventureidpassed: ", res);
+            getDbAdventures();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
 
     return (
         <Grid container xs={12} sm={12} md={12}>
@@ -113,19 +100,19 @@ export default function CompanyDash(props) {
                 direction="column"
                 justify="space-evenly"
                 alignItems="center" >
-                <Typography className={classes.heading} variant='h1'>Company name Here! </Typography>
+                <Typography className={classes.heading} variant='h1'>{props.companyProfile.Adventure_company.name}</Typography>
                 <CompanyDashPanel handlePostAdventure={handlePostAdventure} handleEditCompany={handleEditCompany}></CompanyDashPanel>
             </Grid>
 
-            {postAdventure ?
-                <PostAdventure /> :
-                (editCompany) ?
-                    <CompanyAddInfo /> :
+            {postAdventureState ?
+                <PostAdventure companyProfile={props.companyProfile} /> :
+                (editCompanyState) ?
+                    <CompanyEditInfo companyProfile={props.companyProfile} setCompanyData={props.setCompanyData} handleEditCompany={handleEditCompany} /> :
                     <Grid container>
 
                         <Typography className={classes.heading} variant='h3'>Current Active Adventures</Typography>
                         <Grid container item spacing={3}>
-                            {adventureArr.map((adventure) =>
+                            {adventureState.map((adventure) =>
 
 
                                 <CompanyAdventureCard
@@ -133,6 +120,8 @@ export default function CompanyDash(props) {
                                     date={moment(adventure.createdAt).format('D MMM YYYY')}
                                     image={adventure.image}
                                     text={adventure.description}
+                                    adventure={adventure.id}
+                                    deleteCard={adventureCardDelete}
                                 ></CompanyAdventureCard>
                             )}
                         </Grid>
