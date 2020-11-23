@@ -6,7 +6,7 @@ const qs = require('qs');
 export default {
     //Register user
     registerUser: function (userData) {
-        return axios.post(BASEURL + '/user/registerUser', {
+        return axios.post(BASEURL + 'user/registerUser', {
             first_name: userData.first_name,
             last_name: userData.last_name,
             email: userData.email,
@@ -183,7 +183,7 @@ export default {
     },
     //Code example of api to login
     login: function (userData) {
-        return axios.post(BASEURL + '/user/loginUser', {
+        return axios.post(BASEURL + 'user/loginUser', {
             username: userData.username,
             password: userData.password,
 
