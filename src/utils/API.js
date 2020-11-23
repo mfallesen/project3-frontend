@@ -75,7 +75,7 @@ export default {
             headers: {
                 'Authorization': `Bearer ${token}`,
             },
-            
+
         })
     },
 
@@ -96,6 +96,34 @@ export default {
         return axios({
             method: 'put',
             url: BASEURL + '/user/updateUser',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: data
+        })
+    },
+
+    updateCompanyInfo: function (companyData, token) {
+        console.log("In API: ", companyData);
+        console.log("In API: ", token)
+
+        const data = qs.stringify({
+            'name': companyData.name,
+            'address_1': companyData.address_1,
+            'address_2': companyData.address_2,
+            'city': companyData.city,
+            'state': companyData.state,
+            'zip_code': companyData.zip_code,
+            'phone': companyData.phone,
+            'email': companyData.email,
+            'website': companyData.website,
+            'description': companyData.description,
+            'image': companyData.image,
+        });
+        return axios({
+            method: 'put',
+            url: BASEURL + `/api_company/edit/company/${companyData.id}`,
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/x-www-form-urlencoded'
