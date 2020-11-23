@@ -166,13 +166,26 @@ export default function Navbar(props) {
                         </Grid>
                         <Grid item >
                             {/* <img className={classes.image} src={"https://res.cloudinary.com/crowandrew/image/upload/c_fit,w_300/v1605820413/minnesvart/logo_rdvtg7.png"} alt='logo' /> */}
-
+                            
+                            {props.profile.isLoggedIn || props.companyProfile.isCompanyLoggedIn ?
+                            <Button href='/adventures'>
+                                
                             <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
                                 <Image publicId="minnesvart/logo_rdvtg7.png" >
                                     <Transformation width="200" crop="fill" />
                                 </Image>
                             </CloudinaryContext>
-
+                            </Button>
+                            :
+                            <Button href='/'>
+                                
+                            <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
+                                <Image publicId="minnesvart/logo_rdvtg7.png" >
+                                    <Transformation width="200" crop="fill" />
+                                </Image>
+                            </CloudinaryContext>
+                            </Button>
+                            }
                         </Grid>
 
                         <Grid item >
