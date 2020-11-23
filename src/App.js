@@ -10,7 +10,6 @@ import { BrowserRouter as Router, Link, Switch, Route, Redirect } from 'react-ro
 import UserSignUp from './components/UserSignUp/UserSignUp';
 import Hero from "./components/Hero";
 import AdventureLanding from './components/AdventureLanding';
-import Userlandingpost from './components/Userlandingpost';
 import Profile from './components/Profile';
 import CompanySignup from './components/CompanySignup';
 import CompanyLogin from './components/CompanyLogin';
@@ -19,9 +18,6 @@ import CompanyAddInfo from './components/CompanyAddInfo';
 import Footer from './components/Footer';
 import Gallery from './components/Gallery'
 import AdventuresPage from './components/AdventuresPage';
-
-
-
 
 function App() {
   const [loginFormState, setLoginFormState] = useState({
@@ -133,20 +129,6 @@ function App() {
     })
   }
 
-  const handleFormSubmit = event => {
-    event.preventDefault();
-    API.loginCompany(loginFormState).then(newToken => {
-      console.log("NewToken in CompanyLogin: ", newToken);
-      localStorage.setItem('JWTCOMPANY', newToken.data.token);
-      localStorage.setItem('USERNAMECOMPANY', loginFormState.username);
-    }).then(() => {
-      window.location.href = `/companydashboard/${loginFormState.username}`;//if we do this, then it erases all local state
-    })
-    setLoginFormState({
-      username: "",
-      password: ""
-    })
-  }
   const inputChange = event => {
     const { name, value } = event.target;
     setLoginFormState({
@@ -162,6 +144,7 @@ function App() {
     username: "",
     password: ""
   })
+
   const handleUserRegisterFormSubmit = event => {
     event.preventDefault();
     API.registerUser(signUpFormState).then(userData => {
@@ -184,15 +167,6 @@ function App() {
     })
   }
 
-  // const [companyData, setCompanyData] = useState({
-  //   auth: false,
-  //   email: "",
-  //   message: "",
-  //   password: "",
-  //   username: "",
-  //   isCompanyLoggedIn: false
-  // });
-
   const [companyProfileState, setCompanyProfileState] = useState({
     username: "",
     email: "",
@@ -201,13 +175,13 @@ function App() {
     Adventure_company: "",
     isCompanyLoggedIn: false
   })
+
   return (
     <Router>
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Navbar profile={profileState} setProfile={setProfileState} companyProfile={companyProfileState} setCompanyProfileState={setCompanyProfileState} />
-
         <Switch>
           <Route exact path="/registerUser">
             <UserSignUp handleUserRegFormSubmit={handleUserRegisterFormSubmit} inputChange={inputChangeRegister} form={signUpFormState} />
@@ -240,7 +214,6 @@ function App() {
               <AdventureLanding />
               <Gallery />
             </div>
-
           </Route>
         </Switch>
         <Footer />
