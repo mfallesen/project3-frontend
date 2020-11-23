@@ -31,15 +31,27 @@ export default function AdventureLanding(props) {
 
         API.getAdventureLanding().then(response => {
             const data = response.data
-            console.log("constant:data", data)
             var newItems = [];
 
-            for (var i = 0; i < 4; i++) {
-                var idx = Math.floor(Math.random() * data.length);
-                newItems.push(data[idx]);
-                data.splice(idx, 1);
+            if (data.length <= 3) {
+                for (var i = 0; i < data.length; i++) {
+                    var idx = Math.floor(Math.random() * data.length);
+                    newItems.push(data[idx]);
+                    data.splice(idx, 1);
+                }
+                setAdventure(newItems);
+            } else if (data.length > 4) {
+                for (var i = 0; i < 4; i++) {
+                    var idx = Math.floor(Math.random() * data.length);
+                    newItems.push(data[idx]);
+                    data.splice(idx, 1);
+                }
+                setAdventure(newItems);
             }
-            setAdventure(newItems);
+
+
+
+
         })
     }
 
