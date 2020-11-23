@@ -21,23 +21,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompanyAdventureCard(props) {
+  console.log('company card props: ', props);
   const classes = useStyles();
 
   const [isFlipped, setIsFlipped] = useState(false);
     const handleClick = () => {
         setIsFlipped(!isFlipped);
     }
-
-  // *******UNCOMMENT BELOW FOR BUTTON FUNCTIONALITY******************
-  // const [anchorEl, setAnchorEl] = React.useState(null);
-
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
+    
 
   return (
     <Grid item xs={6} sm={6} md={3}>
@@ -46,22 +37,7 @@ export default function CompanyAdventureCard(props) {
 
         <Card onClick={handleClick}>
           <CardHeader
-            // *******UNCOMMENT BELOW FOR BUTTON FUNCTIONALITY******************
-            // action={
-            //   <IconButton aria-label="settings">
-            //     <MoreVertIcon aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}/>
-            //     <Menu
-            //         id="simple-menu"
-            //         anchorEl={anchorEl}
-            //         keepMounted
-            //         open={Boolean(anchorEl)}
-            //         onClose={handleClose}
-            //     >
-            //         <MenuItem onClick={handleClose}><EditIcon/>Edit</MenuItem>
-            //         <MenuItem onClick={handleClose}><DeleteForeverIcon/>Delete</MenuItem>
-            //     </Menu>
-            //   </IconButton>
-            // }
+            
             title={props.title}
             subheader={props.date}
           />
@@ -94,7 +70,7 @@ export default function CompanyAdventureCard(props) {
               }
             </Typography>
           </CardContent>
-          <Button color={'secondary'} fullWidth={true}><DeleteForeverIcon /></Button>
+          <Button color={'secondary'} fullWidth={true} onClick={() => props.deleteCard(props.adventure)}><DeleteForeverIcon /></Button>
         </Card>
 
         <Card onClick={handleClick}>
