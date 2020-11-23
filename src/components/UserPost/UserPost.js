@@ -6,13 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { CloudinaryContext, Image } from "cloudinary-react";
 import { openUploadWidget } from "../Cloudinary/CloudinaryService";
 import { Cloudinary as CoreCloudinary, Util } from 'cloudinary-core';
-
-
-
-
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -36,8 +31,6 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
-
-
 
 export default function UserPost() {
     const classes = useStyles();
