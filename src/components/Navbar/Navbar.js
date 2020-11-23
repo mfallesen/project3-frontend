@@ -165,7 +165,6 @@ export default function Navbar(props) {
                             </React.Fragment>
                         </Grid>
                         <Grid item >
-                            {/* <img className={classes.image} src={"https://res.cloudinary.com/crowandrew/image/upload/c_fit,w_300/v1605820413/minnesvart/logo_rdvtg7.png"} alt='logo' /> */}
                             
                             {props.profile.isLoggedIn || props.companyProfile.isCompanyLoggedIn ?
                             <Button href='/adventures'>
