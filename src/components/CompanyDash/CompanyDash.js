@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/styles'
 import CompanyAdventureCard from '../CompanyAdventureCard';
 import CompanyDashPanel from '../CompanyDashPanel';
 import PostAdventure from '../PostAdventure';
-import CompanyAddInfo from '../CompanyAddInfo';
+import CompanyEditInfo from '../CompanyEditInfo';
 import { useParams, useHistory } from 'react-router-dom';
 import API from '../../utils/API';
 import moment from 'moment';
@@ -83,12 +83,12 @@ export default function CompanyDash(props) {
         console.log("Num : ", num);
         console.log("token : ", token);
         API.deleteAdventure(num, token).then(res => {
-          console.log("adventureidpassed: ", res);
-          getDbAdventures();
+            console.log("adventureidpassed: ", res);
+            getDbAdventures();
         }).catch(err => {
             console.log(err);
         })
-      }
+    }
 
 
     return (
@@ -107,7 +107,7 @@ export default function CompanyDash(props) {
             {postAdventureState ?
                 <PostAdventure companyProfile={props.companyProfile} /> :
                 (editCompanyState) ?
-                    <CompanyAddInfo companyProfile={props.companyProfile} setCompanyData={props.setCompanyData} /> :
+                    <CompanyEditInfo companyProfile={props.companyProfile} setCompanyData={props.setCompanyData} handleEditCompany={handleEditCompany} /> :
                     <Grid container>
 
                         <Typography className={classes.heading} variant='h3'>Current Active Adventures</Typography>
