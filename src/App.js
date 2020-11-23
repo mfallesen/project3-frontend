@@ -108,7 +108,6 @@ function App() {
   const submitForm = event => {
     event.preventDefault();
     API.login(loginFormState).then(newToken => {
-      console.log("NewToken :", newToken);
       localStorage.setItem('JWT', newToken.data.token);
       localStorage.setItem('STREAM', newToken.data.appToken);
       localStorage.setItem('USERNAME', loginFormState.username);
@@ -148,15 +147,12 @@ function App() {
   const handleUserRegisterFormSubmit = event => {
     event.preventDefault();
     API.registerUser(signUpFormState).then(userData => {
-      console.log("UserData from handleUserRegFormSubmit: ", userData);
       window.location.href="/signin"
     })
   }
 
   const handleCompanyData = (companyProfileState) => {
-    console.log("CompanyProfileState", companyProfileState);
     setCompanyProfileState({ ...companyProfileState, isCompanyLoggedIn: true });
-    console.log("Company Data: ", companyProfileState);
   }
 
   const inputChangeRegister = event => {
