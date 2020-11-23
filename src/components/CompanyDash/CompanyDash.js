@@ -78,6 +78,19 @@ export default function CompanyDash(props) {
         })
     }
 
+    const adventureCardDelete = (num) => {
+        const token = localStorage.getItem('JWTCOMPANY')
+        console.log("Num : ", num);
+        console.log("token : ", token);
+        API.deleteAdventure(num, token).then(res => {
+          console.log("adventureidpassed: ", res);
+          getDbAdventures();
+        }).catch(err => {
+            console.log(err);
+        })
+      }
+
+
     return (
         <Grid container xs={12} sm={12} md={12}>
 
@@ -107,6 +120,8 @@ export default function CompanyDash(props) {
                                     date={moment(adventure.createdAt).format('D MMM YYYY')}
                                     image={adventure.image}
                                     text={adventure.description}
+                                    adventure={adventure.id}
+                                    deleteCard={adventureCardDelete}
                                 ></CompanyAdventureCard>
                             )}
                         </Grid>
