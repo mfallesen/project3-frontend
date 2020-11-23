@@ -6,7 +6,6 @@ import { makeStyles, withStyles } from '@material-ui/styles';
 import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { AppBar, Button, Toolbar, List, Divider, ListItem, ListItemIcon, ListItemText, IconButton, Drawer, Grid } from '@material-ui/core';
 import ExploreIcon from '@material-ui/icons/Explore';
-import StarIcon from '@material-ui/icons/Star';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
@@ -49,7 +48,6 @@ const StyledMenuOpenIcon = withStyles({
 
 })(MenuOpenIcon);
 
-
 export default function Navbar(props) {
 
     const classes = useStyles();
@@ -65,7 +63,7 @@ export default function Navbar(props) {
         return <ListItem button component="a" {...props} />;
     }
 
-    const toggleDrawer = (anchor, open) => (event) => {
+    const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
@@ -73,7 +71,7 @@ export default function Navbar(props) {
         setState({ ...state, ['left']: open });
     };
 
-    const list = (anchor) => (
+    const list = () => (
         <div
             className={clsx(classes.list, {
                 [classes.fullList]: 'left' === 'top' || 'left' === 'bottom',
@@ -103,7 +101,7 @@ export default function Navbar(props) {
         </div>
     );
 
-    const companylist = (anchor) => (
+    const companylist = () => (
         <div
             className={clsx(classes.list, {
                 [classes.fullList]: 'left' === 'top' || 'left' === 'bottom',

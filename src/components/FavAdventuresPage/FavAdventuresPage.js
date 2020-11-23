@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import AdventureCard from '../AdventureCard'
 import SearchForm from '../SearchForm/SearchForm'
@@ -44,7 +44,6 @@ export default function AdventuresPage(props) {
         })
     }
 
-
     const handleInputChange = event => {
 
         setSearchResults(event);
@@ -69,7 +68,6 @@ export default function AdventuresPage(props) {
             setFilteredData(originalData)
         }
     }
-
 
     return (
 
