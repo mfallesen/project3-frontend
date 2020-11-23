@@ -37,10 +37,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const goToLogin = () => {
+  window.location.href = "/signin"
+}
+
 export default function UserSignUp(props) {
   const classes = useStyles();
   console.log(props);
 
+  const preventDefault = (event) => event.preventDefault();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -66,81 +71,81 @@ export default function UserSignUp(props) {
                 onChange={props.inputChange}
                 value={props.form.first_name}
               />
-              </Grid>
-              <Grid item xs={12} >
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="last_name"
-                  label="Last Name"
-                  name="last_name"
-                  autoComplete="Last Name"
-                  onChange={props.inputChange}
-                  value={props.form.last_name}
-                />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    onChange={props.inputChange}
-                    value={props.form.email}
-                  />
-                </Grid>
-                <Grid item xs={12} >
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="username"
-                    label="User Name"
-                    name="username"
-                    autoComplete="username"
-                    onChange={props.inputChange}
-                    value={props.form.username}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={props.inputChange}
-                    value={props.form.password}
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
+            </Grid>
+            <Grid item xs={12} >
+              <TextField
+                variant="outlined"
+                required
                 fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                value="register"
-              >
-                Sign Up
+                id="last_name"
+                label="Last Name"
+                name="last_name"
+                autoComplete="Last Name"
+                onChange={props.inputChange}
+                value={props.form.last_name}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={props.inputChange}
+                value={props.form.email}
+              />
+            </Grid>
+            <Grid item xs={12} >
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="username"
+                label="User Name"
+                name="username"
+                autoComplete="username"
+                onChange={props.inputChange}
+                value={props.form.username}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={props.inputChange}
+                value={props.form.password}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            value="register"
+          >
+            Sign Up
                     </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link to="/signin" variant="body2">
-                    Already have an account? Sign in!
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link onClick={() => goToLogin()} variant="body2">
+                Already have an account? Sign in!
                   </Link>
-                </Grid>
-              </Grid>
-          </form>
-    </div>
-  </Container>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
 
   );
 };
