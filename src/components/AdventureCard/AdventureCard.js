@@ -43,12 +43,8 @@ export default function AdventureCard(props) {
 
         const token = localStorage.getItem("JWT");
         API.postAdventureRating(token, id).then(response => {
-            const data = response.data
-
-
-        }).then(() => {
             postLikeCount(props.id);
-        })
+        }).catch(err => console.log(err))
     }
 
     return (
