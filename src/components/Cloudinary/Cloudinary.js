@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { CloudinaryContext, Image } from "cloudinary-react";
-import { Util } from 'cloudinary-core';
 import { fetchPhotos, openUploadWidget } from "./CloudinaryService";
 import './Cloudinary.css';
 import Button from '@material-ui/core/Button'
