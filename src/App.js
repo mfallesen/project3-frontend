@@ -166,6 +166,7 @@ function App() {
     event.preventDefault();
     API.registerUser(signUpFormState).then(userData => {
       console.log("UserData from handleUserRegFormSubmit: ", userData);
+      window.location.href="/signin"
     })
   }
 
