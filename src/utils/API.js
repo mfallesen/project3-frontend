@@ -66,6 +66,20 @@ export default {
         })
     },
 
+    deleteAdventure: function (adventureId, token) {
+        console.log("AdventureDeleteinAPI: ", adventureId);
+
+        return axios({
+            method: 'delete',
+            url: BASEURL + `/api_company/adventure/${adventureId}`,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            
+        })
+    },
+
+
     updateUserInfo: function (userData, userName, token) {
         console.log("In API: ", userData);
         console.log("In API: ", token)
