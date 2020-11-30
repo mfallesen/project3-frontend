@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
-import { Button, Card, CardContent, CardHeader, CardMedia, Container, Typography } from '@material-ui/core'
+import { Button, Card, CardContent, CardHeader, CardMedia, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import ReactCardFlip from 'react-card-flip';
-import { CloudinaryContext, Image, Transformation } from "cloudinary-react";
+import { CloudinaryContext, Image } from "cloudinary-react";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import IconButton from '@material-ui/core/IconButton';
 import API from "../../utils/API";
@@ -25,7 +25,6 @@ export default function AdventureCard(props) {
     }
 
     useEffect(() => {
-        // postRatingDB(props.id);
         postLikeCount(props.id);
     }, []);
 
