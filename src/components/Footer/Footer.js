@@ -46,7 +46,7 @@ export default function Footer() {
 
     < Grid container className={classes.footer} alignItems='center' direction="column" justify='center'>
 
-      <Grid item alignItems='center'>
+      <Grid item >
         <Typography variant="h6" gutterBottom>
           Local Memories. Locally Minnesvärt.
         </Typography>
