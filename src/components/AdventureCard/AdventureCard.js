@@ -16,11 +16,8 @@ const useStyles = makeStyles({
     },
 })
 
-
-
 export default function AdventureCard(props) {
     const classes = useStyles();
-
     const [isFlipped, setIsFlipped] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const handleClick = () => {
@@ -43,12 +40,8 @@ export default function AdventureCard(props) {
 
         const token = localStorage.getItem("JWT");
         API.postAdventureRating(token, id).then(response => {
-            const data = response.data
-
-
-        }).then(() => {
             postLikeCount(props.id);
-        })
+        }).catch(err => console.log(err))
     }
 
     return (
@@ -134,7 +127,6 @@ export default function AdventureCard(props) {
                     </CardContent>
                     {/* Add to favorites button */}
                 </Card>
-
 
             </ReactCardFlip>
         </Grid>

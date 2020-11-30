@@ -2,19 +2,13 @@ import React, { useState, useEffect } from 'react';
 import API from "../../utils/API";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -47,43 +41,6 @@ export default function SignUp(props) {
         password: ""
     })
 
-    // const [companyProfileState, setCompanyProfileState] = useState({
-    //     username: "",
-    //     email: "",
-    //     token: "",
-    //     id: "",
-    //     isCompanyLoggedIn: false
-    // })
-
-    // useEffect(getCompanyData(), [])
-
-    // function getCompanyData(props) {
-    //     const token = localStorage.getItem("JWTCOMPANY");
-    //     const username = localStorage.getItem("USERNAMECOMPANY");
-    //     if (token && username) {
-    //         API.getCompanyProfile(username, token).then(companyProfileData => {
-    //             if (companyProfileData) {
-    //                 props.setCompanyProfileState({
-    //                     username: companyProfileData.data.username,
-    //                     email: companyProfileData.data.email,
-    //                     id: companyProfileData.data.id,
-    //                     isCompanyLoggedIn: true
-    //                 })
-    //             } else {
-    //                 localStorage.removeItem("JWTCOMPANY");
-    //                 props.setCompanyProfileState({
-    //                     username: "",
-    //                     email: "",
-    //                     token: "",
-    //                     id: "",
-    //                     isCompanyLoggedIn: false
-    //                 })
-    //             }
-    //         })
-    //     }
-    // }
-
-    // })
     const inputChange = event => {
         const { name, value } = event.target;
         setLoginFormState({

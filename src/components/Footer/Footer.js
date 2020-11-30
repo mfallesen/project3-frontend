@@ -4,8 +4,6 @@ import Link from '@material-ui/core/Link';
 import Typography from '../Typography';
 import { Grid } from '@material-ui/core';
 
-
-
 function Copyright() {
   return (
     <Typography variant="body1" color="textSecondary" align="center">
@@ -29,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 function CompanySignIn() {
   return (
     <Typography
@@ -41,7 +38,6 @@ function CompanySignIn() {
     </Typography>
   )
 }
-
 
 export default function Footer() {
   const classes = useStyles();

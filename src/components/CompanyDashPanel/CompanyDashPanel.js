@@ -1,11 +1,10 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import React, { useState } from 'react'
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -16,12 +15,21 @@ const useStyles = makeStyles((theme) => ({
 export default function CompanyDashPanel(props) {
     const classes = useStyles();
     const [addButton, setAddButton] = useState(false);
+    const [editButton, setEditButton] = useState(false);
 
     function addButtonChange() {
         if (addButton) {
             return setAddButton(false)
         } else {
             return setAddButton(true)
+        }
+    }
+
+    function editButtonChange() {
+        if (editButton) {
+            return setEditButton(false)
+        } else {
+            return setEditButton(true)
         }
     }
 
@@ -47,7 +55,7 @@ export default function CompanyDashPanel(props) {
                     }}
                 >
                     Back to Dashboard
-                </Button> 
+                </Button>
                 :
                 <Button
                     variant="contained"
@@ -64,18 +72,36 @@ export default function CompanyDashPanel(props) {
                 </Button>
             }
 
-
-
-            <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                className={classes.button}
-                startIcon={<EditIcon />}
-                onClick={props.handleEditCompany}
-            >
-                Edit Company Profile
+            {editButton ?
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    className={classes.button}
+                    startIcon={<DashboardIcon />}
+                    onClick={() => {
+                        props.handleEditCompany();
+                        editButtonChange();
+                    }}
+                >
+                    Back to Dashboard
+                </Button>
+                :
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    className={classes.button}
+                    startIcon={<EditIcon />}
+                    onClick={() => {
+                        props.handleEditCompany();
+                        editButtonChange();
+                    }}
+                >
+                    Edit Company Profile
             </Button>
+            }
+
         </Grid>
     )
 }

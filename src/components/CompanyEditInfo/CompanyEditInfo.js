@@ -10,6 +10,7 @@ import { CloudinaryContext, Image } from "cloudinary-react";
 import { openUploadWidget } from "../Cloudinary/CloudinaryService";
 import { Cloudinary as CoreCloudinary, Util } from 'cloudinary-core';
 
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -33,29 +34,31 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignUp() {
+export default function CompanyEditInfo(props) {
     const classes = useStyles();
 
-    const currentCompanyUserId = localStorage.getItem("COMPANYUSERID");
-
     const [businessInfoFormState, setBusinessInfoFormState] = useState({
-        name: "",
-        address_1: "",
-        address_2: "",
-        city: "",
-        state: "",
-        zip_code: "",
-        phone: "",
-        email: "",
-        website: "",
-        description: "",
-        image: "",
-        CompanyUserId: currentCompanyUserId,
+        name: props.companyProfile.Adventure_company.name,
+        address_1: props.companyProfile.Adventure_company.address_1,
+        address_2: props.companyProfile.Adventure_company.address_2,
+        city: props.companyProfile.Adventure_company.city,
+        state: props.companyProfile.Adventure_company.state,
+        zip_code: props.companyProfile.Adventure_company.zip_code,
+        phone: props.companyProfile.Adventure_company.phone,
+        email: props.companyProfile.Adventure_company.email,
+        website: props.companyProfile.Adventure_company.website,
+        description: props.companyProfile.Adventure_company.description,
+        image: props.companyProfile.Adventure_company.image,
+        id: props.companyProfile.Adventure_company.id
     })
 
     const [image, setImage] = useState([])
 
+
+    // input change handler for the company profile save form
     const inputChange = event => {
+        console.log("NAME:", event.target.name)
+        console.log("VALUE:", event.target.value)
         const { name, value } = event.target;
         setBusinessInfoFormState({
             ...businessInfoFormState,
@@ -65,25 +68,15 @@ export default function SignUp() {
 
     const handleFormSubmit = event => {
         event.preventDefault();
-        API.addCompany(businessInfoFormState).then(userData => {
-            console.log("AFTER API: ", userData);
-        }).then(() => {
-            window.location.href = "/companylogin";
-        })
-        setBusinessInfoFormState({
-            name: "",
-            address_1: "",
-            address_2: "",
-            city: "",
-            state: "",
-            zip_code: "",
-            phone: "",
-            email: "",
-            website: "",
-            description: "",
-            image: "",
-            CompanyUserId: "",
-        })
+        const token = localStorage.getItem("JWTCOMPANY")
+        API.updateCompanyInfo(businessInfoFormState, token).then(companyData => {
+            console.log("AFTER API: ", companyData);
+            console.log("SAVE");
+            props.setCompanyData({
+                ...props.companyProfile,
+                Adventure_company: businessInfoFormState
+            })
+        }).catch(err => console.log(err))
     }
 
     const beginUpload = tag => {
@@ -277,6 +270,7 @@ export default function SignUp() {
                         <Grid item xs={12}>
                             <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
 
+
                                 {businessInfoFormState.image ? <Image
                                     publicId={businessInfoFormState.image}
                                     fetch-format="auto"
@@ -298,6 +292,7 @@ export default function SignUp() {
                                 id="image"
                                 label="Image"
                                 name="image"
+                                disabled="true"
                                 autoComplete="image"
                                 onChange={inputChange}
                                 value={businessInfoFormState.image}

@@ -4,11 +4,10 @@ import { makeStyles } from '@material-ui/styles'
 import CompanyAdventureCard from '../CompanyAdventureCard';
 import CompanyDashPanel from '../CompanyDashPanel';
 import PostAdventure from '../PostAdventure';
-import CompanyAddInfo from '../CompanyAddInfo';
+import CompanyEditInfo from '../CompanyEditInfo';
 import { useParams, useHistory } from 'react-router-dom';
 import API from '../../utils/API';
 import moment from 'moment';
-
 
 const useStyles = makeStyles({
     heading: {
@@ -16,9 +15,6 @@ const useStyles = makeStyles({
         marginLeft: 'auto'
     }
 });
-
-
-
 
 export default function CompanyDash(props) {
     const classes = useStyles();
@@ -45,8 +41,6 @@ export default function CompanyDash(props) {
             getDbAdventures()
         }, 1000)
     }, [props.companyProfile.Adventure_company.id])
-
-
 
     const handlePostAdventure = () => {
         if (postAdventureState) {
@@ -83,17 +77,15 @@ export default function CompanyDash(props) {
         console.log("Num : ", num);
         console.log("token : ", token);
         API.deleteAdventure(num, token).then(res => {
-          console.log("adventureidpassed: ", res);
-          getDbAdventures();
+            console.log("adventureidpassed: ", res);
+            getDbAdventures();
         }).catch(err => {
             console.log(err);
         })
-      }
-
+    }
 
     return (
         <Grid container xs={12} sm={12} md={12}>
-
 
             <Grid
                 container
@@ -107,13 +99,12 @@ export default function CompanyDash(props) {
             {postAdventureState ?
                 <PostAdventure companyProfile={props.companyProfile} /> :
                 (editCompanyState) ?
-                    <CompanyAddInfo companyProfile={props.companyProfile} setCompanyData={props.setCompanyData} /> :
+                    <CompanyEditInfo companyProfile={props.companyProfile} setCompanyData={props.setCompanyData} handleEditCompany={handleEditCompany} /> :
                     <Grid container>
 
                         <Typography className={classes.heading} variant='h3'>Current Active Adventures</Typography>
                         <Grid container item spacing={3}>
                             {adventureState.map((adventure) =>
-
 
                                 <CompanyAdventureCard
                                     title={adventure.name}
@@ -130,5 +121,3 @@ export default function CompanyDash(props) {
         </Grid>
     )
 }
-
-
