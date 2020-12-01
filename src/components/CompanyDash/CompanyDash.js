@@ -9,16 +9,12 @@ import { useParams, useHistory } from 'react-router-dom';
 import API from '../../utils/API';
 import moment from 'moment';
 
-
 const useStyles = makeStyles({
     heading: {
         marginRight: 'auto',
         marginLeft: 'auto'
     }
 });
-
-
-
 
 export default function CompanyDash(props) {
     const classes = useStyles();
@@ -45,8 +41,6 @@ export default function CompanyDash(props) {
             getDbAdventures()
         }, 1000)
     }, [props.companyProfile.Adventure_company.id])
-
-
 
     const handlePostAdventure = () => {
         if (postAdventureState) {
@@ -90,10 +84,8 @@ export default function CompanyDash(props) {
         })
     }
 
-
     return (
         <Grid container xs={12} sm={12} md={12}>
-
 
             <Grid
                 container
@@ -114,7 +106,6 @@ export default function CompanyDash(props) {
                         <Grid container item spacing={3}>
                             {adventureState.map((adventure) =>
 
-
                                 <CompanyAdventureCard
                                     title={adventure.name}
                                     date={moment(adventure.createdAt).format('D MMM YYYY')}
@@ -130,5 +121,3 @@ export default function CompanyDash(props) {
         </Grid>
     )
 }
-
-

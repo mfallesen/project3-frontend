@@ -4,8 +4,6 @@ import Link from '@material-ui/core/Link';
 import Typography from '../Typography';
 import { Grid } from '@material-ui/core';
 
-
-
 function Copyright() {
   return (
     <Typography variant="body1" color="textSecondary" align="center">
@@ -29,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 function CompanySignIn() {
   return (
     <Typography
@@ -42,7 +39,6 @@ function CompanySignIn() {
   )
 }
 
-
 export default function Footer() {
   const classes = useStyles();
 
@@ -50,7 +46,7 @@ export default function Footer() {
 
     < Grid container className={classes.footer} alignItems='center' direction="column" justify='center'>
 
-      <Grid item alignItems='center'>
+      <Grid item >
         <Typography variant="h6" gutterBottom>
           Local Memories. Locally Minnesvärt.
         </Typography>

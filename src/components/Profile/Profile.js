@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './Profile.css';
 import {
     StreamApp,
     FlatFeed,
@@ -13,8 +12,6 @@ import {
 import stream from 'getstream';
 import "react-activity-feed/dist/index.css";
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -30,12 +27,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import IconButton from '@material-ui/core/IconButton';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import FavAdventuresPage from '../FavAdventuresPage';
-
-
-
-
-
-
 
 const streamString = localStorage.getItem('STREAM');
 const useStyles = makeStyles((theme) => ({
@@ -78,7 +69,6 @@ const client = stream.connect(process.env.REACT_APP_STREAM_API_KEY, streamString
 
 // Left side personal feed
 function Feed(props) {
-
 
     client.user(client.userId).update({ name: `${props.profile.first_name} ${props.profile.last_name}`, profileImage: `https://res.cloudinary.com/crowandrew/image/upload/w_400,h_400,c_crop,g_face,r_max/w_150/v1603932299/${props.profile.image}` });
     return (
@@ -149,7 +139,6 @@ function Profile(props) {
         setReadOnlyEditState(false)
     }
 
-
     // function for navigation butttons
     const viewPanelChange = (panelName) => {
         setViewPanelState(panelName)
@@ -191,7 +180,6 @@ function Profile(props) {
     const Activities = () => {
         const token = localStorage.getItem("JWT")
 
-
         API.getActivities(token).then(activityData => {
             let siteActivities = []
             activityData.data.map(activity => {
@@ -224,9 +212,6 @@ function Profile(props) {
         UserFollowing()
         UserFollowers()
     }, []);
-
-
-
 
     // function pulling following data from getStream.io
     const UserFollowing = () => {
@@ -309,11 +294,11 @@ function Profile(props) {
         return <Grid item xs={12} sm={2}>
             <Grid container spacing={1}>
                 <Grid item xs={12}>
-                    {/* <ScrollableAnchor id={'potatoes'}> */}
+                    
                     <Typography variant="h6">
                         Following {followingListState.length}
                     </Typography>
-                    {/* </ScrollableAnchor> */}
+                    
                 </Grid>
             </Grid>
             <Grid container spacing={1}>
@@ -409,7 +394,6 @@ function Profile(props) {
         </Grid>
     }
 
-
     // return jsx to render on page
     return (
         <React.Fragment>
@@ -428,12 +412,10 @@ function Profile(props) {
                                             <Grid item xs={12}>
                                                 <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
 
-
                                                     <Image
                                                         publicId={props.profile.image}
                                                         fetch-format="auto"
                                                         quality="auto"
-
                                                     >
                                                         <Transformation gravity="face" height="500" radius="max" width="500" crop="crop" />
                                                         <Transformation width="150" crop="scale" />
@@ -466,7 +448,6 @@ function Profile(props) {
                                     }
                                 </Grid>
                                 <Grid item xs={12} sm={7} lg={9} >
-
 
                                     <Grid container spacing={2}>
                                         <Grid item xs={10} className={classes.heroText}>
@@ -599,6 +580,5 @@ function Profile(props) {
         </React.Fragment>
     );
 }
-
 
 export default Profile;

@@ -5,13 +5,6 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { CloudinaryContext, Image } from "cloudinary-react";
 import ReactCardFlip from 'react-card-flip';
 
-// *******UNCOMMENT BELOW FOR BUTTON FUNCTIONALITY******************
-// import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import Menu from '@material-ui/core/Menu';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import EditIcon from '@material-ui/icons/Edit';
-
-
 const useStyles = makeStyles((theme) => ({
 
   media: {
@@ -29,11 +22,9 @@ export default function CompanyAdventureCard(props) {
         setIsFlipped(!isFlipped);
     }
     
-
   return (
     <Grid item xs={6} sm={6} md={3}>
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-
 
         <Card onClick={handleClick}>
           <CardHeader
@@ -43,7 +34,6 @@ export default function CompanyAdventureCard(props) {
           />
           <CardMedia>
             <CloudinaryContext cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}>
-
 
               {props.image ? <Image
                 publicId={props.image}

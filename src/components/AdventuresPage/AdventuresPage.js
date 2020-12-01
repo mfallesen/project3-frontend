@@ -12,7 +12,6 @@ const useStyles = makeStyles({
     },
 })
 
-
 export default function AdventuresPage(props) {
     const classes = useStyles();
     const [searchResults, setSearchResults] = useState('');
@@ -27,27 +26,14 @@ export default function AdventuresPage(props) {
         const token = localStorage.getItem("JWT");
         API.getAdventureTags(token).then(response => {
             const data = response.data
-            console.log("constant:data", data)
             setOriginalData(data);
             setFilteredData(data);
             return data
         })
     }
 
-
     const fuseOptions = {
         isCaseSensitive: false,
-        // includeScore: false,
-        // shouldSort: true,
-        // includeMatches: true,
-        // findAllMatches: true,
-        // minMatchCharLength: 3,
-        // location: 0,
-        // threshold: 0.6,
-        // distance: 100,
-        // useExtendedSearch: false,
-        // ignoreLocation: true,
-        // ignoreFieldNorm: false,
         keys: [
             {
                 name: 'name',
@@ -57,11 +43,6 @@ export default function AdventuresPage(props) {
                 name: 'description',
                 weight: 2,
             },
-            // 'Adventure_company.name',
-            // 'Adventure_company.city',
-            // 'Adventure_company.state',
-            // 'Adventure_company.description',
-            // 'Adventure_company.zip_code',
             {
                 name: 'Tags.name',
                 weight: 3
@@ -69,26 +50,12 @@ export default function AdventuresPage(props) {
         ]
     };
 
-
     const fuse = new Fuse(originalData, fuseOptions);
-
 
     const handleInputChange = event => {
 
         setSearchResults(event);
 
-        // if (!searchResults) {
-        //     const newList = originalData.filter(adventures => {
-
-        //         if (adventures.Tags.length > 0) {
-
-        //             for (let i = 0; i < adventures.Tags.length; i++) {
-
-        //                 if (adventures.Tags[i].name.indexOf(searchResults) > -1) {
-        //                     return true
-        //                 }
-        //             }
-        //         }
         const fuseSearch = fuse.search(searchResults);
         if (fuseSearch.length > 0) {
             let newFuseSearch = []
@@ -100,19 +67,7 @@ export default function AdventuresPage(props) {
         } else {
             setFilteredData(originalData)
         }
-        //     })
-
-
-
-        // }
-        // else {
-
-        //     setFilteredData(originalData)
-
-        // }
     }
-
-
 
     return (
 

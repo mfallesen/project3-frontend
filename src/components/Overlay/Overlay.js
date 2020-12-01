@@ -1,5 +1,4 @@
 import React from "react";
-import './Overlay.css'
 import { makeStyles } from "@material-ui/core/styles";
 import {Typography, Button, Grid} from "@material-ui/core/";
 
