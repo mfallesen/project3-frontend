@@ -50,7 +50,7 @@ export default {
             'name': adventureData.name,
             'description': adventureData.description,
             'image': adventureData.image,
-            'longitude': adventureData.latitude,
+            'longitude': adventureData.longitude,
             'latitude': adventureData.latitude,
             'AdventureCompanyId': adventureCompanyId,
             'tags': tagsArr
