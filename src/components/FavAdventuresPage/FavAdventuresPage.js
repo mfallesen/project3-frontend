@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import AdventureCard from '../AdventureCard'
 import SearchForm from '../SearchForm/SearchForm'
@@ -44,7 +44,6 @@ export default function AdventuresPage(props) {
         })
     }
 
-
     const handleInputChange = event => {
 
         setSearchResults(event);
@@ -70,7 +69,6 @@ export default function AdventuresPage(props) {
         }
     }
 
-
     return (
 
         <Grid container spacing={4} alignItems={'center'} justify={'center'} md={12}>
@@ -89,7 +87,7 @@ export default function AdventuresPage(props) {
             </Grid>
             <Grid container item md={12} spacing={3}>
                 {filteredData.map(
-                    card => <AdventureCard id={card.id} title={card.name} image={card.image} text={card.Tags.name} description={card.description} xs={12}></AdventureCard>
+                    card => <AdventureCard id={card.id} title={card.name} image={card.image} text={card.Tags.name} description={card.description} lat={card.latitude} lon={card.longitude} website={card.Adventure_company.website} xs={12}></AdventureCard>
                 )}
             </Grid>
 

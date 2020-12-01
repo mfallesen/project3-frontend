@@ -11,9 +11,6 @@ import { openUploadWidget } from "../Cloudinary/CloudinaryService";
 import { Cloudinary as CoreCloudinary, Util } from 'cloudinary-core';
 import AdventureCard from '../AdventureCard'
 
-
-
-
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -36,8 +33,6 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
-
-
 
 export default function AdventurePost(props) {
     const classes = useStyles();
