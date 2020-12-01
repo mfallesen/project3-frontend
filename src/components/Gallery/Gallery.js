@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
 import React from 'react'
-import './Gallery.css'
 import {
     Gallery
 } from "react-activity-feed";
