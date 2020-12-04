@@ -18,6 +18,7 @@ import CompanyAddInfo from './components/CompanyAddInfo';
 import Footer from './components/Footer';
 import Gallery from './components/Gallery'
 import AdventuresPage from './components/AdventuresPage';
+import Team from './components/Team';
 
 function App() {
   const [loginFormState, setLoginFormState] = useState({
@@ -211,6 +212,9 @@ function App() {
               <AdventureLanding />
               <Gallery />
             </div>
+          </Route>
+          <Route exact path='/team'>
+            <Team></Team>
           </Route>
         </Switch>
         <Footer />
