@@ -106,6 +106,9 @@ export default function CompanyDash(props) {
                                     image={adventure.image}
                                     text={adventure.description}
                                     adventure={adventure.id}
+                                    lat={adventure.latitude}
+                                    lon={adventure.longitude}
+                                    website={adventure.Adventure_company.website}
                                     deleteCard={adventureCardDelete}
                                 ></CompanyAdventureCard>
                             )}
