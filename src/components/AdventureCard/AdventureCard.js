@@ -95,7 +95,7 @@ export default function AdventureCard(props) {
                                 </Typography>
                                 <Grid container justify='space-between'>
 
-                                    <Typography align='justify' variant='button'><Button disabled>{likeCount} Likes</Button><IconButton onClick={() => {
+                                    <Typography align='justify' variant='button'><Button disabled>{likeCount === 0 ? props.rating : likeCount} Likes</Button><IconButton onClick={() => {
                                         postRatingDB(props.id)
                                     }} color='primary'><ThumbUpAltIcon /></IconButton></Typography>
 
