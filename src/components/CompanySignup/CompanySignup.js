@@ -54,7 +54,6 @@ export default function SignUp() {
         API.signupCompany(signUpFormState).then(userData => {
 
             localStorage.setItem('COMPANYUSERID', userData.data.id);
-            console.log(userData.data.id);
         }).then(() => {
             window.location.href = "/companyaddinfo";
         })
