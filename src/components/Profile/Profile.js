@@ -135,7 +135,6 @@ function Profile(props) {
 
     // function to to change fields to be editable
     const editProfile = () => {
-        console.log("EDIT")
         setReadOnlyEditState(false)
     }
 
@@ -167,10 +166,7 @@ function Profile(props) {
         const token = localStorage.getItem("JWT")
         const userName = localStorage.getItem("USERNAME")
         API.updateUserInfo(props.profile, userName, token).then(userData => {
-            console.log("AFTER API: ", userData);
-
         }).then(() => {
-            console.log("SAVE")
             saveProfile()
         })
 
@@ -200,7 +196,6 @@ function Profile(props) {
                 }
                 siteActivities.push(activityObj)
             })
-            console.log(siteActivities);
             setActivitiesState(siteActivities)
 
         })
@@ -223,11 +218,10 @@ function Profile(props) {
                 const user = res.results[i].target_id.slice(9);
                 List.push(user)
             }
-            console.log(List)
             setFollowingListState(List)
 
         }).catch((err) => {
-            console.log(err)
+            console.error(err)
         })
     }
 
@@ -235,17 +229,15 @@ function Profile(props) {
     const UserFollowers = () => {
         const userOne = client.feed('timeline', client.userId);
         userOne.followers().then((res) => {
-            console.log("FOLLOWER: ", res)
             let List = []
             for (let i = 0; i < res.results.length; i++) {
                 const user = res.results[i].feed_id.slice(9);
                 List.push(user)
             }
-            console.log(List)
             setFollowerListState(List)
 
         }).catch((err) => {
-            console.log(err)
+            console.error(err)
         })
     }
 
@@ -253,7 +245,6 @@ function Profile(props) {
     const followerUser = (userToFollow) => {
         const userOne = client.feed('timeline', client.userId);
         userOne.follow('timeline', userToFollow)
-        console.log("Followed: ", userToFollow)
         UserFollowing()
         UserFollowers()
         Activities()
@@ -262,7 +253,6 @@ function Profile(props) {
     const unfollowerUser = (userToUnFollow) => {
         const userOne = client.feed('timeline', client.userId);
         userOne.unfollow('timeline', userToUnFollow, { keepHistory: true })
-        console.log("UnFollowed: ", userToUnFollow)
         UserFollowing()
         UserFollowers()
         Activities()
@@ -277,7 +267,6 @@ function Profile(props) {
         };
         openUploadWidget(uploadOptions, (error, photos) => {
             if (!error) {
-                console.log(photos);
                 if (photos.event === 'success') {
                     props.setProfile({
                         ...props.profile,
@@ -285,7 +274,7 @@ function Profile(props) {
                     })
                 }
             } else {
-                console.log(error);
+                console.error(error);
             }
         })
     }
@@ -294,11 +283,11 @@ function Profile(props) {
         return <Grid item xs={12} sm={2}>
             <Grid container spacing={1}>
                 <Grid item xs={12}>
-                    
+
                     <Typography variant="h6">
                         Following {followingListState.length}
                     </Typography>
-                    
+
                 </Grid>
             </Grid>
             <Grid container spacing={1}>
