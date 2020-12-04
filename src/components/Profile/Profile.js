@@ -9,6 +9,7 @@ import {
     StatusUpdateForm,
     FollowButton,
 } from "react-activity-feed";
+import './Profile.css'
 import stream from 'getstream';
 import "react-activity-feed/dist/index.css";
 import Button from '@material-ui/core/Button';
