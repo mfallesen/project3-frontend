@@ -56,7 +56,6 @@ export default function UserPost() {
         event.preventDefault();
         const token = localStorage.getItem('JWT');
         API.addUserPost(postInfoFormState, username, token).then(postData => {
-            console.log("AFTER API: ", postData);
         })
         setPostInfoFormState({
             title: "",
@@ -73,7 +72,6 @@ export default function UserPost() {
         };
         openUploadWidget(uploadOptions, (error, photos) => {
             if (!error) {
-                console.log(photos);
                 if (photos.event === 'success') {
                     setPostInfoFormState({
                         ...postInfoFormState,
@@ -81,7 +79,7 @@ export default function UserPost() {
                     })
                 }
             } else {
-                console.log(error);
+                console.error(error);
             }
         })
     }
@@ -105,7 +103,7 @@ export default function UserPost() {
         fetch(urlPath)
             .then(res => res.text())
             .then(text => (text ? setter(JSON.parse(text).resources.map(image => image.public_id)) : []))
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
     };
 
     useEffect(() => {

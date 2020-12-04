@@ -35,8 +35,7 @@ export default function CompanyDash(props) {
         const companyUserName = localStorage.getItem("USERNAMECOMPANY")
         API.getCompanyProfile(companyUserName, token).then(({ data }) => {
             props.handleCompanyData(data);
-            console.log("Data from getCompanyProfile", data);
-        }).catch(err => console.log(err))
+        }).catch(err => console.error(err))
         setTimeout(() => {
             getDbAdventures()
         }, 1000)
@@ -64,8 +63,6 @@ export default function CompanyDash(props) {
         const token = localStorage.getItem("JWTCOMPANY");
         API.getAdventures(token).then(res => {
             const newList = res.data.filter(adventure => {
-                console.log("FILTER Id:", props.companyProfile.Adventure_company.id)
-                console.log("FILTER LIST", adventure)
                 return adventure.AdventureCompanyId === props.companyProfile.Adventure_company.id
             })
             setAdventureState(newList);
@@ -74,13 +71,10 @@ export default function CompanyDash(props) {
 
     const adventureCardDelete = (num) => {
         const token = localStorage.getItem('JWTCOMPANY')
-        console.log("Num : ", num);
-        console.log("token : ", token);
         API.deleteAdventure(num, token).then(res => {
-            console.log("adventureidpassed: ", res);
             getDbAdventures();
         }).catch(err => {
-            console.log(err);
+            console.error(err);
         })
     }
 
@@ -112,6 +106,9 @@ export default function CompanyDash(props) {
                                     image={adventure.image}
                                     text={adventure.description}
                                     adventure={adventure.id}
+                                    lat={adventure.latitude}
+                                    lon={adventure.longitude}
+                                    website={adventure.Adventure_company.website}
                                     deleteCard={adventureCardDelete}
                                 ></CompanyAdventureCard>
                             )}

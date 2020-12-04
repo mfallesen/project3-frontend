@@ -18,6 +18,7 @@ import CompanyAddInfo from './components/CompanyAddInfo';
 import Footer from './components/Footer';
 import Gallery from './components/Gallery'
 import AdventuresPage from './components/AdventuresPage';
+import Team from './components/Team';
 
 function App() {
   const [loginFormState, setLoginFormState] = useState({
@@ -108,7 +109,6 @@ function App() {
   const submitForm = event => {
     event.preventDefault();
     API.login(loginFormState).then(newToken => {
-      console.log("LOOK", newToken)
       localStorage.setItem('JWT', newToken.data.token);
       localStorage.setItem('STREAM', newToken.data.appToken);
       localStorage.setItem('USERNAME', loginFormState.username);
@@ -125,7 +125,7 @@ function App() {
           isLoggedIn: true
         })
       }).catch(err => {
-        console.log(err);
+        console.error(err);
       })
     })
   }
@@ -212,6 +212,9 @@ function App() {
               <AdventureLanding />
               <Gallery />
             </div>
+          </Route>
+          <Route exact path='/team'>
+            <Team></Team>
           </Route>
         </Switch>
         <Footer />

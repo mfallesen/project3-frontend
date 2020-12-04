@@ -52,7 +52,6 @@ export default function SignUp(props) {
     const handleFormSubmit = event => {
         event.preventDefault();
         API.loginCompany(loginFormState).then(newToken => {
-            console.log("NewToken in CompanyLogin: ", newToken);
             localStorage.setItem('JWTCOMPANY', newToken.data.token);
             localStorage.setItem('USERNAMECOMPANY', loginFormState.username);
         }).then(() => {

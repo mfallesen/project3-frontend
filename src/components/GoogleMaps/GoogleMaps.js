@@ -3,9 +3,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const MapContainer = (props) => {
     const lat = props.lon;
-    // console.log("Lat: ", lat);
     const lon = props.lat;
-    // console.log("Lon: ", lon);
 
     const mapStyles = {
         height: "250px",
