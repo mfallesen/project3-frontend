@@ -14,21 +14,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompanyAdventureCard(props) {
-  console.log('company card props: ', props);
   const classes = useStyles();
 
   const [isFlipped, setIsFlipped] = useState(false);
-    const handleClick = () => {
-        setIsFlipped(!isFlipped);
-    }
-    
+  const handleClick = () => {
+    setIsFlipped(!isFlipped);
+  }
+
   return (
     <Grid item xs={6} sm={6} md={3}>
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
 
         <Card onClick={handleClick}>
           <CardHeader
-            
+
             title={props.title}
             subheader={props.date}
           />
@@ -54,7 +53,7 @@ export default function CompanyAdventureCard(props) {
           </CardMedia>
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              { props.text.length > 100 ?
+              {props.text.length > 100 ?
                 `${props.text.substring(0, 100)} ...` :
                 props.text
               }
@@ -65,7 +64,7 @@ export default function CompanyAdventureCard(props) {
 
         <Card onClick={handleClick}>
           <CardContent>
-              <Typography>{props.text}</Typography>
+            <Typography>{props.text}</Typography>
           </CardContent>
         </Card>
 

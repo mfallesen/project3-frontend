@@ -15,12 +15,11 @@ function Cloudinary(props) {
         };
         openUploadWidget(uploadOptions, (error, photos) => {
             if (!error) {
-                console.log(photos);
                 if (photos.event === 'success') {
                     setImages([...images, photos.info.public_id])
                 }
             } else {
-                console.log(error);
+                console.error(error);
             }
         })
     }

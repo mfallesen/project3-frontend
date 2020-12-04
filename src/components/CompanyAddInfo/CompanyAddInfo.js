@@ -66,7 +66,6 @@ export default function SignUp() {
     const handleFormSubmit = event => {
         event.preventDefault();
         API.addCompany(businessInfoFormState).then(userData => {
-            console.log("AFTER API: ", userData);
         }).then(() => {
             window.location.href = "/companylogin";
         })
@@ -94,7 +93,6 @@ export default function SignUp() {
         };
         openUploadWidget(uploadOptions, (error, photos) => {
             if (!error) {
-                console.log(photos);
                 if (photos.event === 'success') {
                     setBusinessInfoFormState({
                         ...businessInfoFormState,
@@ -102,7 +100,7 @@ export default function SignUp() {
                     })
                 }
             } else {
-                console.log(error);
+                console.error(error);
             }
         })
     }
@@ -126,7 +124,7 @@ export default function SignUp() {
         fetch(urlPath)
             .then(res => res.text())
             .then(text => (text ? setter(JSON.parse(text).resources.map(image => image.public_id)) : []))
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
     };
 
     useEffect(() => {

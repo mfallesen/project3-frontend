@@ -57,8 +57,6 @@ export default function CompanyEditInfo(props) {
 
     // input change handler for the company profile save form
     const inputChange = event => {
-        console.log("NAME:", event.target.name)
-        console.log("VALUE:", event.target.value)
         const { name, value } = event.target;
         setBusinessInfoFormState({
             ...businessInfoFormState,
@@ -70,13 +68,11 @@ export default function CompanyEditInfo(props) {
         event.preventDefault();
         const token = localStorage.getItem("JWTCOMPANY")
         API.updateCompanyInfo(businessInfoFormState, token).then(companyData => {
-            console.log("AFTER API: ", companyData);
-            console.log("SAVE");
             props.setCompanyData({
                 ...props.companyProfile,
                 Adventure_company: businessInfoFormState
             })
-        }).catch(err => console.log(err))
+        }).catch(err => console.error(err))
     }
 
     const beginUpload = tag => {
@@ -87,7 +83,6 @@ export default function CompanyEditInfo(props) {
         };
         openUploadWidget(uploadOptions, (error, photos) => {
             if (!error) {
-                console.log(photos);
                 if (photos.event === 'success') {
                     setBusinessInfoFormState({
                         ...businessInfoFormState,
@@ -95,7 +90,7 @@ export default function CompanyEditInfo(props) {
                     })
                 }
             } else {
-                console.log(error);
+                console.error(error);
             }
         })
     }
@@ -119,7 +114,7 @@ export default function CompanyEditInfo(props) {
         fetch(urlPath)
             .then(res => res.text())
             .then(text => (text ? setter(JSON.parse(text).resources.map(image => image.public_id)) : []))
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
     };
 
     useEffect(() => {
