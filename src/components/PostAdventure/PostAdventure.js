@@ -72,7 +72,6 @@ export default function AdventurePost(props) {
         const token = localStorage.getItem('JWTCOMPANY');
         let tags = extract(adventureInfoFormState.description)
         API.addAdventure(adventureInfoFormState, tags, props.companyProfile.Adventure_company.id, token).then(userData => {
-            console.log("AFTER API: ", userData);
         })
         setAdventureInfoFormState({
             name: "",
@@ -92,7 +91,6 @@ export default function AdventurePost(props) {
         };
         openUploadWidget(uploadOptions, (error, photos) => {
             if (!error) {
-                console.log(photos);
                 if (photos.event === 'success') {
                     setAdventureInfoFormState({
                         ...adventureInfoFormState,
@@ -100,7 +98,7 @@ export default function AdventurePost(props) {
                     })
                 }
             } else {
-                console.log(error);
+                console.error(error);
             }
         })
     }
@@ -124,7 +122,7 @@ export default function AdventurePost(props) {
         fetch(urlPath)
             .then(res => res.text())
             .then(text => (text ? setter(JSON.parse(text).resources.map(image => image.public_id)) : []))
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
     };
 
     useEffect(() => {
