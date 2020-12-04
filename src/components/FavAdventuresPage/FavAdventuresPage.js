@@ -24,7 +24,6 @@ export default function AdventuresPage(props) {
         const token = localStorage.getItem("JWT");
         API.getAdventureTags(token).then(response => {
             const data = response.data
-            console.log("constant:data", data)
             const filteredList = data.filter(adventures => {
 
                 if (adventures.Adventure_ratings.length > 0) {
