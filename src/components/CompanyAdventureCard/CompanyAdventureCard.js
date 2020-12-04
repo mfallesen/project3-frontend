@@ -4,31 +4,31 @@ import { Card, CardHeader, CardMedia, CardContent, Typography, Button, Grid } fr
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { CloudinaryContext, Image } from "cloudinary-react";
 import ReactCardFlip from 'react-card-flip';
+import GoogleMaps from '../GoogleMaps';
 
 const useStyles = makeStyles((theme) => ({
 
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-  },
+  }
 }));
 
 export default function CompanyAdventureCard(props) {
-  console.log('company card props: ', props);
   const classes = useStyles();
 
   const [isFlipped, setIsFlipped] = useState(false);
-    const handleClick = () => {
-        setIsFlipped(!isFlipped);
-    }
-    
+  const handleClick = () => {
+    setIsFlipped(!isFlipped);
+  }
+
   return (
     <Grid item xs={6} sm={6} md={3}>
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
 
         <Card onClick={handleClick}>
           <CardHeader
-            
+
             title={props.title}
             subheader={props.date}
           />
@@ -54,18 +54,36 @@ export default function CompanyAdventureCard(props) {
           </CardMedia>
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              { props.text.length > 100 ?
+              {props.text.length > 100 ?
                 `${props.text.substring(0, 100)} ...` :
                 props.text
               }
             </Typography>
           </CardContent>
-          <Button color={'secondary'} fullWidth={true} onClick={() => props.deleteCard(props.adventure)}><DeleteForeverIcon /></Button>
+          <Grid container >
+            <Grid item xs={6}>
+              <Button color={'secondary'} onClick={() => props.deleteCard(props.adventure)}><DeleteForeverIcon /></Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button color={'primary'} onClick={() => handleClick}>More Info</Button>
+            </Grid>
+          </Grid>
         </Card>
 
-        <Card onClick={handleClick}>
-          <CardContent>
-              <Typography>{props.text}</Typography>
+        <Card elevation='6' >
+          <CardContent >
+            <Typography>{props.text}</Typography>
+            <hr />
+            <GoogleMaps lat={props.lat} lon={props.lon} />
+            <Grid container justify='space-between'>
+              <Grid item >
+                <Button href={`https://${props.website}`}>Check out the company!</Button>
+              </Grid>
+              <Grid item justify='flex-end'>
+                <Button onClick={handleClick}>Less Info</Button>
+              </Grid>
+            </Grid>
+
           </CardContent>
         </Card>
 

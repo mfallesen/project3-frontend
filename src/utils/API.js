@@ -16,7 +16,6 @@ export default {
     },
     //Signup Company
     signupCompany: function (companyData) {
-        console.log("In API: ", companyData);
         return axios.post(BASEURL + '/company/signupCompanyUser', {
             email: companyData.email,
             username: companyData.username,
@@ -25,7 +24,6 @@ export default {
     },
 
     addCompany: function (companyData) {
-        console.log("In API: ", companyData);
         return axios.post(BASEURL + '/company/addCompany', {
             name: companyData.name,
             address_1: companyData.address_1,
@@ -43,14 +41,11 @@ export default {
     },
 
     addAdventure: function (adventureData, tagsArr, adventureCompanyId, token) {
-        console.log("In API: ", adventureData);
-        console.log("In API: ", token)
-
         const data = qs.stringify({
             'name': adventureData.name,
             'description': adventureData.description,
             'image': adventureData.image,
-            'longitude': adventureData.latitude,
+            'longitude': adventureData.longitude,
             'latitude': adventureData.latitude,
             'AdventureCompanyId': adventureCompanyId,
             'tags': tagsArr
@@ -67,8 +62,6 @@ export default {
     },
 
     deleteAdventure: function (adventureId, token) {
-        console.log("AdventureDeleteinAPI: ", adventureId);
-
         return axios({
             method: 'delete',
             url: BASEURL + `/api_company/adventure/${adventureId}`,
@@ -81,9 +74,6 @@ export default {
 
 
     updateUserInfo: function (userData, userName, token) {
-        console.log("In API: ", userData);
-        console.log("In API: ", token)
-
         const data = qs.stringify({
             'username': userName,
             'first_name': userData.first_name,
@@ -105,9 +95,6 @@ export default {
     },
 
     updateCompanyInfo: function (companyData, token) {
-        console.log("In API: ", companyData);
-        console.log("In API: ", token)
-
         const data = qs.stringify({
             'name': companyData.name,
             'address_1': companyData.address_1,
@@ -133,9 +120,6 @@ export default {
     },
 
     addUserPost: function (postData, username, token) {
-        console.log("In API: ", postData);
-        console.log("In API: ", token)
-
         const data = qs.stringify({
             'title': postData.title,
             'description': postData.description,
@@ -153,8 +137,6 @@ export default {
     },
 
     getAdventures: function (token) {
-        console.log("In API: ", token)
-
         return axios({
             method: 'get',
             url: BASEURL + '/api_company/adventures/',
@@ -175,7 +157,6 @@ export default {
     },
 
     loginCompany: function (userData) {
-        console.log(userData);
         return axios.post(BASEURL + '/company/loginCompanyUser', {
             username: userData.username,
             password: userData.password,

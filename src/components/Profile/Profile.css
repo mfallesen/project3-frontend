@@ -1,0 +1,22 @@
+.raf-button--primary:disabled {
+    background-color: #9aab9e !important;
+  }
+  
+  .raf-button--primary {
+    background-color: #687864 !important;
+  }
+
+  .raf-follow-button {
+      border-color: #5085A5 !important;
+      color: #5085A5 !important;
+  }
+
+  .raf-follow-button:hover, .raf-follow-button--active {
+    background: #5085A5 !important;
+    color: white !important;
+}
+
+  .raf-follow-button--active {
+      color: white !important;
+      background: #5085A5 !important;
+  }

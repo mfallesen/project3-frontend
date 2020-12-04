@@ -41,12 +41,12 @@ export default function AdventureCard(props) {
         const token = localStorage.getItem("JWT");
         API.postAdventureRating(token, id).then(response => {
             postLikeCount(props.id);
-        }).catch(err => console.log(err))
+        }).catch(err => console.error(err))
     }
 
     return (
 
-        <Grid item xs={props.xs} sm={props.sm} md={props.md}>
+        <Grid item xs={props.xs} sm={props.sm} md={props.md} lg={props.lg}>
             <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
 
                 <Card className={classes.card} elevation='6'>
