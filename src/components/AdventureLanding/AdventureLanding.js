@@ -48,7 +48,7 @@ export default function AdventureLanding(props) {
                     data.splice(idx, 1);
                 }
                 setAdventure(newItems);
-            } else if (largeScreen) {
+            } else {
                 for (let i = 0; i < 4; i++) {
                     let idx = Math.floor(Math.random() * data.length);
                     newItems.push(data[idx]);
@@ -60,12 +60,12 @@ export default function AdventureLanding(props) {
     }
 
     return (
-            <Grid container spacing={3} className={classes.root} >
-                <Grid className={classes.cardRow} container item md={12} spacing={3}>
-                    {adventure.map(
-                        card => <AdventureCard id={card.id} title={card.name} image={card.image} text={card.Tags.name} description={card.description} lat={card.latitude} lon={card.longitude} website={card.Adventure_company.website} rating={card.Adventure_ratings.length} xs={12} sm={6} md={4} lg={3}></AdventureCard>
-                    )}
-                </Grid>
+        <Grid container spacing={3} className={classes.root} >
+            <Grid className={classes.cardRow} container item md={12} spacing={3}>
+                {adventure.map(
+                    card => <AdventureCard id={card.id} title={card.name} image={card.image} text={card.Tags.name} description={card.description} lat={card.latitude} lon={card.longitude} website={card.Adventure_company.website} rating={card.Adventure_ratings.length} xs={12} sm={6} md={4} lg={3}></AdventureCard>
+                )}
             </Grid>
+        </Grid>
     )
 }
