@@ -14,6 +14,10 @@ const useStyles = makeStyles({
         textAlign: 'center',
         height: '500'
     },
+    cardhead: {
+        height: 74,
+
+    }
 })
 
 export default function AdventureCard(props) {
@@ -49,10 +53,12 @@ export default function AdventureCard(props) {
         <Grid item xs={props.xs} sm={props.sm} md={props.md} lg={props.lg}>
             <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
 
-                <Card className={classes.card} elevation='6'>
+                <Card className={classes.card} raised={true}>
                     <Grid container>
                         <Grid item xs={12}>
                             <CardHeader
+                            className={classes.cardhead}
+                                component='h3'
                                 title={props.title}
                             />
                         </Grid>
