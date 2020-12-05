@@ -34,9 +34,12 @@ export default function Team() {
     const classes = useStyles();
 
     return (
-        <Grid container justify='center' spacing={6} >
+        <Grid container alignItems='center' justify='center' direction='column'>
+            <Grid item xs={12} className={classes.root}>
+
             <Typography variant='h3' className={classes.toppad}>Meet The Team!</Typography>
-            <Grid item className={classes.root}>
+            </Grid>
+            <Grid item xs={12} className={classes.root}>
                 <Card className={classes.card} raised={true}>
                     <CardMedia
                         className={classes.media}
@@ -61,7 +64,7 @@ export default function Team() {
 
                 </Card>
             </Grid>
-            <Grid item className={classes.root}>
+            <Grid item xs={12} className={classes.root}>
                 <Card className={classes.card} raised={true}>
                     <CardContent>
                         <Typography variant='h5'>Kayla Newlon</Typography>
@@ -86,7 +89,7 @@ export default function Team() {
 
                 </Card>
             </Grid>
-            <Grid item className={classes.root}>
+            <Grid item xs={12} className={classes.root}>
                 <Card className={classes.card} raised={true}>
                     <CardMedia
                         className={classes.media}
@@ -112,7 +115,7 @@ export default function Team() {
 
                 </Card>
             </Grid>
-            <Grid item className={classes.root}>
+            <Grid item xs={12} className={classes.root}>
                 <Card className={classes.card} raised={true}>
                     <CardContent>
                         <Typography variant='h5'>Daniel Yoder</Typography>
@@ -137,7 +140,7 @@ export default function Team() {
 
                 </Card>
             </Grid>
-            <Grid item className={classes.root}>
+            <Grid item xs={12} className={classes.root}>
                 <Card className={classes.card} raised={true}>
                     <CardMedia
                         className={classes.media}
