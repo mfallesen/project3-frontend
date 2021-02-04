@@ -77,10 +77,10 @@ Kayla Newlon - https://github.com/kbnewlon / kayla.b.newlon@gmail.com
 Contact our team at minnesvart@gmail.com for any questions 
 
 ## **Visuals**
-![Screenshot of Landing Page](readme-images/screenshot_landing_page.PNG)
-![Screenshot of Profile Page](readme-images/screenshot_profile_page.PNG)
-![Screenshot of Adventures Page](readme-images/screenshot_adventures.PNG)
-![Screenshot of example company landing page](readme-images/screenshot_company_landing.PNG)
+![Screenshot of Landing Page](readme-images/screenshot_landing_page.png)
+![Screenshot of Profile Page](readme-images/screenshot_profile_page.png)
+![Screenshot of Adventures Page](readme-images/screenshot_adventures.png)
+![Screenshot of example company landing page](readme-images/screenshot_company_landing.png)
 
 ## **Demos**
 Adventure Company User Demo: https://youtu.be/0wrHZZjhLL4
